@@ -1,3 +1,5 @@
+package Server.TestRegistryIteration1;
+
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;

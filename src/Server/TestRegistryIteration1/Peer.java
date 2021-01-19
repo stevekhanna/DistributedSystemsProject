@@ -1,3 +1,5 @@
+package Server.TestRegistryIteration1;
+
 public class Peer {
 	String address;
 	int port;
