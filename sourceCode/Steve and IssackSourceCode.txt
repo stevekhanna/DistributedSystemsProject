@@ -390,3 +390,1104 @@ public class Client {
     }
 }
 
+Sat Jan 23 18:10:23 MST 2021
+java
+灡捫慧攠䍬楥湴㬊੩浰潲琠橡癡⹩漮⨻੩浰潲琠橡癡⹮整⹓潣步琻੩浰潲琠橡癡⹮楯⹣桡牳整⹓瑡湤慲摃桡牳整猻੩浰潲琠橡癡⹮楯⹦楬攮䙩汥卹獴敭猻੩浰潲琠橡癡⹮楯⹦楬攮䙩汥猻੩浰潲琠橡癡⹮楯⹦楬攮偡瑨㬊業灯牴⁪慶愮湩漮晩汥⹐慴桳㬊ੰ畢汩挠捬慳猠䍬楥湴⁻ਠ†⁰物癡瑥⁓瑲楮朠獥牶敲䥐‽•汯捡汨潳琢㬊††灲楶慴攠楮琠灯牴‽‱㈳㐵㬊ਠ†⁂畦晥牥摒敡摥爠牥慤敲㬊††䉵晦敲敤坲楴敲⁷物瑥爻ਠ†⁰畢汩挠䍬楥湴⡓瑲楮朠獥牶敲䥐Ⱐ楮琠灯牴⥻ਠ†††⁴桩献獥牶敲䥐‽⁳敲癥牉倻ਠ†††⁴桩献灯牴‽⁰潲琻ਠ†⁽ਊਠ†⁰物癡瑥⁓瑲楮朠桡湤汥䝥瑃潤攨⥻ਊ††††却物湧⁲敳灯湳攠㴠∢㬊††††却物湧⁬慮杵慧攠㴠≪慶慜渢㬊ਠ†††⁐慴栠灡瑨‽⁆楬敓祳瑥浳⹧整䑥晡畬琨⤮来瑐慴栨≳牣∩㬊††††却物湧⁳‽⁰慴栮瑯䅢獯汵瑥偡瑨⠩⹴潓瑲楮木⤻ਠ†††⁩映⡳⹣潮瑡楮猨∯∩⥻猫㴢⼢㭽敬獥筳⬽≜尢㭽ਠ†††⁰慴栠㴠䙩汥卹獴敭献来瑄敦慵汴⠩⹧整偡瑨⡳⬢䍬楥湴∩㬊††††猠㴠灡瑨⹴潁扳潬畴敐慴栨⤮瑯却物湧⠩㬊††††楦 献捯湴慩湳⠢⼢⤩筳⬽∯∻絥汳敻猫㴢屜∻紊††††灡瑨‽⁆楬敓祳瑥浳⹧整䑥晡畬琨⤮来瑐慴栨猫≃汩敮琮橡癡∩㬊††††猠㴠灡瑨⹴潁扳潬畴敐慴栨⤮瑯却物湧⠩㬊††††卹獴敭⹯畴⹰物湴汮⠢䍵牲敮琠牥污瑩癥⁰慴栠楳㨠∠⬠猩㬊ਠ†††⁴特笊††††††却物湧⁣潤攠㴠䙩汥献牥慤却物湧⡰慴栬⁓瑡湤慲摃桡牳整献啔䙟ㄶ⤫≜渢㬊††††††却物湧⁥湤佦䍯摥‽•⸮⹜渢㬊††††††牥獰潮獥‽⁬慮杵慧攫捯摥⭥湤佦䍯摥㬊††††紊††††捡瑣栨䥏䕸捥灴楯渠攩笊††††††攮灲楮瑓瑡捫呲慣攨⤻ਠ†††⁽ਊ††††牥瑵牮⁲敳灯湳攻ਠ†⁽ਊ††灲楶慴攠癯楤⁨慮摬敒敱略獴⡓潣步琠獯捫⥻ਊ††††瑲祻ਠ†††††⁲敡摥爠㴠湥眠䉵晦敲敤剥慤敲⡮敷⁉湰畴却牥慭剥慤敲⡳潣欮来瑉湰畴却牥慭⠩⤩㬊††††††睲楴敲‽⁮敷⁂畦晥牥摗物瑥爨湥眠併瑰畴却牥慭坲楴敲⡳潣欮来瑏畴灵瑓瑲敡洨⤩⤻ਠ†††††⁓瑲楮朠牥煵敳琻ਠ†††††⁷桩汥 ⡲敱略獴‽⁲敡摥爮牥慤䱩湥⠩⤠ℽ⁮畬氩笊††††††††卹獴敭⹯畴⹰物湴汮⡲敱略獴⤻ਠ†††††††⁓瑲楮朠牥獰潮獥‽•∻ਊ††††††††獷楴捨⡲敱略獴⤠笊††††††††††捡獥•来琠瑥慭⁮慭攢㨊††††††††††††牥獰潮獥‽•却敶攠慮搠䥳獡捫屮∻ਠ†††††††††††⁓祳瑥洮潵琮灲楮瑬渨≗物瑩湧⁲敳灯湳攠湯眺•‫⁲敳灯湳攩㬊††††††††††††睲楴敲⹷物瑥⡲敳灯湳攩㬊††††††††††††睲楴敲⹦汵獨⠩㬊††††††††††扲敡欻ਠ†††††††††⁣慳攠≧整⁣潤攢㨊ਠ†††††††††††⁲敳灯湳攠㴠桡湤汥䝥瑃潤攨⤻ਊਠ†††††††††††⁷物瑥爮睲楴攨牥獰潮獥⤻ਠ†††††††††††⁷物瑥爮晬畳栨⤻ਊ††††††††††扲敡欻ਠ†††††††††⁣慳攠≲散敩癥⁰敥牳∺ਊ††††††††††扲敡欻ਠ†††††††††⁤敦慵汴㨊††††††††††††卹獴敭⹯畴⹰物湴汮⠢剥煵敳琠湯琠牥捯杮楺敤∩㬊††††††††紊††††††紊††††††牥慤敲⹣汯獥⠩㬊††††††睲楴敲⹣汯獥⠩㬊††††紊††††捡瑣栨䥏䕸捥灴楯渠攩笊††††††攮灲楮瑓瑡捫呲慣攨⤻ਊ††††紊††紊ਊ††灵扬楣⁶潩搠獴慲琨⤠瑨牯睳⁉佅硣数瑩潮笊ਠ†††⁓潣步琠獯捫‽⁮敷⁓潣步琨獥牶敲䥐Ⱐ灯牴⤻ਠ†††⁨慮摬敒敱略獴⡳潣欩㬊††††獯捫⹣汯獥⠩㬊ਊ††紊紊
+Sat Jan 23 18:11:02 MST 2021
+java
+灡捫慧攠䍬楥湴㬊੩浰潲琠橡癡⹩漮⨻੩浰潲琠橡癡⹮整⹓潣步琻੩浰潲琠橡癡⹮楯⹣桡牳整⹓瑡湤慲摃桡牳整猻੩浰潲琠橡癡⹮楯⹦楬攮䙩汥卹獴敭猻੩浰潲琠橡癡⹮楯⹦楬攮䙩汥猻੩浰潲琠橡癡⹮楯⹦楬攮偡瑨㬊業灯牴⁪慶愮湩漮晩汥⹐慴桳㬊ੰ畢汩挠捬慳猠䍬楥湴⁻ਠ†⁰物癡瑥⁓瑲楮朠獥牶敲䥐‽•汯捡汨潳琢㬊††灲楶慴攠楮琠灯牴‽‱㈳㐵㬊ਠ†⁂畦晥牥摒敡摥爠牥慤敲㬊††䉵晦敲敤坲楴敲⁷物瑥爻ਠ†⁰畢汩挠䍬楥湴⡓瑲楮朠獥牶敲䥐Ⱐ楮琠灯牴⥻ਠ†††⁴桩献獥牶敲䥐‽⁳敲癥牉倻ਠ†††⁴桩献灯牴‽⁰潲琻ਠ†⁽ਊਠ†⁰物癡瑥⁓瑲楮朠桡湤汥䝥瑃潤攨⥻ਊ††††却物湧⁲敳灯湳攠㴠∢㬊††††却物湧⁬慮杵慧攠㴠≪慶慜渢㬊ਠ†††⁐慴栠灡瑨‽⁆楬敓祳瑥浳⹧整䑥晡畬琨⤮来瑐慴栨≳牣∩㬊††††却物湧⁳‽⁰慴栮瑯䅢獯汵瑥偡瑨⠩⹴潓瑲楮木⤻ਠ†††⁩映⡳⹣潮瑡楮猨∯∩⥻猫㴢⼢㭽敬獥筳⬽≜尢㭽ਠ†††⁰慴栠㴠䙩汥卹獴敭献来瑄敦慵汴⠩⹧整偡瑨⡳⬢䍬楥湴∩㬊††††猠㴠灡瑨⹴潁扳潬畴敐慴栨⤮瑯却物湧⠩㬊††††楦 献捯湴慩湳⠢⼢⤩筳⬽∯∻絥汳敻猫㴢屜∻紊††††灡瑨‽⁆楬敓祳瑥浳⹧整䑥晡畬琨⤮来瑐慴栨猫≃汩敮琮橡癡∩㬊††††猠㴠灡瑨⹴潁扳潬畴敐慴栨⤮瑯却物湧⠩㬊††††卹獴敭⹯畴⹰物湴汮⠢䍵牲敮琠牥污瑩癥⁰慴栠楳㨠∠⬠猩㬊ਠ†††⁴特笊††††††却物湧⁣潤攠㴠䙩汥献牥慤却物湧⡰慴栬⁓瑡湤慲摃桡牳整献啔䙟ㄶ⤫≜渢㬊††††††却物湧⁥湤佦䍯摥‽•⸮⹜渢㬊††††††牥獰潮獥‽⁬慮杵慧攫捯摥⭥湤佦䍯摥㬊††††紊††††捡瑣栨䥏䕸捥灴楯渠攩笊††††††攮灲楮瑓瑡捫呲慣攨⤻ਠ†††⁽ਊ††††牥瑵牮⁲敳灯湳攻ਠ†⁽ਊ††灲楶慴攠癯楤⁨慮摬敒敱略獴⡓潣步琠獯捫⥻ਊ††††瑲祻ਠ†††††⁲敡摥爠㴠湥眠䉵晦敲敤剥慤敲⡮敷⁉湰畴却牥慭剥慤敲⡳潣欮来瑉湰畴却牥慭⠩⤩㬊††††††睲楴敲‽⁮敷⁂畦晥牥摗物瑥爨湥眠併瑰畴却牥慭坲楴敲⡳潣欮来瑏畴灵瑓瑲敡洨⤩⤻ਠ†††††⁓瑲楮朠牥煵敳琻ਠ†††††⁷桩汥 ⡲敱略獴‽⁲敡摥爮牥慤䱩湥⠩⤠ℽ⁮畬氩笊††††††††卹獴敭⹯畴⹰物湴汮⡲敱略獴⤻ਠ†††††††⁓瑲楮朠牥獰潮獥‽•∻ਊ††††††††獷楴捨⡲敱略獴⤠笊††††††††††捡獥•来琠瑥慭⁮慭攢㨊††††††††††††牥獰潮獥‽•却敶攠慮搠䥳獡捫屮∻ਠ†††††††††††⁓祳瑥洮潵琮灲楮瑬渨≗物瑩湧⁲敳灯湳攠湯眺•‫⁲敳灯湳攩㬊††††††††††††睲楴敲⹷物瑥⡲敳灯湳攩㬊††††††††††††睲楴敲⹦汵獨⠩㬊††††††††††扲敡欻ਠ†††††††††⁣慳攠≧整⁣潤攢㨊ਠ†††††††††††⁲敳灯湳攠㴠桡湤汥䝥瑃潤攨⤻ਠ†††††††††††⁓祳瑥洮潵琮灲楮瑬渨牥獰潮獥⤻ਠ†††††††††††⁷物瑥爮睲楴攨牥獰潮獥⤻ਠ†††††††††††⁷物瑥爮晬畳栨⤻ਊ††††††††††扲敡欻ਠ†††††††††⁣慳攠≲散敩癥⁰敥牳∺ਊ††††††††††扲敡欻ਠ†††††††††⁤敦慵汴㨊††††††††††††卹獴敭⹯畴⹰物湴汮⠢剥煵敳琠湯琠牥捯杮楺敤∩㬊††††††††紊††††††紊††††††牥慤敲⹣汯獥⠩㬊††††††睲楴敲⹣汯獥⠩㬊††††紊††††捡瑣栨䥏䕸捥灴楯渠攩笊††††††攮灲楮瑓瑡捫呲慣攨⤻ਊ††††紊††紊ਊ††灵扬楣⁶潩搠獴慲琨⤠瑨牯睳⁉佅硣数瑩潮笊ਠ†††⁓潣步琠獯捫‽⁮敷⁓潣步琨獥牶敲䥐Ⱐ灯牴⤻ਠ†††⁨慮摬敒敱略獴⡳潣欩㬊††††獯捫⹣汯獥⠩㬊ਊ††紊紊
+Sat Jan 23 18:11:32 MST 2021
+java
+package Client;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class Client {
+    private String serverIP = "localhost";
+    private int port = 12345;
+
+    BufferedReader reader;
+    BufferedWriter writer;
+    public Client(String serverIP, int port){
+        this.serverIP = serverIP;
+        this.port = port;
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void handleRequest(Socket sock){
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            String request;
+            while ((request = reader.readLine()) != null){
+                System.out.println(request);
+                String response = "";
+
+                switch(request) {
+                    case "get team name":
+                        response = "Steve and Issack\n";
+                        System.out.println("Writing response now: " + response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "get code":
+
+                        response = handleGetCode();
+                        System.out.println(response);
+                        writer.write(response);
+                        writer.flush();
+
+                    break;
+                    case "receive peers":
+
+                    break;
+                    default:
+                        System.out.println("Request not recognized");
+                }
+            }
+            reader.close();
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void start() throws IOException{
+
+        Socket sock = new Socket(serverIP, port);
+        handleRequest(sock);
+        sock.close();
+
+
+    }
+}
+
+Sat Jan 23 18:21:43 MST 2021
+java
+package Client;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class Client {
+    private String serverIP = "localhost";
+    private int port = 12345;
+
+    BufferedReader reader;
+    BufferedWriter writer;
+    public Client(String serverIP, int port){
+        this.serverIP = serverIP;
+        this.port = port;
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void handleRequest(Socket sock){
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            String request;
+            while ((request = reader.readLine()) != null){
+                System.out.println(request);
+                String response = "";
+
+                switch(request) {
+                    case "get team name":
+                        response = "Steve and Issack\n";
+                        System.out.println("Writing response now: " + response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "get code":
+                        response = handleGetCode();
+                        System.out.println(response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "receive peers":
+                        int numberOfPeers = Integer.parseInt(reader.readLine());
+                        while(numberOfPeers >0){
+                            String peer = reader.readLine();
+                            System.out.println(peer);
+                            numberOfPeers--;
+                        }
+                    break;
+                    default:
+                        System.out.println("Request not recognized");
+                }
+            }
+            reader.close();
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void start() throws IOException{
+
+        Socket sock = new Socket(serverIP, port);
+        handleRequest(sock);
+        sock.close();
+
+
+    }
+}
+
+Sat Jan 23 18:22:38 MST 2021
+java
+package Client;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class Client {
+    private String serverIP = "localhost";
+    private int port = 12345;
+
+    BufferedReader reader;
+    BufferedWriter writer;
+    public Client(String serverIP, int port){
+        this.serverIP = serverIP;
+        this.port = port;
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void handleRequest(Socket sock){
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            String request;
+            while ((request = reader.readLine()) != null){
+                System.out.println(request);
+                String response = "";
+
+                switch(request) {
+                    case "get team name":
+                        response = "Steve and Issack\n";
+                        System.out.println("Writing response now: " + response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "get code":
+                        response = handleGetCode();
+                        //System.out.println(response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "receive peers":
+                        int numberOfPeers = Integer.parseInt(reader.readLine());
+                        System.out.println(numberOfPeers);
+                        while(numberOfPeers >0){
+                            String peer = reader.readLine();
+                            System.out.println(peer);
+                            numberOfPeers--;
+                        }
+                    break;
+                    case "get report":
+
+                    default:
+                        System.out.println("Request not recognized");
+                }
+            }
+            reader.close();
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void start() throws IOException{
+
+        Socket sock = new Socket(serverIP, port);
+        handleRequest(sock);
+        sock.close();
+
+
+    }
+}
+
+Sat Jan 23 18:22:49 MST 2021
+java
+package Client;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class Client {
+    private String serverIP = "localhost";
+    private int port = 12345;
+
+    BufferedReader reader;
+    BufferedWriter writer;
+    public Client(String serverIP, int port){
+        this.serverIP = serverIP;
+        this.port = port;
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void handleRequest(Socket sock){
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            String request;
+            while ((request = reader.readLine()) != null){
+                System.out.println(request);
+                String response = "";
+
+                switch(request) {
+                    case "get team name":
+                        response = "Steve and Issack\n";
+                        System.out.println("Writing response now: " + response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "get code":
+                        response = handleGetCode();
+                        //System.out.println(response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "receive peers":
+                        int numberOfPeers = Integer.parseInt(reader.readLine());
+                        System.out.println(numberOfPeers);
+                        while(numberOfPeers >0){
+                            String peer = reader.readLine();
+                            System.out.println(peer);
+                            numberOfPeers--;
+                        }
+                    break;
+                    case "get report":
+
+                    default:
+                        System.out.println("Request not recognized");
+                }
+            }
+            reader.close();
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void start() throws IOException{
+
+        Socket sock = new Socket(serverIP, port);
+        handleRequest(sock);
+        sock.close();
+
+
+    }
+}
+
+Sat Jan 23 18:48:17 MST 2021
+java
+package Client;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Client {
+    private String serverIP = "localhost";
+    private int port = 12345;
+
+    BufferedReader reader;
+    BufferedWriter writer;
+
+    List<String> peerList;
+    ConcurrentHashMap<String, List<String>> peerTable;
+
+
+
+    public Client(String serverIP, int port){
+        this.serverIP = serverIP;
+        this.port = port;
+        this.peerList = Collections.synchronizedList( new ArrayList<String>());
+        this.peerTable = new ConcurrentHashMap<String, List<String>>();
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void handleRequest(Socket sock){
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            String request;
+            while ((request = reader.readLine()) != null){
+                System.out.println(request);
+                String response = "";
+
+                switch(request) {
+                    case "get team name":
+                        response = "Steve and Issack\n";
+                        System.out.println("Writing response now: " + response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "get code":
+                        response = handleGetCode();
+                        //System.out.println(response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "receive peers":
+                        int numberOfPeers = Integer.parseInt(reader.readLine());
+                        System.out.println(numberOfPeers);
+                        while(numberOfPeers >0){
+                            String peer = reader.readLine();
+                            peerList.add(peer);
+                            System.out.println("Added: "+peer);
+                            numberOfPeers--;
+                        }
+                        String source = sock.getInetAddress().toString();
+
+                        System.out.println(source);
+                    break;
+                    case "get report":
+                        int numOfPeers = peerList.size();
+
+                        String peers = peerList.toString();
+
+
+
+                    break;
+                    default:
+                        System.out.println("Request not recognized");
+                }
+            }
+            reader.close();
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void start() throws IOException{
+
+        Socket sock = new Socket(serverIP, port);
+        handleRequest(sock);
+        sock.close();
+
+
+    }
+}
+
+Sat Jan 23 18:48:47 MST 2021
+java
+package Client;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Client {
+    private String serverIP = "localhost";
+    private int port = 12345;
+
+    BufferedReader reader;
+    BufferedWriter writer;
+
+    List<String> peerList;
+    ConcurrentHashMap<String, List<String>> peerTable;
+
+
+
+    public Client(String serverIP, int port){
+        this.serverIP = serverIP;
+        this.port = port;
+        this.peerList = Collections.synchronizedList( new ArrayList<String>());
+        this.peerTable = new ConcurrentHashMap<String, List<String>>();
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void handleRequest(Socket sock){
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            String request;
+            while ((request = reader.readLine()) != null){
+                System.out.println(request);
+                String response = "";
+
+                switch(request) {
+                    case "get team name":
+                        response = "Steve and Issack\n";
+                        System.out.println("Writing response now: " + response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "get code":
+                        response = handleGetCode();
+                        //System.out.println(response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "receive peers":
+                        int numberOfPeers = Integer.parseInt(reader.readLine());
+                        System.out.println(numberOfPeers);
+                        while(numberOfPeers >0){
+                            String peer = reader.readLine();
+                            peerList.add(peer);
+                            System.out.println("Added: "+peer);
+                            numberOfPeers--;
+                        }
+                        String source = sock.getRemoteSocketAddress().toString();
+
+                        System.out.println(source);
+                    break;
+                    case "get report":
+                        int numOfPeers = peerList.size();
+
+                        String peers = peerList.toString();
+
+
+
+                    break;
+                    default:
+                        System.out.println("Request not recognized");
+                }
+            }
+            reader.close();
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void start() throws IOException{
+
+        Socket sock = new Socket(serverIP, port);
+        handleRequest(sock);
+        sock.close();
+
+
+    }
+}
+
+Sat Jan 23 19:00:24 MST 2021
+java
+package Client;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Client {
+    private String serverIP = "localhost";
+    private int port = 12345;
+
+    BufferedReader reader;
+    BufferedWriter writer;
+
+    ConcurrentHashMap<String, List<String>> peerTable;
+
+
+
+    public Client(String serverIP, int port){
+        this.serverIP = serverIP;
+        this.port = port;
+
+        this.peerTable = new ConcurrentHashMap<String, List<String>>();
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void handleRequest(Socket sock){
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            String request;
+            while ((request = reader.readLine()) != null){
+                System.out.println(request);
+                String response = "";
+
+                switch(request) {
+                    case "get team name":
+                        response = "Steve and Issack\n";
+                        System.out.println("Writing response now: " + response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "get code":
+                        response = handleGetCode();
+                        //System.out.println(response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "receive peers":
+                        int numberOfPeers = Integer.parseInt(reader.readLine());
+                        System.out.println(numberOfPeers);
+                        List<String> peerList = Collections.synchronizedList( new ArrayList<String>());
+                        while(numberOfPeers >0){
+                            String peer = reader.readLine();
+                            peerList.add(peer);
+                            System.out.println("Added: "+peer);
+                            numberOfPeers--;
+                        }
+                        String source = sock.getRemoteSocketAddress().toString();
+                        if(!peerTable.containsKey(source)){
+                            peerTable.put(source, peerList);
+                        }
+                        else{
+                            List<String> temp = peerTable.get(source);
+                            temp.addAll(peerList);
+//                            peerTable.put(source, temp);
+                        }
+
+                        System.out.println(peerTable.toString());
+                    break;
+                    case "get report":
+
+
+
+
+                    break;
+                    default:
+                        System.out.println("Request not recognized");
+                }
+            }
+            reader.close();
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void start() throws IOException{
+
+        Socket sock = new Socket(serverIP, port);
+        handleRequest(sock);
+        sock.close();
+
+
+    }
+}
+
+Sat Jan 23 19:01:26 MST 2021
+java
+package Client;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Client {
+    private String serverIP = "localhost";
+    private int port = 12345;
+
+    BufferedReader reader;
+    BufferedWriter writer;
+
+    ConcurrentHashMap<String, List<String>> peerTable;
+
+
+
+    public Client(String serverIP, int port){
+        this.serverIP = serverIP;
+        this.port = port;
+
+        this.peerTable = new ConcurrentHashMap<String, List<String>>();
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void handleRequest(Socket sock){
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            String request;
+            while ((request = reader.readLine()) != null){
+                System.out.println(request);
+                String response = "";
+
+                switch(request) {
+                    case "get team name":
+                        response = "Steve and Issack\n";
+                        System.out.println("Writing response now: " + response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "get code":
+                        response = handleGetCode();
+                        //System.out.println(response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "receive peers":
+                        int numberOfPeers = Integer.parseInt(reader.readLine());
+                        System.out.println(numberOfPeers);
+                        List<String> peerList = Collections.synchronizedList( new ArrayList<String>());
+                        while(numberOfPeers >0){
+                            String peer = reader.readLine();
+                            peerList.add(peer);
+                            System.out.println("Added: "+peer);
+                            numberOfPeers--;
+                        }
+                        String source = sock.getLocalSocketAddress().toString();
+                        if(!peerTable.containsKey(source)){
+                            peerTable.put(source, peerList);
+                        }
+                        else{
+                            List<String> temp = peerTable.get(source);
+                            temp.addAll(peerList);
+//                            peerTable.put(source, temp);
+                        }
+
+                        System.out.println(peerTable.toString());
+                    break;
+                    case "get report":
+
+
+
+
+                    break;
+                    default:
+                        System.out.println("Request not recognized");
+                }
+            }
+            reader.close();
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void start() throws IOException{
+
+        Socket sock = new Socket(serverIP, port);
+        handleRequest(sock);
+        sock.close();
+
+
+    }
+}
+
+Sat Jan 23 19:02:14 MST 2021
+java
+package Client;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Client {
+    private String serverIP = "localhost";
+    private int port = 12345;
+
+    BufferedReader reader;
+    BufferedWriter writer;
+
+    ConcurrentHashMap<String, List<String>> peerTable;
+
+
+
+    public Client(String serverIP, int port){
+        this.serverIP = serverIP;
+        this.port = port;
+
+        this.peerTable = new ConcurrentHashMap<String, List<String>>();
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void handleRequest(Socket sock){
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            String request;
+            while ((request = reader.readLine()) != null){
+                System.out.println(request);
+                String response = "";
+
+                switch(request) {
+                    case "get team name":
+                        response = "Steve and Issack\n";
+                        System.out.println("Writing response now: " + response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "get code":
+                        response = handleGetCode();
+                        //System.out.println(response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+                    case "receive peers":
+                        int numberOfPeers = Integer.parseInt(reader.readLine());
+                        System.out.println(numberOfPeers);
+                        List<String> peerList = Collections.synchronizedList( new ArrayList<String>());
+                        while(numberOfPeers >0){
+                            String peer = reader.readLine();
+                            peerList.add(peer);
+                            System.out.println("Added: "+peer);
+                            numberOfPeers--;
+                        }
+                        String source = sock.getRemoteSocketAddress().toString();
+                        if(!peerTable.containsKey(source)){
+                            peerTable.put(source, peerList);
+                        }
+                        else{
+                            List<String> temp = peerTable.get(source);
+                            temp.addAll(peerList);
+//                            peerTable.put(source, temp);
+                        }
+
+                        System.out.println(peerTable.toString());
+                    break;
+                    case "get report":
+
+
+
+
+                    break;
+                    default:
+                        System.out.println("Request not recognized");
+                }
+            }
+            reader.close();
+            writer.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void start() throws IOException{
+
+        Socket sock = new Socket(serverIP, port);
+        handleRequest(sock);
+        sock.close();
+
+
+    }
+}
+

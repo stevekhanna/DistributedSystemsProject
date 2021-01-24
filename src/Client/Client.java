@@ -6,7 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Client {
     private String serverIP = "localhost";
@@ -14,9 +15,43 @@ public class Client {
 
     BufferedReader reader;
     BufferedWriter writer;
+
+    ConcurrentHashMap<String, Set<String>> peerTable;
+
+
+
     public Client(String serverIP, int port){
         this.serverIP = serverIP;
         this.port = port;
+        this.peerTable = new ConcurrentHashMap<String, Set<String>>();
+    }
+
+
+    private String handleGetCode(){
+
+        String response = "";
+        String language = "java\n";
+
+        Path path = FileSystems.getDefault().getPath("src");
+        String s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client");
+        s = path.toAbsolutePath().toString();
+        if (s.contains("/")){s+="/";}else{s+="\\";}
+        path = FileSystems.getDefault().getPath(s+"Client.java");
+        s = path.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+
+        try{
+            String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
+            String endOfCode = "...\n";
+            response = language+code+endOfCode;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return response;
     }
 
     private void handleRequest(Socket sock){
@@ -37,34 +72,32 @@ public class Client {
                         writer.flush();
                     break;
                     case "get code":
-
-                        Path p = Paths.get("Client.java");
-                        Path folder = FileSystems.getDefault().getPath(new String("./")).toAbsolutePath().getParent();
-
-                        System.out.println(folder.toString());
-
-                        String language = "java\n";
-
-                        Path path = FileSystems.getDefault().getPath("src");
-                        String s = path.toAbsolutePath().toString();
-                        if (s.contains("/")){s+="/";}else{s+="\\";}
-                        path = FileSystems.getDefault().getPath(s+"Client");
-                        s = path.toAbsolutePath().toString();
-                        if (s.contains("/")){s+="/";}else{s+="\\";}
-                        path = FileSystems.getDefault().getPath(s+"Client.java");
-                        s = path.toAbsolutePath().toString();
-                        System.out.println("Current relative path is: " + s);
-
-                        String code = Files.readString(path)+"\n";
-                        System.out.println(code);
-
-                        String endOfCode = "...\n";
-                        response = language+code+endOfCode;
+                        response = handleGetCode();
                         writer.write(response);
                         writer.flush();
-
                     break;
                     case "receive peers":
+                        int numberOfPeers = Integer.parseInt(reader.readLine());
+                        System.out.println(numberOfPeers);
+                        Set<String> peerList = Collections.synchronizedSet(new HashSet<String>());
+                        while(numberOfPeers > 0){
+                            String peer = reader.readLine();
+                            peerList.add(peer);
+                            System.out.println("Added: "+peer);
+                            numberOfPeers--;
+                        }
+                        String source = sock.getRemoteSocketAddress().toString();
+                        if(!peerTable.containsKey(source)){
+                            peerTable.put(source, peerList);
+                        }
+                        else{
+                            Set<String> temp = peerTable.get(source);
+                            temp.addAll(peerList);
+                        }
+
+                        System.out.println(peerTable.toString());
+                    break;
+                    case "get report":
 
                     break;
                     default:
@@ -76,17 +109,13 @@ public class Client {
         }
         catch(IOException e){
             e.printStackTrace();
-
         }
     }
 
 
     public void start() throws IOException{
-
         Socket sock = new Socket(serverIP, port);
         handleRequest(sock);
         sock.close();
-
-
     }
 }
