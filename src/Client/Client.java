@@ -6,32 +6,79 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 1 ) Convert all string to string builder
+ * 2 ) Extract any constants and store them as static final at the top of the file
+ * 3 ) JavaDoc on all functions and class
+ * 4 ) Testcases, Junit
+ * 5 ) Look for any places where exceptions might occur
+ * 6 ) Run with multiple peers
+ * 7 ) Getters and setters if needed
+ * 8 ) Move variables that are shared to instance level and others to local level
+ * 9 ) Separate cases into function and figure out proper name for methods
+ * 10 ) ******use her peer class*****
+ * 11 ) change handle to get for all except the handleRequest method
+ * 12 ) Add local debugger instead of standard output.
+ */
+
+/**
+ * Insert class summary here, *say what class does but not how it does it*
+ * @author Steve Khanna 10153930, Issack John 30031053
+ */
 public class Client {
-    private String serverIP = "localhost";
-    private int port = 12345;
+    private final String serverIP;
+    /** Port number of registry */
+    private final int port;
+    /** Our team name */
+    private static final String TEAM_NAME = "Steve and Issack\n";
+    /** If no port number is provided when running the registry, this port number will be used. */
+    public static final int DEFAULT_PORT_NUMBER = 1245;
 
-    BufferedReader reader;
-    BufferedWriter writer;
+    private BufferedReader reader;
+    private BufferedWriter writer;
 
-    ConcurrentHashMap<String, Set<String>> peerTable;
+    /** Contains the sources and peers we know about, no duplicate sources*/
+    private final ConcurrentHashMap<String, Set<String>> peerTable;
+    private final ConcurrentHashMap<String, String> timeTable;
 
+    /**
+     *
+     */
+    public Client(){
+        this.serverIP = "localhost";
+        this.port = DEFAULT_PORT_NUMBER;
+        this.peerTable = new ConcurrentHashMap<String, Set<String>>();
+        this.timeTable = new ConcurrentHashMap<String, String>();
+    }
 
-
+    /**
+     *
+     * @param serverIP
+     * @param port
+     */
     public Client(String serverIP, int port){
         this.serverIP = serverIP;
         this.port = port;
         this.peerTable = new ConcurrentHashMap<String, Set<String>>();
+        this.timeTable = new ConcurrentHashMap<String, String>();
     }
 
 
+    /**
+     *
+     * @return
+     */
     private String handleGetCode(){
 
         String response = "";
         String language = "java\n";
 
+        // Simplify
         Path path = FileSystems.getDefault().getPath("src");
         String s = path.toAbsolutePath().toString();
         if (s.contains("/")){s+="/";}else{s+="\\";}
@@ -40,7 +87,6 @@ public class Client {
         if (s.contains("/")){s+="/";}else{s+="\\";}
         path = FileSystems.getDefault().getPath(s+"Client.java");
         s = path.toAbsolutePath().toString();
-        System.out.println("Current relative path is: " + s);
 
         try{
             String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
@@ -54,20 +100,96 @@ public class Client {
         return response;
     }
 
+    /**
+     *
+     * @return
+     */
+    private String handleGetPeers(){
+        StringBuilder sb = new StringBuilder();
+        peerTable.values().forEach(peerList -> {
+            peerList.forEach(peer -> {
+                sb.append(peer).append("\n");
+            });
+        });
+        return sb.toString();
+    }
+
+    /**
+     *
+     * @param source
+     * @return
+     */
+    private String handleGetPeers(String source){
+        StringBuilder sb = new StringBuilder();
+        peerTable.get(source).forEach(peer -> {
+                sb.append(peer).append("\n");
+        });
+        return sb.toString();
+    }
+
+    /**
+     *
+     * @return
+     */
+    private int handleGetNumOfSources(){
+        return peerTable.size();
+    }
+
+    /**
+     *
+     * @param source
+     * @return
+     */
+    private int handleGetNumOfPeers(String source){
+        return peerTable.get(source).size();
+    }
+
+    /**
+     *
+     * @return
+     */
+    private String handleGetSources(){
+        StringBuilder sb = new StringBuilder();
+        peerTable.keySet().forEach(source -> {
+            sb.append(source)
+                    .append("\n")
+                    .append(timeTable.get(source))
+                    .append("\n")
+                    .append(handleGetNumOfPeers(source))
+                    .append("\n")
+                    .append(handleGetPeers(source));
+        });
+
+        return sb.toString();
+    }
+
+    /**
+     *
+     * @return
+     */
+    private int handleGetNumOfPeers(){
+        return peerTable.values().size();
+    }
+
+    /**
+     *
+     * @param sock
+     */
     private void handleRequest(Socket sock){
 
         try{
             reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
             String request;
-            while ((request = reader.readLine()) != null){
+            boolean done = false;
+            while ((request = reader.readLine()) != null && !done){
                 System.out.println(request);
                 String response = "";
 
                 switch(request) {
                     case "get team name":
-                        response = "Steve and Issack\n";
-                        System.out.println("Writing response now: " + response);
+                        response = TEAM_NAME;
+                        System.out.printf("Writing response: {\n%s}\n" ,response);
                         writer.write(response);
                         writer.flush();
                     break;
@@ -75,18 +197,20 @@ public class Client {
                         response = handleGetCode();
                         writer.write(response);
                         writer.flush();
+                        System.out.println("Code Written Successfully.");
                     break;
                     case "receive peers":
                         int numberOfPeers = Integer.parseInt(reader.readLine());
-                        System.out.println(numberOfPeers);
+                        String dateAcquired = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
                         Set<String> peerList = Collections.synchronizedSet(new HashSet<String>());
+
                         while(numberOfPeers > 0){
                             String peer = reader.readLine();
                             peerList.add(peer);
-                            System.out.println("Added: "+peer);
                             numberOfPeers--;
                         }
-                        String source = sock.getRemoteSocketAddress().toString();
+                        String source = sock.getInetAddress().getHostAddress();
+                        timeTable.put(source, dateAcquired);
                         if(!peerTable.containsKey(source)){
                             peerTable.put(source, peerList);
                         }
@@ -95,10 +219,34 @@ public class Client {
                             temp.addAll(peerList);
                         }
 
-                        System.out.println(peerTable.toString());
+                        System.out.printf("Peers received: {\n%s\n}\n",peerTable.toString());
                     break;
                     case "get report":
+                        int numOfPeers = 0;
+                        //newline peer peer
+                        String peers = "";
+                        int numOfSources = 0;
+                        String sources = "";
 
+                        if(peerTable.isEmpty()){
+                            response = numOfPeers + "\n" + peers + "\n" + numOfSources + "\n" + sources +"\n";
+                        }
+                        else{
+                            numOfPeers = handleGetNumOfPeers();
+                            peers = handleGetPeers();
+                            numOfSources = handleGetNumOfSources();
+                            sources = handleGetSources();
+
+                            response = numOfPeers + "\n" + peers + numOfSources + "\n" + sources;
+                        }
+                        System.out.printf("Writing response:\n{%s}\n", response);
+                        writer.write(response);
+                        writer.flush();
+                    break;
+
+                    case "close":
+                        System.out.println("Close Received");
+                        done = true;
                     break;
                     default:
                         System.out.println("Request not recognized");
@@ -106,6 +254,7 @@ public class Client {
             }
             reader.close();
             writer.close();
+            System.out.println("Reader and Writer successfully closed.");
         }
         catch(IOException e){
             e.printStackTrace();
@@ -113,9 +262,34 @@ public class Client {
     }
 
 
+    /**
+     *
+     * @throws IOException
+     */
     public void start() throws IOException{
         Socket sock = new Socket(serverIP, port);
         handleRequest(sock);
         sock.close();
+        System.out.println("Socket successfully closed.");
+    }
+
+    /**
+     * Starts the client server
+     * @param args
+     */
+    public static void main(String[] args) {
+        //Server IP = 136.159.5.22
+        //Port: 55921
+        if (args.length != 2) {
+            System.out.println("Number of arguments is not valid. Usage: Server IP, port");
+            System.exit(1);
+        }
+        try {
+            Client client = new Client(args[0], Integer.parseInt(args[1]));
+            client.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
