@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Insert class summary here, *say what class does but not how it does it*
- * @author Steve Khanna 10153930, Issack John 30031053
+ * @author Steve and Issack - Steve Khanna 10153930, Issack John 30031053
  */
 public class Client {
     private final String serverIP;
@@ -47,7 +47,8 @@ public class Client {
     private final ConcurrentHashMap<String, String> timeTable;
 
     /**
-     *
+     * Default class constructor
+     * Initializes port, peerTable, and timeTable
      */
     public Client(){
         this.serverIP = "localhost";
@@ -57,7 +58,7 @@ public class Client {
     }
 
     /**
-     *
+     * Overloaded class constructor
      * @param serverIP
      * @param port
      */
