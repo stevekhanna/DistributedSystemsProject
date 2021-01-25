@@ -12,18 +12,18 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 1 ) Convert all string to string builder
- * 2 ) Extract any constants and store them as static final at the top of the file
- * 3 ) JavaDoc on all functions and class
- * 4 ) Testcases, Junit
- * 5 ) Look for any places where exceptions might occur
- * 6 ) Run with multiple peers
- * 7 ) Getters and setters if needed
- * 8 ) Move variables that are shared to instance level and others to local level
- * 9 ) Separate cases into function and figure out proper name for methods
- * 10 ) ******use her peer class*****
- * 11 ) change handle to get for all except the handleRequest method
- * 12 ) Add local debugger instead of standard output.
+ * 1 ) TODO Convert all string to string builder
+ * 2 ) TODO Extract any constants and store them as static final at the top of the file
+ * 3 ) TODO JavaDoc on all functions and class
+ * 4 ) TODO Testcases, Junit
+ * 5 ) TODO Look for any places where exceptions might occur
+ * 6 ) TODO Run with multiple peers
+ * 7 ) TODO Getters and setters if needed
+ * 8 ) TODO Move variables that are shared to instance level and others to local level
+ * 9 ) TODO Separate cases into function and figure out proper name for methods
+ * 10 ) TODO ******use her peer class*****
+ * 11 ) TODO change handle to get for all except the handleRequest method
+ * 12 ) TODO Add local debugger instead of standard output.
  */
 
 /**
