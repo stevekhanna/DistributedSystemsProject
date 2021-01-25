@@ -80,7 +80,7 @@ fabric.properties
 
 
 #Additional Logging Files:
-reports
+reports/
 sourceCode/
 *.log
 *.log.lck

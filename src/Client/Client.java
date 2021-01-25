@@ -29,21 +29,27 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Insert class summary here, *say what class does but not how it does it*
  * @author Steve and Issack - Steve Khanna 10153930, Issack John 30031053
+ * @version 1.0
+ * @since 01-20-2020
  */
 public class Client {
+    /** Server ip of registry */
     private final String serverIP;
     /** Port number of registry */
     private final int port;
     /** Our team name */
     private static final String TEAM_NAME = "Steve and Issack\n";
-    /** If no port number is provided when running the registry, this port number will be used. */
+    /** If no port number is provided when running the client, this port number will be used */
     public static final int DEFAULT_PORT_NUMBER = 1245;
+    /** If no server ip is provided when running the client, this server ip will be used*/
+    public static final String DEFAULT_SERVER_IP = "localhost";
 
     private BufferedReader reader;
     private BufferedWriter writer;
 
     /** Contains the sources and peers we know about, no duplicate sources*/
     private final ConcurrentHashMap<String, Set<String>> peerTable;
+    /** Contains the time when the peerTable was acquire from a source, no duplicates allowed */
     private final ConcurrentHashMap<String, String> timeTable;
 
     /**
@@ -51,7 +57,7 @@ public class Client {
      * Initializes port, peerTable, and timeTable
      */
     public Client(){
-        this.serverIP = "localhost";
+        this.serverIP = DEFAULT_SERVER_IP;
         this.port = DEFAULT_PORT_NUMBER;
         this.peerTable = new ConcurrentHashMap<String, Set<String>>();
         this.timeTable = new ConcurrentHashMap<String, String>();
