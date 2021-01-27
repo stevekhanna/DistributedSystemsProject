@@ -252,6 +252,14 @@ public class Client {
         }
     }
 
+    public String getServerIP() {
+        return serverIP;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
 
     /**
      *
