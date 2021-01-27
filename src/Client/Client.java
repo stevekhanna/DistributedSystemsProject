@@ -79,7 +79,7 @@ public class Client {
      */
     private String handleGetCode(){
 
-        String response = "";
+        StringBuilder response = new StringBuilder();
         String language = "java\n";
 
         // Simplify
@@ -95,13 +95,13 @@ public class Client {
         try{
             String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
             String endOfCode = "...\n";
-            response = language+code+endOfCode;
+            response.append(language).append(code).append(endOfCode);
         }
         catch(IOException e){
             e.printStackTrace();
         }
 
-        return response;
+        return response.toString();
     }
 
     /**
