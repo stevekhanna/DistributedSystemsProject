@@ -44,9 +44,6 @@ public class Client {
     /** If no server ip is provided when running the client, this server ip will be used*/
     public static final String DEFAULT_SERVER_IP = "localhost";
 
-    private BufferedReader reader;
-    private BufferedWriter writer;
-
     /** Contains the sources and peers we know about, no duplicate sources*/
     private final ConcurrentHashMap<String, Set<String>> peerTable;
     /** Contains the time when the peerTable was acquire from a source, no duplicates allowed */
@@ -185,24 +182,25 @@ public class Client {
     private void handleRequest(Socket sock){
 
         try{
-            reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-            writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+
             String request;
             boolean done = false;
             while ((request = reader.readLine()) != null && !done){
                 System.out.println(request);
-                String response = "";
+                StringBuilder response = new StringBuilder();
 
                 switch(request) {
                     case "get team name":
-                        response = TEAM_NAME;
-                        System.out.printf("Writing response: {\n%s}\n" ,response);
-                        writer.write(response);
+                        response.append(TEAM_NAME);
+                        System.out.printf("Writing response: {\n%s}\n" ,response.toString());
+                        writer.write(response.toString());
                         writer.flush();
                     break;
                     case "get code":
-                        response = handleGetCode();
-                        writer.write(response);
+                        response.append(handleGetCode());
+                        writer.write(response.toString());
                         writer.flush();
                         System.out.println("Code Written Successfully.");
                     break;
@@ -236,18 +234,29 @@ public class Client {
                         String sources = "";
 
                         if(peerTable.isEmpty()){
-                            response = numOfPeers + "\n" + peers + "\n" + numOfSources + "\n" + sources +"\n";
+                            response.append(numOfPeers)
+                                    .append("\n")
+                                    .append(peers)
+                                    .append("\n")
+                                    .append(numOfSources)
+                                    .append("\n")
+                                    .append(sources)
+                                    .append("\n");
                         }
                         else{
                             numOfPeers = handleGetNumOfPeers();
                             peers = handleGetPeers();
                             numOfSources = handleGetNumOfSources();
                             sources = handleGetSources();
-
-                            response = numOfPeers + "\n" + peers + numOfSources + "\n" + sources;
+                            response.append(numOfPeers)
+                                    .append("\n")
+                                    .append(peers)
+                                    .append(numOfSources)
+                                    .append("\n")
+                                    .append(sources);
                         }
-                        System.out.printf("Writing response:\n{%s}\n", response);
-                        writer.write(response);
+                        System.out.printf("Writing response:\n{%s}\n", response.toString());
+                        writer.write(response.toString());
                         writer.flush();
                     break;
 
