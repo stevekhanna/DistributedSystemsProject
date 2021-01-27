@@ -77,7 +77,7 @@ public class Client {
      *
      * @return
      */
-    private String handleGetCode(){
+    private String getCode(){
 
         StringBuilder response = new StringBuilder();
         String language = "java\n";
@@ -108,7 +108,7 @@ public class Client {
      *
      * @return
      */
-    private String handleGetPeers(){
+    private String getPeers(){
         StringBuilder sb = new StringBuilder();
         peerTable.values().forEach(peerList -> {
             peerList.forEach(peer -> {
@@ -123,7 +123,7 @@ public class Client {
      * @param source
      * @return
      */
-    private String handleGetPeers(String source){
+    private String getPeers(String source){
         StringBuilder sb = new StringBuilder();
         peerTable.get(source).forEach(peer -> {
                 sb.append(peer).append("\n");
@@ -135,44 +135,19 @@ public class Client {
      *
      * @return
      */
-    private int handleGetNumOfSources(){
-        return peerTable.size();
-    }
-
-    /**
-     *
-     * @param source
-     * @return
-     */
-    private int handleGetNumOfPeers(String source){
-        return peerTable.get(source).size();
-    }
-
-    /**
-     *
-     * @return
-     */
-    private String handleGetSources(){
+    private String getSources(){
         StringBuilder sb = new StringBuilder();
         peerTable.keySet().forEach(source -> {
             sb.append(source)
                     .append("\n")
                     .append(timeTable.get(source))
                     .append("\n")
-                    .append(handleGetNumOfPeers(source))
+                    .append(peerTable.get(source).size())
                     .append("\n")
-                    .append(handleGetPeers(source));
+                    .append(getPeers(source));
         });
 
         return sb.toString();
-    }
-
-    /**
-     *
-     * @return
-     */
-    private int handleGetNumOfPeers(){
-        return peerTable.values().size();
     }
 
     /**
@@ -199,7 +174,7 @@ public class Client {
                         writer.flush();
                     break;
                     case "get code":
-                        response.append(handleGetCode());
+                        response.append(getCode());
                         writer.write(response.toString());
                         writer.flush();
                         System.out.println("Code Written Successfully.");
@@ -244,10 +219,10 @@ public class Client {
                                     .append("\n");
                         }
                         else{
-                            numOfPeers = handleGetNumOfPeers();
-                            peers = handleGetPeers();
-                            numOfSources = handleGetNumOfSources();
-                            sources = handleGetSources();
+                            numOfPeers = peerTable.values().size();
+                            peers = getPeers();
+                            numOfSources = peerTable.size();
+                            sources = getSources();
                             response.append(numOfPeers)
                                     .append("\n")
                                     .append(peers)
