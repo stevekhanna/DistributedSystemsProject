@@ -149,6 +149,11 @@ public class Client {
         return sb.toString();
     }
 
+    /**
+     * @param reader
+     * @param source
+     * @throws IOException
+     */
     private void receivePeers(BufferedReader reader, String source) throws IOException {
         int numberOfPeers = Integer.parseInt(reader.readLine());
         String dateAcquired = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
@@ -168,6 +173,25 @@ public class Client {
             Set<String> temp = peerTable.get(source);
             temp.addAll(peerList);
         }
+    }
+
+    private String getReport(){
+        StringBuilder report = new StringBuilder();
+        int numOfPeers = peerTable.values().size();
+        //newline peer peer
+        String peers = (getPeers().equals("") ? "\n" : getPeers());
+        int numOfSources = peerTable.size();
+        String sources = (getSources().equals("") ? "\n" : getSources());
+
+        report.append(numOfPeers)
+                .append("\n")
+                .append(peers)
+                .append("\n")
+                .append(numOfSources)
+                .append("\n")
+                .append(sources);
+
+        return report.toString();
     }
 
 
@@ -205,34 +229,7 @@ public class Client {
                         System.out.printf("Peers received: {\n%s\n}\n",peerTable.toString());
                     break;
                     case "get report":
-                        int numOfPeers = 0;
-                        //newline peer peer
-                        String peers = "";
-                        int numOfSources = 0;
-                        String sources = "";
-
-                        if(peerTable.isEmpty()){
-                            response.append(numOfPeers)
-                                    .append("\n")
-                                    .append(peers)
-                                    .append("\n")
-                                    .append(numOfSources)
-                                    .append("\n")
-                                    .append(sources)
-                                    .append("\n");
-                        }
-                        else{
-                            numOfPeers = peerTable.values().size();
-                            peers = getPeers();
-                            numOfSources = peerTable.size();
-                            sources = getSources();
-                            response.append(numOfPeers)
-                                    .append("\n")
-                                    .append(peers)
-                                    .append(numOfSources)
-                                    .append("\n")
-                                    .append(sources);
-                        }
+                        response.append(getReport());
                         System.out.printf("Writing response:\n{%s}\n", response.toString());
                         writer.write(response.toString());
                         writer.flush();
