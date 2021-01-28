@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * 1 ) TODO Convert all string to string builder
  * 2 ) TODO Extract any constants and store them as static final at the top of the file
  * 3 ) TODO JavaDoc on all functions and class
- * 4 ) TODO Testcases, Junit
  * 5 ) TODO Look for any places where exceptions might occur
  * 6 ) TODO Run with multiple peers
  * 7 ) TODO Getters and setters if needed
@@ -150,6 +149,28 @@ public class Client {
         return sb.toString();
     }
 
+    private void receivePeers(BufferedReader reader, String source) throws IOException {
+        int numberOfPeers = Integer.parseInt(reader.readLine());
+        String dateAcquired = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
+        Set<String> peerList = Collections.synchronizedSet(new HashSet<>());
+
+        while(numberOfPeers > 0){
+            String peer = reader.readLine();
+            peerList.add(peer);
+            numberOfPeers--;
+        }
+
+        timeTable.put(source, dateAcquired);
+        if(!peerTable.containsKey(source)){
+            peerTable.put(source, peerList);
+        }
+        else{
+            Set<String> temp = peerTable.get(source);
+            temp.addAll(peerList);
+        }
+    }
+
+
     /**
      *
      * @param sock
@@ -180,25 +201,7 @@ public class Client {
                         System.out.println("Code Written Successfully.");
                     break;
                     case "receive peers":
-                        int numberOfPeers = Integer.parseInt(reader.readLine());
-                        String dateAcquired = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
-                        Set<String> peerList = Collections.synchronizedSet(new HashSet<String>());
-
-                        while(numberOfPeers > 0){
-                            String peer = reader.readLine();
-                            peerList.add(peer);
-                            numberOfPeers--;
-                        }
-                        String source = sock.getInetAddress().getHostAddress();
-                        timeTable.put(source, dateAcquired);
-                        if(!peerTable.containsKey(source)){
-                            peerTable.put(source, peerList);
-                        }
-                        else{
-                            Set<String> temp = peerTable.get(source);
-                            temp.addAll(peerList);
-                        }
-
+                        receivePeers(reader, sock.getInetAddress().getHostAddress());
                         System.out.printf("Peers received: {\n%s\n}\n",peerTable.toString());
                     break;
                     case "get report":
