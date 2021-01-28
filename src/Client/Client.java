@@ -217,28 +217,27 @@ public class Client {
                         System.out.printf("Writing response: {\n%s}\n" ,response.toString());
                         writer.write(response.toString());
                         writer.flush();
-                    break;
+                        break;
                     case "get code":
                         response.append(getCode());
                         writer.write(response.toString());
                         writer.flush();
                         System.out.println("Code Written Successfully.");
-                    break;
+                        break;
                     case "receive peers":
                         receivePeers(reader, sock.getInetAddress().getHostAddress());
                         System.out.printf("Peers received: {\n%s\n}\n",peerTable.toString());
-                    break;
+                        break;
                     case "get report":
                         response.append(getReport());
                         System.out.printf("Writing response:\n{%s}\n", response.toString());
                         writer.write(response.toString());
                         writer.flush();
-                    break;
-
+                        break;
                     case "close":
                         System.out.println("Close Received");
                         done = true;
-                    break;
+                        break;
                     default:
                         System.out.println("Request not recognized");
                 }
