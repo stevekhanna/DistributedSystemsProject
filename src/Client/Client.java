@@ -177,17 +177,14 @@ public class Client {
 
     private String getReport(){
         StringBuilder report = new StringBuilder();
-        int numOfPeers = peerTable.values().size();
-        //newline peer peer
         String peers = (getPeers().equals("") ? "\n" : getPeers());
-        int numOfSources = peerTable.size();
         String sources = (getSources().equals("") ? "\n" : getSources());
 
-        report.append(numOfPeers)
+        report.append(peerTable.values().size()) //numOfPeers
                 .append("\n")
                 .append(peers)
                 .append("\n")
-                .append(numOfSources)
+                .append(peerTable.size()) //numOfSources
                 .append("\n")
                 .append(sources);
 
