@@ -12,7 +12,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 1 ) TODO Convert all string to string builder
  * 2 ) TODO Extract any constants and store them as static final at the top of the file
  * 3 ) TODO JavaDoc on all functions and class
  * 5 ) TODO Look for any places where exceptions might occur
@@ -55,29 +54,29 @@ public class Client {
     public Client(){
         this.serverIP = DEFAULT_SERVER_IP;
         this.port = DEFAULT_PORT_NUMBER;
-        this.peerTable = new ConcurrentHashMap<String, Set<String>>();
-        this.timeTable = new ConcurrentHashMap<String, String>();
+        this.peerTable = new ConcurrentHashMap<>();
+        this.timeTable = new ConcurrentHashMap<>();
     }
 
     /**
      * Overloaded class constructor
-     * @param serverIP
-     * @param port
+     * @param serverIP the Ip for the registry
+     * @param port the port for the registry
      */
     public Client(String serverIP, int port){
         this.serverIP = serverIP;
         this.port = port;
-        this.peerTable = new ConcurrentHashMap<String, Set<String>>();
-        this.timeTable = new ConcurrentHashMap<String, String>();
+        this.peerTable = new ConcurrentHashMap<>();
+        this.timeTable = new ConcurrentHashMap<>();
     }
 
 
     /**
-     *
-     * @return
+     * Convert all source code for peer process to string
+     * @return String response, all the source code as a string
      */
     private String getCode(){
-
+        //use stringbuilder
         StringBuilder response = new StringBuilder();
         String language = "java\n";
 
@@ -104,8 +103,8 @@ public class Client {
     }
 
     /**
-     *
-     * @return
+     * Grabs all the stored peers
+     * @return string of peers with newline after each one
      */
     private String getPeers(){
         StringBuilder sb = new StringBuilder();
@@ -118,9 +117,9 @@ public class Client {
     }
 
     /**
-     *
-     * @param source
-     * @return
+     * Grabs all the peers for the source provides
+     * @param source the source IP:port where the peers came from
+     * @return a string of peers with newline after each one
      */
     private String getPeers(String source){
         StringBuilder sb = new StringBuilder();
@@ -131,8 +130,8 @@ public class Client {
     }
 
     /**
-     *
-     * @return
+     * Grab all the known sources as well as their list of peers
+     * @return list of sources as a string, the number of
      */
     private String getSources(){
         StringBuilder sb = new StringBuilder();
