@@ -12,23 +12,10 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 2 ) TODO Extract any constants and store them as static final at the top of the file
- * 3 ) TODO JavaDoc on all functions and class
- * 5 ) TODO Look for any places where exceptions might occur
- * 6 ) TODO Run with multiple peers
- * 7 ) TODO Getters and setters if needed
- * 8 ) TODO Move variables that are shared to instance level and others to local level
- * 9 ) TODO Separate cases into function and figure out proper name for methods
- * 10 ) TODO ******use her peer class*****
- * 11 ) TODO change handle to get for all except the handleRequest method
- * 12 ) TODO Add local debugger instead of standard output.
- */
-
-/**
- * Insert class summary here, *say what class does but not how it does it*
- * @author Steve and Issack - Steve Khanna 10153930, Issack John 30031053
- * @version 1.0
- * @since 01-20-2020
+ * A peer process that can receive peers from the registry as well as send a report on it's known sources and peers
+ * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
+ * @version 1.0 (Iteration 1)
+ * @since 01-29-2021
  */
 public class Client {
     /** Server ip of registry */
@@ -76,19 +63,10 @@ public class Client {
      * @return String response, all the source code as a string
      */
     private String getCode(){
-        //use stringbuilder
         StringBuilder response = new StringBuilder();
         String language = "java\n";
 
-        // Simplify
-        Path path = FileSystems.getDefault().getPath("src");
-        String s = path.toAbsolutePath().toString();
-        if (s.contains("/")){s+="/";}else{s+="\\";}
-        path = FileSystems.getDefault().getPath(s+"Client");
-        s = path.toAbsolutePath().toString();
-        if (s.contains("/")){s+="/";}else{s+="\\";}
-        path = FileSystems.getDefault().getPath(s+"Client.java");
-        s = path.toAbsolutePath().toString();
+        Path path = FileSystems.getDefault().getPath("src/Client/Client.java");
 
         try{
             String code = Files.readString(path, StandardCharsets.UTF_8)+"\n";
@@ -130,8 +108,8 @@ public class Client {
     }
 
     /**
-     * Grab all the known sources as well as their list of peers
-     * @return list of sources as a string, the number of
+     * Grab all the known sources as well as their peers
+     * @return String, the sources as a string, the number of sources as well as the peers
      */
     private String getSources(){
         StringBuilder sb = new StringBuilder();
@@ -149,9 +127,10 @@ public class Client {
     }
 
     /**
-     * @param reader
-     * @param source
-     * @throws IOException
+     * receive a list of peers from the registry and store them
+     * @param reader socket to read the peers from
+     * @param source for storing the peers with their source
+     * @throws IOException if there is a problem communicating with the registry
      */
     private void receivePeers(BufferedReader reader, String source) throws IOException {
         int numberOfPeers = Integer.parseInt(reader.readLine());
@@ -174,6 +153,10 @@ public class Client {
         }
     }
 
+    /**
+     * handle the get report request, getting the sources and their peers as a string
+     * @return String, information on the sources, peers and how many peers their are
+     */
     private String getReport(){
         StringBuilder report = new StringBuilder();
         String peers = (getPeers().equals("") ? "\n" : getPeers());
@@ -192,8 +175,9 @@ public class Client {
 
 
     /**
-     *
-     * @param sock
+     * handling the communication between the peer process and the registry server
+     * based on the communication protocol
+     * @param sock the socket where the client is connected to the registry for all necessary communication
      */
     private void handleRequest(Socket sock){
 
@@ -247,18 +231,27 @@ public class Client {
         }
     }
 
+    /**
+     * get the server ip
+     * @return string server ip
+     */
     public String getServerIP() {
         return serverIP;
     }
 
+    /**
+     * get the port
+     * @return int port
+     */
     public int getPort() {
         return port;
     }
 
 
     /**
-     *
-     * @throws IOException
+     * Starts the peer and accepts requests from registry.
+     * @throws IOException if there are problems starting this peer or
+     * if there are problems communicating with the registry.
      */
     public void start() throws IOException{
         Socket sock = new Socket(serverIP, port);
@@ -268,18 +261,21 @@ public class Client {
     }
 
     /**
-     * Starts the client server
-     * @param args
+     * Starts the client server. If a port number is provided as a runtime argument,
+     * it will be used to start the peer.
+     * @param args optional server ip as first argument and port number as second argument.
      */
     public static void main(String[] args) {
-        //Server IP = 136.159.5.22
-        //Port: 55921
-        if (args.length != 2) {
-            System.out.println("Number of arguments is not valid. Usage: Server IP, port");
-            System.exit(1);
-        }
+
         try {
-            Client client = new Client(args[0], Integer.parseInt(args[1]));
+            Client client;
+            if (args.length != 2) {
+                System.out.println("No Server IP and port provided. Using Default Constructor with: localhost:12345");
+                client = new Client();
+            }
+            else{
+                client = new Client(args[0], Integer.parseInt(args[1]));
+            }
             client.start();
 
         } catch (Exception e) {
