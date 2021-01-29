@@ -1,3 +1,5 @@
+package Server.SubmissionRegistryServer;
+
 public class Peer {
 	String address;
 	int port;

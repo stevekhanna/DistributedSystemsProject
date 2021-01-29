@@ -159,13 +159,16 @@ public class Client {
      */
     private String getReport(){
         StringBuilder report = new StringBuilder();
-        String peers = (getPeers().equals("") ? "\n" : getPeers());
         String sources = (getSources().equals("") ? "\n" : getSources());
 
-        report.append(peerTable.values().size()) //numOfPeers
+        int totalPeers = 0;
+        for(Set<String> setOfPeers : peerTable.values()){
+            totalPeers += setOfPeers.size();
+        }
+
+        report.append(totalPeers) //numOfPeers
                 .append("\n")
-                .append(peers)
-                .append("\n")
+                .append(getPeers())
                 .append(peerTable.size()) //numOfSources
                 .append("\n")
                 .append(sources);
@@ -205,7 +208,7 @@ public class Client {
                         System.out.println("Code Written Successfully.");
                         break;
                     case "receive peers":
-                        receivePeers(reader, sock.getInetAddress().getHostAddress());
+                        receivePeers(reader, sock.getInetAddress().getHostAddress()+":"+sock.getPort());
                         System.out.printf("Peers received: {\n%s\n}\n",peerTable.toString());
                         break;
                     case "get report":
