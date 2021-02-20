@@ -251,9 +251,9 @@ public class Client {
                     case "get location":
                         System.out.println("get location Received");
                         String ip = getMyIP();
-                        if(ip.equals("Error")){
+                        if (ip.equals("Error")) {
                             writer.write("Garbage\n");
-                        }else{
+                        } else {
                             response.append(ip)
                                     .append(":")
                                     .append(socket.getLocalPort())
@@ -325,10 +325,21 @@ public class Client {
             System.out.println("Problem initializing broadcast socket");
             e.printStackTrace();
         }
-
+        //setup TCP
         Socket sock = new Socket(serverIP, port);
         handleRequest(sock);
         sock.close();
         System.out.println("Socket successfully closed.");
+
+        byte[] receiveData = new byte[4096];
+        DatagramPacket pkt = new DatagramPacket(receiveData, receiveData.length);
+        while (true) {
+            try{
+                socket.receive(pkt);
+                executor.execute(new RequestProcessor(this, pkt));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -1,18 +1,24 @@
 package Client;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.net.Socket;
+import java.net.DatagramPacket;
 
 public class RequestProcessor implements Runnable{
 
-    private Socket peerSocket = null;
-    private BufferedWriter out;
-    private BufferedReader in;
+    private DatagramPacket pkt;
+
+    public RequestProcessor(Client client, DatagramPacket pkt) {
+        this.pkt = pkt;
+    }
 
 
     @Override
     public void run() {
-        assert(peerSocket != null);
+        try{
+            DvPacket data = new DvPacket(pkt);
+            String source = data.getSource();
+            System.out.println(source +"!!!!!!!!!!!!!!!\n");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
