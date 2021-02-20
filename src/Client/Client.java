@@ -221,8 +221,13 @@ public class Client {
                         System.out.println("Close Received");
                         done = true;
                         break;
+                    case "get location":
+                        System.out.println("get location Received");
+                        writer.write("Garbage\n");
+                        writer.flush();
+                        break;
                     default:
-                        System.out.println("Request not recognized");
+                        System.out.printf("Request not recognized: %s\n", request);
                 }
             }
             reader.close();
@@ -261,28 +266,5 @@ public class Client {
         handleRequest(sock);
         sock.close();
         System.out.println("Socket successfully closed.");
-    }
-
-    /**
-     * Starts the client server. If a port number is provided as a runtime argument,
-     * it will be used to start the peer.
-     * @param args optional server ip as first argument and port number as second argument.
-     */
-    public static void main(String[] args) {
-
-        try {
-            Client client;
-            if (args.length != 2) {
-                System.out.println("No Server IP and port provided. Using Default Constructor with: localhost:12345");
-                client = new Client();
-            }
-            else{
-                client = new Client(args[0], Integer.parseInt(args[1]));
-            }
-            client.start();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
