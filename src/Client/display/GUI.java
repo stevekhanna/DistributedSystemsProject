@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 
 public class GUI extends JPanel implements ActionListener {
     private JButton button;
+    private JTextField inputField;
+
     public GUI() {
         initGUI();
     }
@@ -25,8 +27,8 @@ public class GUI extends JPanel implements ActionListener {
         add(label);
 
         //Input field
-        JTextField field = new JTextField(20);
-        add(field);
+        inputField = new JTextField(20);
+        add(inputField);
 
         //button
         button = new JButton("Send");
@@ -37,7 +39,7 @@ public class GUI extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button) {
-            System.out.println("Button pressed");
+            System.out.printf("%s\n", inputField.getText());
         }
     }
 }
