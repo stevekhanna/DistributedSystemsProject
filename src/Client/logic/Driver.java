@@ -4,8 +4,8 @@ import Client.Client;
 import Client.common.ClientConfig;
 import Client.display.GUI;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import java.awt.Color;
 
 public class Driver extends JFrame {
 
