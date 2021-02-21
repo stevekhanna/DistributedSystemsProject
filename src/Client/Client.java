@@ -54,6 +54,7 @@ public class Client {
     private final ConcurrentHashMap<String, String> timeTable;
 
     private DatagramSocket udpSocket;
+    private boolean shutdown;
 
     /**
      * Default class constructor
@@ -64,6 +65,7 @@ public class Client {
         this.port = DEFAULT_PORT_NUMBER;
         this.peerTable = new ConcurrentHashMap<>();
         this.timeTable = new ConcurrentHashMap<>();
+        this.shutdown = false;
     }
 
     /**
@@ -77,6 +79,7 @@ public class Client {
         this.port = port;
         this.peerTable = new ConcurrentHashMap<>();
         this.timeTable = new ConcurrentHashMap<>();
+        this.shutdown = false;
     }
 
 
@@ -341,26 +344,21 @@ public class Client {
 
         byte[] msg = new byte[4];
         DatagramPacket pkt = new DatagramPacket(msg, msg.length);
-        while (true) {
+        while (!shutdown) {
             try {
                 udpSocket.receive(pkt);
             } catch (Exception e) {
                 break;
             }
-            processPacket(pkt);
-//            executor.execute(new RequestProcessor(this, pkt));
+            executor.execute(new RequestProcessor(this, new DvPacket(pkt)));
         }
+        System.out.println("Closing UDP socket");
         udpSocket.close();
+        System.out.println("Shutting down executor");
         executor.shutdown();
     }
 
-    public void processPacket(DatagramPacket pkt){
-        try{
-            DvPacket data = new DvPacket(pkt);
-            System.out.println(data.getMessage());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
+    public void shutdown(){
+        this.shutdown = true;
     }
 }

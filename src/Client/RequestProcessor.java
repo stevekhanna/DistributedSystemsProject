@@ -1,23 +1,28 @@
 package Client;
 
-import java.net.DatagramPacket;
 
 public class RequestProcessor implements Runnable{
 
-    private DatagramPacket pkt;
+    private DvPacket packet;
     private Client client;
 
-    public RequestProcessor(Client client, DatagramPacket pkt) {
+    public RequestProcessor(Client client, DvPacket pkt) {
         this.client = client;
-        this.pkt = pkt;
+        this.packet = pkt;
     }
 
     @Override
     public void run() {
-        System.out.println("GOT SOMETHING!!!!!!");
+        processPacket();
+    }
+
+    public void processPacket(){
         try{
-            DvPacket data = new DvPacket(pkt);
-            System.out.println(data.getMessage());
+            System.out.println(packet.getMessage());
+            if(packet.getMessage().equals("stop")){
+                System.out.println("Terminating program");
+                client.shutdown();
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
