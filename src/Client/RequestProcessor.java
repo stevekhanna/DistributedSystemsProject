@@ -19,9 +19,20 @@ public class RequestProcessor implements Runnable{
     public void processPacket(){
         try{
             System.out.println(packet.getMessage());
-            if(packet.getMessage().equals("stop")){
-                System.out.println("Terminating program");
-                client.shutdown();
+            String request = packet.getMessage();
+            switch (request){
+                case "stop":
+                    System.out.println("Stop request received, terminating program");
+                    client.shutdown();
+                    break;
+                case "snip":
+                    System.out.println("Snip request received");
+                    break;
+                case "peer":
+                    System.out.println("Peer request received");
+                    break;
+                default:
+                    System.out.printf("Request not recognized: %s\n", request);
             }
         }catch (Exception e){
             e.printStackTrace();
