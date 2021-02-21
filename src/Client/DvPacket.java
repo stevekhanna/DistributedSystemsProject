@@ -1,31 +1,26 @@
 package Client;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.net.DatagramPacket;
 
 public class DvPacket implements Serializable {
 
-    private String source;
+    private String message;
 
     public DvPacket(){
-        this.source = "";
+        this.message = "";
     }
 
     public DvPacket(String source){
-        this.source = source;
+        this.message = source;
     }
 
     public DvPacket(DatagramPacket datagram) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream byteStream = new ByteArrayInputStream(datagram.getData());
-        ObjectInputStream objectStream = new ObjectInputStream(byteStream);
-
-        source = (String) objectStream.readObject();
+        this.message = new String(datagram.getData(), 0, datagram.getLength());
     }
 
-    public String getSource() {
-        return source;
+    public String getMessage() {
+        return message;
     }
 }

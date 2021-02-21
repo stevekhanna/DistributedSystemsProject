@@ -339,7 +339,7 @@ public class Client {
             ce.printStackTrace();
         }
 
-        byte[] msg = new byte[128];
+        byte[] msg = new byte[4];
         DatagramPacket pkt = new DatagramPacket(msg, msg.length);
         while (true) {
             try {
@@ -347,9 +347,20 @@ public class Client {
             } catch (Exception e) {
                 break;
             }
-            executor.execute(new RequestProcessor(this, pkt));
+            processPacket(pkt);
+//            executor.execute(new RequestProcessor(this, pkt));
         }
         udpSocket.close();
         executor.shutdown();
+    }
+
+    public void processPacket(DatagramPacket pkt){
+        try{
+            DvPacket data = new DvPacket(pkt);
+            System.out.println(data.getMessage());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }
