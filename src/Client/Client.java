@@ -53,7 +53,7 @@ public class Client {
      */
     private final ConcurrentHashMap<String, String> timeTable;
 
-    private DatagramSocket socket;
+    private DatagramSocket udpSocket;
 
     /**
      * Default class constructor
@@ -256,7 +256,7 @@ public class Client {
                         } else {
                             response.append(ip)
                                     .append(":")
-                                    .append(socket.getLocalPort())
+                                    .append(udpSocket.getLocalPort())
                                     .append("\n");
                             writer.write(response.toString());
                         }
@@ -319,27 +319,37 @@ public class Client {
 
         //setup UDP broadcast socket
         try {
-            socket = new DatagramSocket(ClientConfig.UDP_DEFAULT_PORT);
-            socket.setBroadcast(true);
+            udpSocket = new DatagramSocket(ClientConfig.UDP_DEFAULT_PORT);
+            udpSocket.setBroadcast(true);
         } catch (Exception e) {
             System.out.println("Problem initializing broadcast socket");
             e.printStackTrace();
         }
         //setup TCP
-        Socket sock = new Socket(serverIP, port);
-        handleRequest(sock);
-        sock.close();
-        System.out.println("Socket successfully closed.");
-
-        byte[] receiveData = new byte[4096];
-        DatagramPacket pkt = new DatagramPacket(receiveData, receiveData.length);
-        while (true) {
-            try{
-                socket.receive(pkt);
-                executor.execute(new RequestProcessor(this, pkt));
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+        try {
+            Socket socket = new Socket(serverIP, port);
+            handleRequest(socket);
+            socket.close();
+            System.out.println("Socket successfully closed.");
+        } catch (BindException be) {
+            System.out.println("Trouble binding to port");
+            be.printStackTrace();
+        } catch (ConnectException ce) {
+            System.out.println("Trouble connecting, connection refused");
+            ce.printStackTrace();
         }
+
+        byte[] msg = new byte[4096];
+        DatagramPacket pkt = new DatagramPacket(msg, msg.length);
+        try {
+            while (true) {
+                udpSocket.receive(pkt);
+                executor.execute(new RequestProcessor(this, pkt));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        udpSocket.close();
+        executor.shutdown();
     }
 }
