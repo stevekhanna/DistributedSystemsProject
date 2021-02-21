@@ -6,6 +6,7 @@ import Client.display.GUI;
 
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.io.IOException;
 
 public class Driver extends JFrame {
 
@@ -44,8 +45,18 @@ public class Driver extends JFrame {
             else{
                 client = new Client(args[0], Integer.parseInt(args[1]));
             }
-            client.start();
-
+//            client.start();
+            Thread t = new Thread(){
+                public void run() {
+                    try{
+                        client.start();
+                    }catch (IOException e){
+                        e.printStackTrace();
+                        System.exit(1);
+                    }
+                }
+            };
+            t.start();
         } catch (Exception e) {
             e.printStackTrace();
         }

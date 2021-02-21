@@ -254,7 +254,7 @@ public class Client {
                         if (ip.equals("Error")) {
                             writer.write("Garbage\n");
                         } else {
-                            response.append(ip)
+                            response.append((serverIP.equals("localhost") ? "localhost" : ip))
                                     .append(":")
                                     .append(udpSocket.getLocalPort())
                                     .append("\n");
@@ -339,15 +339,15 @@ public class Client {
             ce.printStackTrace();
         }
 
-        byte[] msg = new byte[4096];
+        byte[] msg = new byte[128];
         DatagramPacket pkt = new DatagramPacket(msg, msg.length);
-        try {
-            while (true) {
+        while (true) {
+            try {
                 udpSocket.receive(pkt);
-                executor.execute(new RequestProcessor(this, pkt));
+            } catch (Exception e) {
+                break;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            executor.execute(new RequestProcessor(this, pkt));
         }
         udpSocket.close();
         executor.shutdown();
