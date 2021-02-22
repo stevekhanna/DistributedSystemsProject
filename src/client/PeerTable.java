@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import java.util.Map;
 import java.util.Set;

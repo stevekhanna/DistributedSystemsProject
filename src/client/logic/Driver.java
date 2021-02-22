@@ -1,8 +1,8 @@
-package Client.logic;
+package client.logic;
 
-import Client.Client;
-import Client.common.ClientConfig;
-import Client.display.GUI;
+import client.Client;
+import client.common.ClientConfig;
+import client.display.GUI;
 
 import javax.swing.JFrame;
 import java.awt.Color;
@@ -11,10 +11,13 @@ import java.io.IOException;
 public class Driver extends JFrame {
 
     public Driver() {
-        initFrame();
+    }
+    
+    public Driver(Client client){
+        initFrame(client);
     }
 
-    private void initFrame(){
+    private void initFrame(Client client){
         setSize(ClientConfig.WIDTH, ClientConfig.HEIGHT);
         setResizable(false);
 
@@ -23,7 +26,7 @@ public class Driver extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        add(new GUI());
+        add(new GUI(client));
 //        pack();
     }
 
@@ -33,11 +36,9 @@ public class Driver extends JFrame {
      * @param args optional server ip as first argument and port number as second argument.
      */
     public static void main(String[] args){
-        Driver driver = new Driver();
-        driver.setVisible(true);
 
+        Client client = null;
         try {
-            Client client;
             if (args.length != 3) {
                 System.out.println("No Server IP, port and team name provided. Using Default Constructor with: localhost:12345");
                 client = new Client();
@@ -45,10 +46,11 @@ public class Driver extends JFrame {
             else{
                 client = new Client(args[0], Integer.parseInt(args[1]), args[2]);
             }
+            Client finalClient = client;
             Thread t = new Thread(){
                 public void run() {
                     try{
-                        client.start();
+                        finalClient.start();
                     }catch (IOException e){
                         e.printStackTrace();
                         System.exit(1);
@@ -59,5 +61,10 @@ public class Driver extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        Driver driver = new Driver(client);
+        driver.setVisible(true);
+
+        
     }
 }

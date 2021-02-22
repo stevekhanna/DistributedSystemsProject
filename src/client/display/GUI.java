@@ -1,4 +1,6 @@
-package Client.display;
+package client.display;
+
+import client.Client;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,8 +12,14 @@ import java.awt.event.ActionListener;
 public class GUI extends JPanel implements ActionListener {
     private JButton sendButton;
     private JTextField inputField;
+    private Client client;
 
     public GUI() {
+        initGUI();
+    }
+
+    public GUI(Client client){
+        this.client = client;
         initGUI();
     }
 
@@ -40,6 +48,7 @@ public class GUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sendButton) {
             System.out.printf("%s\n", inputField.getText());
+            client.sendSnippet(inputField.getText());
         }
     }
 }

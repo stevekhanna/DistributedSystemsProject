@@ -1,8 +1,8 @@
-package Client.helper;
+package client.helper;
 
 
-import Client.Client;
-import Client.DvPacket;
+import client.Client;
+import client.DvPacket;
 
 public class RequestProcessor implements Runnable{
 

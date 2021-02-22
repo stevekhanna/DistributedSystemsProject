@@ -1,4 +1,4 @@
-package Client.common;
+package client.common;
 
 public class ClientConfig {
 

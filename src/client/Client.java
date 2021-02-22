@@ -1,8 +1,8 @@
-package Client;
+package client;
 
-import Client.common.ClientConfig;
-import Client.helper.RequestProcessor;
-import Client.util.GeneralUtil;
+import client.common.ClientConfig;
+import client.helper.RequestProcessor;
+import client.util.GeneralUtil;
 
 import java.io.*;
 import java.net.*;
@@ -337,6 +337,10 @@ public class Client {
         udpSocket.close();
         System.out.println("Shutting down executor");
         executor.shutdown();
+    }
+
+    public void sendSnippet(String snippet){
+        System.out.printf("sending snippet %s\n", snippet);
     }
 
     public void shutdown() {
