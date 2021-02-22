@@ -28,25 +28,37 @@ public class Client {
      * Server ip of registry
      */
     private final String serverIP;
+
     /**
      * Port number of registry
      */
     private final int port;
+
     /**
      * The client team name
      */
     private final String teamName;
 
     /**
+     * TODO Probably make this a class
      * Contains the sources and peers we know about, no duplicate sources
      */
     private final ConcurrentHashMap<String, Set<String>> peerTable;
+
     /**
+     * TODO maybe merge this with the information above
      * Contains the time when the peerTable was acquire from a source, no duplicates allowed
      */
     private final ConcurrentHashMap<String, String> timeTable;
 
+    /**
+     * Socket used for UDP communication with peers
+     */
     private DatagramSocket udpSocket;
+
+    /**
+     * Controls whether udp socket continues to receive req
+     */
     private boolean shutdown;
 
     /**
@@ -79,22 +91,23 @@ public class Client {
 
     /**
      * Overloaded class constructor
+     *
      * @param serverIP the Ip for the registry
-     * @param port the port for the registry
+     * @param port     the port for the registry
      * @param teamName the teamName of this client
      */
-    public Client(String serverIP, int port, String teamName){
+    public Client(String serverIP, int port, String teamName) {
         this.serverIP = serverIP;
         this.port = port;
-        this.teamName = teamName+"\n";
+        this.teamName = teamName + "\n";
         this.peerTable = new ConcurrentHashMap<>();
         this.timeTable = new ConcurrentHashMap<>();
         this.shutdown = false;
     }
 
-
     /**
      * Convert all source code for peer process to string
+     * TODO: Have this read the directories recursively or however
      *
      * @return String response, all the source code as a string
      */
@@ -215,7 +228,6 @@ public class Client {
         return report.toString();
     }
 
-
     /**
      * handling the communication between the peer process and the registry server
      * based on the communication protocol
@@ -287,6 +299,10 @@ public class Client {
         }
     }
 
+    /**
+     * Getting the IP address
+     * @return String IPv4 address
+     */
     public String getMyIP() {
         //https://stackoverflow.com/questions/2939218/getting-the-external-ip-address-in-java
         URL whatismyip = null;
@@ -368,7 +384,7 @@ public class Client {
         executor.shutdown();
     }
 
-    public void shutdown(){
+    public void shutdown() {
         this.shutdown = true;
     }
 }

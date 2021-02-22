@@ -29,9 +29,11 @@ public class RequestProcessor implements Runnable{
                     break;
                 case "snip":
                     System.out.println("Snip request received");
+                    handleSnipRequest();
                     break;
                 case "peer":
                     System.out.println("Peer request received");
+                    handlePeerRequest();
                     break;
                 default:
                     System.out.printf("Request not recognized: %s\n", request);
@@ -39,5 +41,13 @@ public class RequestProcessor implements Runnable{
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void handleSnipRequest(){
+
+    }
+
+    public void handlePeerRequest(){
+
     }
 }
