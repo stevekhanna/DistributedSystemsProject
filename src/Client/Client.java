@@ -2,6 +2,7 @@ package Client;
 
 import Client.common.ClientConfig;
 import Client.helper.RequestProcessor;
+import Client.util.GeneralUtil;
 
 import java.io.*;
 import java.net.*;
@@ -275,7 +276,7 @@ public class Client {
                         break;
                     case "get location":
                         System.out.println("get location Received");
-                        String ip = getMyIP();
+                        String ip = GeneralUtil.getMyIP();
                         if (ip.equals("Error")) {
                             writer.write("Garbage\n");
                         } else {
@@ -297,25 +298,6 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Getting the IP address
-     * @return String IPv4 address
-     */
-    public String getMyIP() {
-        //https://stackoverflow.com/questions/2939218/getting-the-external-ip-address-in-java
-        URL whatismyip = null;
-        String ip = "Error";
-        try {
-            whatismyip = new URL("http://checkip.amazonaws.com");
-            BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
-            ip = in.readLine(); //you get the IP as a String
-            System.out.println(ip);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ip;
     }
 
     /**
