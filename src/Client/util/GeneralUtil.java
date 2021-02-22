@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class GeneralUtil {
-    
+
     /**
      * Convert all source code for peer process to string
      * TODO: Have this read the directories recursively or however
@@ -36,6 +36,7 @@ public class GeneralUtil {
 
     /**
      * Getting the IP address
+     *
      * @return String IPv4 address
      */
     public static String getMyIP() {
