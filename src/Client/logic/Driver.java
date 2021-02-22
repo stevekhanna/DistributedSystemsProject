@@ -45,7 +45,6 @@ public class Driver extends JFrame {
             else{
                 client = new Client(args[0], Integer.parseInt(args[1]));
             }
-//            client.start();
             Thread t = new Thread(){
                 public void run() {
                     try{

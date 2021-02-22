@@ -33,17 +33,9 @@ public class Client {
      */
     private final int port;
     /**
-     * Our team name
+     * The client team name
      */
-    private static final String TEAM_NAME = "Steve and Issack\n";
-    /**
-     * If no port number is provided when running the client, this port number will be used
-     */
-    public static final int DEFAULT_PORT_NUMBER = 1245;
-    /**
-     * If no server ip is provided when running the client, this server ip will be used
-     */
-    public static final String DEFAULT_SERVER_IP = "localhost";
+    private final String teamName;
 
     /**
      * Contains the sources and peers we know about, no duplicate sources
@@ -62,8 +54,9 @@ public class Client {
      * Initializes port, peerTable, and timeTable
      */
     public Client() {
-        this.serverIP = DEFAULT_SERVER_IP;
-        this.port = DEFAULT_PORT_NUMBER;
+        this.serverIP = ClientConfig.DEFAULT_SERVER_IP;
+        this.port = ClientConfig.DEFAULT_PORT_NUMBER;
+        this.teamName = ClientConfig.DEFAULT_TEAM_NAME;
         this.peerTable = new ConcurrentHashMap<>();
         this.timeTable = new ConcurrentHashMap<>();
         this.shutdown = false;
@@ -78,6 +71,22 @@ public class Client {
     public Client(String serverIP, int port) {
         this.serverIP = serverIP;
         this.port = port;
+        this.teamName = ClientConfig.DEFAULT_TEAM_NAME;
+        this.peerTable = new ConcurrentHashMap<>();
+        this.timeTable = new ConcurrentHashMap<>();
+        this.shutdown = false;
+    }
+
+    /**
+     * Overloaded class constructor
+     * @param serverIP the Ip for the registry
+     * @param port the port for the registry
+     * @param teamName the teamName of this client
+     */
+    public Client(String serverIP, int port, String teamName){
+        this.serverIP = serverIP;
+        this.port = port;
+        this.teamName = teamName;
         this.peerTable = new ConcurrentHashMap<>();
         this.timeTable = new ConcurrentHashMap<>();
         this.shutdown = false;
@@ -227,7 +236,7 @@ public class Client {
 
                 switch (request) {
                     case "get team name":
-                        response.append(TEAM_NAME);
+                        response.append(teamName);
                         System.out.printf("Writing response: {\n%s}\n", response.toString());
                         writer.write(response.toString());
                         writer.flush();
