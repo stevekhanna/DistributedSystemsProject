@@ -86,7 +86,7 @@ public class Client {
     public Client(String serverIP, int port, String teamName){
         this.serverIP = serverIP;
         this.port = port;
-        this.teamName = teamName;
+        this.teamName = teamName+"\n";
         this.peerTable = new ConcurrentHashMap<>();
         this.timeTable = new ConcurrentHashMap<>();
         this.shutdown = false;

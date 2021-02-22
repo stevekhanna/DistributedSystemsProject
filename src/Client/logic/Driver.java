@@ -7,6 +7,7 @@ import Client.display.GUI;
 import javax.swing.JFrame;
 import java.awt.Color;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Driver extends JFrame {
 
@@ -38,12 +39,12 @@ public class Driver extends JFrame {
 
         try {
             Client client;
-            if (args.length != 2) {
-                System.out.println("No Server IP and port provided. Using Default Constructor with: localhost:12345");
+            if (args.length != 3) {
+                System.out.println("No Server IP, port and team name provided. Using Default Constructor with: localhost:12345");
                 client = new Client();
             }
             else{
-                client = new Client(args[0], Integer.parseInt(args[1]));
+                client = new Client(args[0], Integer.parseInt(args[1]), args[2]);
             }
             Thread t = new Thread(){
                 public void run() {
