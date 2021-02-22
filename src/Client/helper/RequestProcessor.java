@@ -1,10 +1,13 @@
-package Client;
+package Client.helper;
 
+
+import Client.Client;
+import Client.DvPacket;
 
 public class RequestProcessor implements Runnable{
 
-    private DvPacket packet;
-    private Client client;
+    private final DvPacket packet;
+    private final Client client;
 
     public RequestProcessor(Client client, DvPacket pkt) {
         this.client = client;
@@ -18,8 +21,7 @@ public class RequestProcessor implements Runnable{
 
     public void processPacket(){
         try{
-            System.out.println(packet.getMessage());
-            String request = packet.getMessage();
+            String request = packet.getType();
             switch (request){
                 case "stop":
                     System.out.println("Stop request received, terminating program");

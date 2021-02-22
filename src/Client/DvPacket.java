@@ -5,23 +5,24 @@ import java.net.DatagramPacket;
 
 public class DvPacket implements Serializable {
 
+    private String type;
     private String message;
 
     public DvPacket() {
+        this.type = "";
         this.message = "";
     }
 
-    public DvPacket(String source) {
-        this.message = source;
-    }
-
     public DvPacket(DatagramPacket datagram) {
-        System.out.println("before stuck");
-        this.message = new String(datagram.getData(), 0, datagram.getLength());
-        System.out.println("stuck");
+        this.type = new String(datagram.getData(), 0, 4);
+        this.message = new String(datagram.getData(), 4, datagram.getLength());
     }
 
     public String getMessage() {
         return message;
+    }
+
+    public String getType() {
+        return type;
     }
 }

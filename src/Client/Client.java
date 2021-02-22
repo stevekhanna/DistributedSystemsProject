@@ -1,6 +1,7 @@
 package Client;
 
 import Client.common.ClientConfig;
+import Client.helper.RequestProcessor;
 
 import java.io.*;
 import java.net.*;
@@ -342,7 +343,7 @@ public class Client {
             ce.printStackTrace();
         }
 
-        byte[] msg = new byte[4];
+        byte[] msg = new byte[128];
         DatagramPacket pkt = new DatagramPacket(msg, msg.length);
         while (!shutdown) {
             try {
