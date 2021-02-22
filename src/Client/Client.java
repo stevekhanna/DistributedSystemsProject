@@ -253,7 +253,7 @@ public class Client {
                         if (ip.equals("Error")) {
                             writer.write("Garbage\n");
                         } else {
-                            response.append((serverIP.equals("localhost") ? "localhost" : ip))
+                            response.append((serverIP.equals("localhost") ? "127.0.0.1" : ip))
                                     .append(":")
                                     .append(udpSocket.getLocalPort())
                                     .append("\n");
