@@ -107,29 +107,6 @@ public class Client {
     }
 
     /**
-     * Convert all source code for peer process to string
-     * TODO: Have this read the directories recursively or however
-     *
-     * @return String response, all the source code as a string
-     */
-    private String getCode() {
-        StringBuilder response = new StringBuilder();
-        String language = "java\n";
-
-        Path path = FileSystems.getDefault().getPath("src/Client/Client.java");
-
-        try {
-            String code = Files.readString(path, StandardCharsets.UTF_8) + "\n";
-            String endOfCode = "...\n";
-            response.append(language).append(code).append(endOfCode);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return response.toString();
-    }
-
-    /**
      * Grabs all the stored peers
      *
      * @return string of peers with newline after each one
@@ -255,7 +232,7 @@ public class Client {
                         writer.flush();
                         break;
                     case "get code":
-                        response.append(getCode());
+                        response.append(GeneralUtil.getCode());
                         writer.write(response.toString());
                         writer.flush();
                         System.out.println("Code Written Successfully.");
