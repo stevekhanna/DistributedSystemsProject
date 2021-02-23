@@ -346,4 +346,8 @@ public class Client {
     public void shutdown() {
         this.shutdown = true;
     }
+
+    public Collection<Set<String>> getPeerTable() {
+        return peerTable.values();
+    }
 }
