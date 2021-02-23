@@ -23,10 +23,6 @@ public class RequestProcessor implements Runnable{
         try{
             String request = packet.getType();
             switch (request){
-                case "stop":
-                    System.out.println("Stop request received, terminating program");
-                    client.shutdown();
-                    break;
                 case "snip":
                     System.out.println("Snip request received");
                     handleSnipRequest();
@@ -44,9 +40,10 @@ public class RequestProcessor implements Runnable{
     }
 
     public void handleSnipRequest(){
-
+        client.getSnippetList().add(packet.getMessage());
     }
 
+    //TODO
     public void handlePeerRequest(){
 
     }

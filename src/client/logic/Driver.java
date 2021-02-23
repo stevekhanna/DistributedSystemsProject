@@ -64,7 +64,5 @@ public class Driver extends JFrame {
         
         Driver driver = new Driver(client);
         driver.setVisible(true);
-
-        
     }
 }

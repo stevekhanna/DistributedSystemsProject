@@ -15,7 +15,7 @@ public class DvPacket implements Serializable {
 
     public DvPacket(DatagramPacket datagram) {
         this.type = new String(datagram.getData(), 0, 4);
-        this.message = new String(datagram.getData(), 4, datagram.getLength());
+        this.message = new String(datagram.getData(), 5, datagram.getLength());
     }
 
     public String getMessage() {

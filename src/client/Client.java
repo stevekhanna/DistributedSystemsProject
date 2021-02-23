@@ -2,6 +2,7 @@ package client;
 
 import client.common.ClientConfig;
 import client.helper.RequestProcessor;
+import client.helper.UDPBroadcast;
 import client.util.GeneralUtil;
 
 import java.io.*;
@@ -12,6 +13,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A peer process that can receive peers from the registry as well as send a report on it's known sources and peers
@@ -40,13 +42,18 @@ public class Client {
      * TODO Probably make this a class
      * Contains the sources and peers we know about, no duplicate sources
      */
-    private final ConcurrentHashMap<String, Set<String>> peerTable;
+    private final PeerTable peerTable;
 
     /**
      * TODO maybe merge this with the information above
      * Contains the time when the peerTable was acquire from a source, no duplicates allowed
      */
     private final ConcurrentHashMap<String, String> timeTable;
+
+    /**
+     *
+     */
+    private final List<String> snippetList;
 
     /**
      * Socket used for UDP communication with peers
@@ -66,8 +73,9 @@ public class Client {
         this.serverIP = ClientConfig.DEFAULT_SERVER_IP;
         this.port = ClientConfig.DEFAULT_PORT_NUMBER;
         this.teamName = ClientConfig.DEFAULT_TEAM_NAME;
-        this.peerTable = new ConcurrentHashMap<>();
+        this.peerTable = new PeerTable();
         this.timeTable = new ConcurrentHashMap<>();
+        this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
     }
 
@@ -81,8 +89,9 @@ public class Client {
         this.serverIP = serverIP;
         this.port = port;
         this.teamName = ClientConfig.DEFAULT_TEAM_NAME;
-        this.peerTable = new ConcurrentHashMap<>();
+        this.peerTable = new PeerTable();
         this.timeTable = new ConcurrentHashMap<>();
+        this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
     }
 
@@ -97,8 +106,9 @@ public class Client {
         this.serverIP = serverIP;
         this.port = port;
         this.teamName = teamName + "\n";
-        this.peerTable = new ConcurrentHashMap<>();
+        this.peerTable = new PeerTable();
         this.timeTable = new ConcurrentHashMap<>();
+        this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
     }
 
@@ -133,6 +143,7 @@ public class Client {
 
     /**
      * Grab all the known sources as well as their peers
+     * TODO: consider using stringify or something
      *
      * @return String, the sources as a string, the number of sources as well as the peers
      */
@@ -161,11 +172,10 @@ public class Client {
     private void receivePeers(BufferedReader reader, String source) throws IOException {
         int numberOfPeers = Integer.parseInt(reader.readLine());
         String dateAcquired = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
-        Set<String> peerList = Collections.synchronizedSet(new HashSet<>());
+        Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
 
         while (numberOfPeers > 0) {
-            String peer = reader.readLine();
-            peerList.add(peer);
+            peerList.add(new Peer(reader.readLine()));
             numberOfPeers--;
         }
 
@@ -173,7 +183,7 @@ public class Client {
         if (!peerTable.containsKey(source)) {
             peerTable.put(source, peerList);
         } else {
-            Set<String> temp = peerTable.get(source);
+            Set<Peer> temp = peerTable.get(source);
             temp.addAll(peerList);
         }
     }
@@ -188,7 +198,7 @@ public class Client {
         String sources = (getSources().equals("") ? "\n" : getSources());
 
         int totalPeers = 0;
-        for (Set<String> setOfPeers : peerTable.values()) {
+        for (Set<Peer> setOfPeers : peerTable.values()) {
             totalPeers += setOfPeers.size();
         }
 
@@ -299,7 +309,7 @@ public class Client {
      *                     if there are problems communicating with the registry.
      */
     public void start() throws IOException {
-        ExecutorService executor = Executors.newFixedThreadPool(ClientConfig.THREAD_POOL_SIZE);
+        ExecutorService pool = Executors.newFixedThreadPool(ClientConfig.THREAD_POOL_SIZE);
 
         //setup UDP broadcast socket
         try {
@@ -331,23 +341,57 @@ public class Client {
             } catch (Exception e) {
                 break;
             }
-            executor.execute(new RequestProcessor(this, new DvPacket(pkt)));
+            DvPacket packet = new DvPacket(pkt);
+            if(packet.getType().equals("stop")){
+                System.out.println("Stop request received, terminating program");
+                shutdown();
+            }else{
+                pool.execute(new RequestProcessor(this, packet));
+            }
         }
         System.out.println("Closing UDP socket");
         udpSocket.close();
-        System.out.println("Shutting down executor");
-        executor.shutdown();
+        System.out.println("Shutting down pool");
+        pool.shutdown();
+        //https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html#shutdown()
+        try {
+            // Wait a while for existing tasks to terminate
+            if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+                pool.shutdownNow(); // Cancel currently executing tasks
+                // Wait a while for tasks to respond to being cancelled
+                if (!pool.awaitTermination(60, TimeUnit.SECONDS))
+                    System.err.println("Pool did not terminate");
+            }
+        } catch (InterruptedException ie) {
+            // (Re-)Cancel if current thread also interrupted
+            pool.shutdownNow();
+            // Preserve interrupt status
+            Thread.currentThread().interrupt();
+        }
+        System.out.println("Executor Shutdown successful");
+        System.out.println(snippetList.toString());
     }
 
     public void sendSnippet(String snippet){
         System.out.printf("sending snippet %s\n", snippet);
+        Thread t = new Thread(new UDPBroadcast(this, snippet));
+        t.start();
     }
 
     public void shutdown() {
         this.shutdown = true;
     }
 
-    public Collection<Set<String>> getPeerTable() {
+    public Collection<Set<Peer>> getAllPeers() {
         return peerTable.values();
+    }
+
+    public List<String> getSnippetList(){
+        return snippetList;
+    }
+
+    // TODO: Research Synchronized method to see if necessary
+    public DatagramSocket getUDPSocket() {
+        return udpSocket;
     }
 }

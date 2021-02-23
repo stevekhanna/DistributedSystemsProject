@@ -13,7 +13,7 @@ public class GeneralUtil {
 
     /**
      * Convert all source code for peer process to string
-     * TODO: Have this read the directories recursively or however
+     * TODO: Read from a list
      *
      * @return String response, all the source code as a string
      */
