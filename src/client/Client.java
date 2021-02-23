@@ -39,7 +39,6 @@ public class Client {
     private final String teamName;
 
     /**
-     * TODO Probably make this a class
      * Contains the sources and peers we know about, no duplicate sources
      */
     private final PeerTable peerTable;
@@ -53,7 +52,7 @@ public class Client {
     /**
      *
      */
-    private final List<String> snippetList;
+    private final List<Snippet> snippetList;
 
     /**
      * Socket used for UDP communication with peers
@@ -191,6 +190,9 @@ public class Client {
     /**
      * handle the get report request, getting the sources and their peers as a string
      * TODO: update this to meet the new requirements
+     *  <peer list><peer list sources><peers recd><peers sent><snippet list>
+     *
+     * TODO: move some stuff to the toString method of the PeerList class
      * @return String, information on the sources, peers and how many peers their are
      */
     private String getReport() {
@@ -207,9 +209,25 @@ public class Client {
                 .append(getPeers())
                 .append(peerTable.size()) //numOfSources
                 .append("\n")
-                .append(sources);
+                .append(sources)
+                .append(0)
+                .append("\n")
+                .append(0) //peers sent
+                .append("\n")
+                .append(getSnippetListReport());
 
         return report.toString();
+    }
+
+    private String getSnippetListReport() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(snippetList.size())
+                .append("\n");
+
+        snippetList.forEach(snippet -> {
+            sb.append(snippet.toString());
+        });
+        return sb.toString();
     }
 
     /**
@@ -393,7 +411,7 @@ public class Client {
         return peerTable.values();
     }
 
-    public List<String> getSnippetList(){
+    public List<Snippet> getSnippetList(){
         return snippetList;
     }
 

@@ -3,6 +3,7 @@ package client.helper;
 
 import client.Client;
 import client.DvPacket;
+import client.Snippet;
 
 public class RequestProcessor implements Runnable{
 
@@ -40,7 +41,7 @@ public class RequestProcessor implements Runnable{
     }
 
     public void handleSnipRequest(){
-        client.getSnippetList().add(packet.getMessage());
+        client.getSnippetList().add(new Snippet(0, packet));
     }
 
     //TODO
