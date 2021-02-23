@@ -190,7 +190,7 @@ public class Client {
 
     /**
      * handle the get report request, getting the sources and their peers as a string
-     *
+     * TODO: update this to meet the new requirements
      * @return String, information on the sources, peers and how many peers their are
      */
     private String getReport() {
@@ -319,19 +319,8 @@ public class Client {
             System.out.println("Problem initializing broadcast socket");
             e.printStackTrace();
         }
-        //setup TCP
-        try {
-            Socket socket = new Socket(serverIP, port);
-            handleRequest(socket);
-            socket.close();
-            System.out.println("Socket successfully closed.");
-        } catch (BindException be) {
-            System.out.println("Trouble binding to port");
-            be.printStackTrace();
-        } catch (ConnectException ce) {
-            System.out.println("Trouble connecting, connection refused");
-            ce.printStackTrace();
-        }
+
+        connectToRegistry();
 
         byte[] msg = new byte[128];
         DatagramPacket pkt = new DatagramPacket(msg, msg.length);
@@ -370,6 +359,24 @@ public class Client {
         }
         System.out.println("Executor Shutdown successful");
         System.out.println(snippetList.toString());
+
+        connectToRegistry();
+        System.out.println("Sent updated report to registry, now terminating");
+    }
+
+    public void connectToRegistry(){
+        try {
+            Socket socket = new Socket(serverIP, port);
+            handleRequest(socket);
+            socket.close();
+            System.out.println("Socket successfully closed.");
+        } catch (BindException be) {
+            System.out.println("Trouble binding to port");
+            be.printStackTrace();
+        } catch (IOException ce) {
+            System.out.println("Trouble connecting, connection refused");
+            ce.printStackTrace();
+        }
     }
 
     public void sendSnippet(String snippet){

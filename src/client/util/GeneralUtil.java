@@ -47,7 +47,6 @@ public class GeneralUtil {
             whatismyip = new URL("http://checkip.amazonaws.com");
             BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
             ip = in.readLine(); //you get the IP as a String
-            System.out.println(ip);
         } catch (IOException e) {
             e.printStackTrace();
         }
