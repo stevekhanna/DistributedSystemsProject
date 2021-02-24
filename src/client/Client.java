@@ -108,7 +108,7 @@ public class Client {
         StringBuilder sb = new StringBuilder();
         peerTable.values().forEach(peerList -> {
             peerList.forEach(peer -> {
-                sb.append(peer.toString()).append("\n");
+                sb.append(peer.toString());
             });
         });
         return sb.toString();
@@ -123,7 +123,7 @@ public class Client {
     private String getPeers(Peer source) {
         StringBuilder sb = new StringBuilder();
         peerTable.get(source).forEach(peer -> {
-            sb.append(peer.toString()).append("\n");
+            sb.append(peer.toString());
         });
         return sb.toString();
     }
@@ -138,7 +138,6 @@ public class Client {
         StringBuilder sb = new StringBuilder();
         peerTable.keySet().forEach(source -> {
             sb.append(source.toString())
-                    .append("\n")
                     .append(source.getTimeReceived())
                     .append("\n")
                     .append(peerTable.get(source).size())
