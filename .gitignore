@@ -82,6 +82,5 @@ fabric.properties
 #Additional Logging Files:
 reports/
 sourceCode/
-out/
-*.log
+*.DS_Store
 *.log.lck
