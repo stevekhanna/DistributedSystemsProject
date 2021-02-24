@@ -23,6 +23,6 @@ public class ClientConfig {
 
     public static final String SOURCE_DIR = "src/client";
     public static final List<Path> CODE_FILES = new ArrayList<>();
-    public static final int KEEP_ALIVE_INTERVAL = 5 * 1000;
-    public static final int INACTIVITY_INTERVAL = 2 * 60 * 1000;
+    public static final int KEEP_ALIVE_INTERVAL = 60 * 1000;
+    public static final int INACTIVITY_INTERVAL = 60 * 1000;
 }
