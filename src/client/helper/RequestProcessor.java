@@ -2,11 +2,13 @@ package client.helper;
 
 
 import client.*;
+import client.common.ClientConfig;
 
 import javax.swing.*;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class RequestProcessor implements Runnable {
 
@@ -53,6 +55,10 @@ public class RequestProcessor implements Runnable {
         PeerTable peerTable = client.getPeerTable();
 
         Peer source = new Peer(packet.getSource());
+
+        client.getFutures().get(packet.getSource()).cancel(true);
+        client.getFutures().put(packet.getSource(), client.getPool().schedule(new Inactive(client, packet.getSource()), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
+
         Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
         peerList.add(new Peer(packet.getMessage()));
 

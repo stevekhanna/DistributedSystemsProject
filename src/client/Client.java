@@ -2,6 +2,8 @@ package client;
 
 import client.common.ClientConfig;
 import client.display.GUI;
+import client.helper.Inactive;
+import client.helper.KeepAlive;
 import client.helper.RequestProcessor;
 import client.helper.UDPBroadcast;
 import client.util.GeneralUtil;
@@ -59,7 +61,7 @@ public class Client {
      */
     private GUI gui;
 
-    private Map<String, Future> futures; //future tasks
+    private final Map<String, Future> futures; //future tasks
 
     private final ScheduledExecutorService pool;
 
@@ -308,28 +310,6 @@ public class Client {
     }
 
     /**
-     * get the server ip
-     *
-     * @return string server ip
-     */
-    public String getServerIP() {
-        return serverIP;
-    }
-
-    /**
-     * get the port
-     *
-     * @return int port
-     */
-    public int getPort() {
-        return port;
-    }
-
-    public PeerTable getPeerTable() {
-        return peerTable;
-    }
-
-    /**
      * Starts the peer and accepts requests from registry.
      *
      * @throws IOException if there are problems starting this peer or
@@ -348,6 +328,9 @@ public class Client {
 
         connectToRegistry();
 
+        //start keepalive timer
+        futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
+
         while (!shutdown) {
             byte[] msg = new byte[64];
             DatagramPacket pkt = new DatagramPacket(msg, msg.length);
@@ -362,6 +345,10 @@ public class Client {
                 shutdown();
             } else {
                 pool.execute(new RequestProcessor(this, packet));
+
+                //restart KeepAlive timer
+                futures.get(packet.getSource()).cancel(true);
+                futures.put(packet.getSource(), pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
             }
         }
         System.out.println("Closing UDP socket");
@@ -384,7 +371,6 @@ public class Client {
             Thread.currentThread().interrupt();
         }
         System.out.println("Executor Shutdown successful");
-        System.out.println(snippetList.toString());
 
         connectToRegistry();
         System.out.println("Sent updated report to registry, now terminating");
@@ -414,6 +400,24 @@ public class Client {
         this.shutdown = true;
     }
 
+    public void keepAlive() {
+        String randomPeer = getRandomPeer();
+        //snip newline and send peer
+        new Thread(new UDPBroadcast(this, "Peer" + randomPeer.substring(0, randomPeer.length() - 1)));
+    }
+
+    //TODO actually send a random peer, maybe add complexity to this.
+    public String getRandomPeer() {
+
+        //get first source's set of peers
+        Set<Peer> peers = peerTable.entrySet().iterator().next().getValue();
+        return peers.iterator().next().toString();
+    }
+
+    public void expired(String target) {
+        //remove target from known active peers
+    }
+
     public Collection<Set<Peer>> getAllPeers() {
         return peerTable.values();
     }
@@ -431,17 +435,23 @@ public class Client {
         return gui;
     }
 
-    public void keepAlive() {
-        String randomPeer = getRandomPeer();
-        //snip newline and send peer
-        new Thread(new UDPBroadcast(this, "Peer" + randomPeer.substring(0, randomPeer.length() - 1)));
+    public String getServerIP() {
+        return serverIP;
     }
 
-    //TODO actually send a random peer, maybe add complexity to this.
-    public String getRandomPeer() {
+    public int getPort() {
+        return port;
+    }
 
-        //get first source's set of peers
-        Set<Peer> peers = peerTable.entrySet().iterator().next().getValue();
-        return peers.iterator().next().toString();
+    public PeerTable getPeerTable() {
+        return peerTable;
+    }
+
+    public Map<String, Future> getFutures() {
+        return futures;
+    }
+
+    public ScheduledExecutorService getPool() {
+        return pool;
     }
 }
