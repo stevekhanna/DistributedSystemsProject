@@ -3,13 +3,13 @@ package client;
 import java.io.Serializable;
 import java.net.DatagramPacket;
 
-public class DvPacket implements Serializable {
+public class PeerPacket implements Serializable {
 
     private final String type;
     private final String message;
     private final String source;
 
-    public DvPacket(DatagramPacket datagram) {
+    public PeerPacket(DatagramPacket datagram) {
         this.type = new String(datagram.getData(), 0, 4);
         this.message = new String(datagram.getData(), 5, datagram.getLength());
         this.source = datagram.getSocketAddress().toString().substring(1);

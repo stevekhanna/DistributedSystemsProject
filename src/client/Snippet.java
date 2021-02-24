@@ -7,7 +7,7 @@ public class Snippet {
     private final String sourcePeer;
 
 
-    public Snippet(int timestamp, DvPacket packet){
+    public Snippet(int timestamp, PeerPacket packet){
         this.timestamp = timestamp;
         this.content = packet.getMessage();
         this.sourcePeer = packet.getSource();

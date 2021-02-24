@@ -10,10 +10,10 @@ import java.util.Set;
 
 public class RequestProcessor implements Runnable {
 
-    private final DvPacket packet;
+    private final PeerPacket packet;
     private final Client client;
 
-    public RequestProcessor(Client client, DvPacket pkt) {
+    public RequestProcessor(Client client, PeerPacket pkt) {
         this.client = client;
         this.packet = pkt;
     }

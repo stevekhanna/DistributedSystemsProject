@@ -9,9 +9,7 @@ import client.util.GeneralUtil;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * A peer process that can receive peers from the registry as well as send a report on it's known sources and peers
@@ -61,6 +59,10 @@ public class Client {
      */
     private GUI gui;
 
+    private Map<String, Future> futures; //future tasks
+
+    private final ScheduledExecutorService pool;
+
     /**
      * Default class constructor
      * Initializes port, peerTable
@@ -72,6 +74,8 @@ public class Client {
         this.peerTable = new PeerTable();
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
+        this.futures = new ConcurrentHashMap<String, Future>();
+        this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
     }
 
     /**
@@ -87,6 +91,8 @@ public class Client {
         this.peerTable = new PeerTable();
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
+        this.futures = new ConcurrentHashMap<String, Future>();
+        this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
     }
 
     /**
@@ -104,6 +110,8 @@ public class Client {
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
         this.gui = gui;
+        this.futures = new ConcurrentHashMap<String, Future>();
+        this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
     }
 
     /**
@@ -139,6 +147,7 @@ public class Client {
      * Grab all the known sources as well as their peers
      * TODO: consider using stringify or something
      * <source location><newline><date><newline><numOfPeers><newline><peers>
+     *
      * @return String, the sources as a string, the number of sources as well as the peers
      */
     private String getSources() {
@@ -161,7 +170,7 @@ public class Client {
      * @param reader socket to read the peers from
      * @param source for storing the peers with their source
      * @throws IOException if there is a problem communicating with the registry
-     * TODO change to UTC Time
+     *                     TODO change to UTC Time
      */
     private void receivePeers(BufferedReader reader, Peer source) throws IOException {
         int numberOfPeers = Integer.parseInt(reader.readLine());
@@ -183,9 +192,10 @@ public class Client {
     /**
      * handle the get report request, getting the sources and their peers as a string
      * TODO: update this to meet the new requirements
-     *  <peer list><peer list sources><peers recd><peers sent><snippet list>
-     *
+     * <peer list><peer list sources><peers recd><peers sent><snippet list>
+     * <p>
      * TODO: move some stuff to the toString method of the PeerList class
+     *
      * @return String, information on the sources, peers and how many peers their are
      */
     private String getReport() {
@@ -326,7 +336,6 @@ public class Client {
      *                     if there are problems communicating with the registry.
      */
     public void start() throws IOException {
-        ExecutorService pool = Executors.newFixedThreadPool(ClientConfig.THREAD_POOL_SIZE);
 
         //setup UDP broadcast socket
         try {
@@ -339,7 +348,6 @@ public class Client {
 
         connectToRegistry();
 
-
         while (!shutdown) {
             byte[] msg = new byte[64];
             DatagramPacket pkt = new DatagramPacket(msg, msg.length);
@@ -348,11 +356,11 @@ public class Client {
             } catch (Exception e) {
                 break;
             }
-            DvPacket packet = new DvPacket(pkt);
-            if(packet.getType().equals("stop")){
+            PeerPacket packet = new PeerPacket(pkt);
+            if (packet.getType().equals("stop")) {
                 System.out.println("Stop request received, terminating program");
                 shutdown();
-            }else{
+            } else {
                 pool.execute(new RequestProcessor(this, packet));
             }
         }
@@ -382,7 +390,7 @@ public class Client {
         System.out.println("Sent updated report to registry, now terminating");
     }
 
-    public void connectToRegistry(){
+    public void connectToRegistry() {
         try {
             Socket socket = new Socket(serverIP, port);
             handleRequest(socket);
@@ -397,8 +405,9 @@ public class Client {
         }
     }
 
-    public void sendSnippet(String snippet){
-        new Thread(new UDPBroadcast(this, snippet)).start();
+    public void sendSnippet(String snippet) {
+        String message = "snip " + snippet;
+        new Thread(new UDPBroadcast(this, message)).start();
     }
 
     public void shutdown() {
@@ -409,7 +418,7 @@ public class Client {
         return peerTable.values();
     }
 
-    public List<Snippet> getSnippetList(){
+    public List<Snippet> getSnippetList() {
         return snippetList;
     }
 
@@ -420,5 +429,19 @@ public class Client {
 
     public GUI getGui() {
         return gui;
+    }
+
+    public void keepAlive() {
+        String randomPeer = getRandomPeer();
+        //snip newline and send peer
+        new Thread(new UDPBroadcast(this, "Peer" + randomPeer.substring(0, randomPeer.length() - 1)));
+    }
+
+    //TODO actually send a random peer, maybe add complexity to this.
+    public String getRandomPeer() {
+
+        //get first source's set of peers
+        Set<Peer> peers = peerTable.entrySet().iterator().next().getValue();
+        return peers.iterator().next().toString();
     }
 }

@@ -9,18 +9,17 @@ import java.net.InetAddress;
 public class UDPBroadcast implements Runnable{
 
     private final Client client;
-    private final String snippet;
+    private final String message;
 
-    public UDPBroadcast(Client client, String snippet){
+    public UDPBroadcast(Client client, String message){
         this.client = client;
-        this.snippet = "snip " + snippet;
+        this.message = message;
     }
 
     @Override
     public void run() {
         //enumerate all known peers
-        System.out.printf("sending snippet %s\n", snippet);
-        byte[] msg = snippet.getBytes();
+        byte[] msg = message.getBytes();
         client.getAllPeers().forEach(peerList -> {
             peerList.forEach(peer -> {
                 try{
