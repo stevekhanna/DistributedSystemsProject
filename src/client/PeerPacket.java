@@ -8,16 +8,25 @@ public class PeerPacket implements Serializable {
     private final String type;
     private final String message;
     private final String source;
+    private final int timeReceived;
 
     public PeerPacket(DatagramPacket datagram) {
-        this.type = new String(datagram.getData(), 0, 4);
-        if(this.type.equals("peer")){
-            this.message = new String(datagram.getData(), 4, datagram.getLength()-4);
-        }else if(this.type.equals("stop")){
-            this.message = "";
-        }else{
-            this.message = new String(datagram.getData(), 5, datagram.getLength()-5);
+        String[] content = new String(datagram.getData(), 0, datagram.getLength()).split(" ");
+        this.type = content[0].substring(0,4);
+        int timeReceived = 0;
+        switch (type) {
+            case "snip" -> {
+                timeReceived = Integer.parseInt(content[0].substring(4));
+                this.message = content[1];
+            }
+            case "peer" -> this.message = content[0].substring(4);
+            case "stop" -> this.message = "";
+            default -> {
+                this.message = "";
+                System.out.printf("datagram type not recognized: %s\n", type);
+            }
         }
+        this.timeReceived = timeReceived;
         this.source = datagram.getSocketAddress().toString().substring(1);
     }
 
@@ -31,5 +40,9 @@ public class PeerPacket implements Serializable {
 
     public String getSource() {
         return source;
+    }
+
+    public int getTimeReceived() {
+        return timeReceived;
     }
 }

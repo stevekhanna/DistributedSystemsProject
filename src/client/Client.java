@@ -65,6 +65,8 @@ public class Client {
 
     private final ScheduledExecutorService pool;
 
+    private final LamportClock lamportClock;
+
     /**
      * Default class constructor
      * Initializes port, peerTable
@@ -78,23 +80,7 @@ public class Client {
         this.shutdown = false;
         this.futures = new ConcurrentHashMap<String, Future>();
         this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
-    }
-
-    /**
-     * Overloaded class constructor
-     *
-     * @param serverIP the Ip for the registry
-     * @param port     the port for the registry
-     */
-    public Client(String serverIP, int port) {
-        this.serverIP = serverIP;
-        this.port = port;
-        this.teamName = ClientConfig.DEFAULT_TEAM_NAME;
-        this.peerTable = new PeerTable();
-        this.snippetList = Collections.synchronizedList(new ArrayList<>());
-        this.shutdown = false;
-        this.futures = new ConcurrentHashMap<String, Future>();
-        this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
+        this.lamportClock = new LamportClock();
     }
 
     /**
@@ -114,6 +100,7 @@ public class Client {
         this.gui = gui;
         this.futures = new ConcurrentHashMap<String, Future>();
         this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
+        this.lamportClock = new LamportClock();
     }
 
     /**
@@ -400,8 +387,7 @@ public class Client {
     }
 
     public void sendSnippet(String snippet) {
-        String message = "snip " + snippet;
-        new Thread(new UDPBroadcast(this, message)).start();
+        new Thread(new UDPBroadcast(this, "snip" + lamportClock.getTimestamp() + " " + snippet)).start();
     }
 
     public void shutdown() {
@@ -465,5 +451,9 @@ public class Client {
 
     public ScheduledExecutorService getPool() {
         return pool;
+    }
+
+    public LamportClock getLamportClock(){
+        return lamportClock;
     }
 }
