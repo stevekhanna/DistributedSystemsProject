@@ -11,7 +11,11 @@ public class PeerPacket implements Serializable {
 
     public PeerPacket(DatagramPacket datagram) {
         this.type = new String(datagram.getData(), 0, 4);
-        this.message = new String(datagram.getData(), 5, datagram.getLength());
+        if(this.type.equals("peer")){
+            this.message = new String(datagram.getData(), 4, datagram.getLength()-4);
+        }else{
+            this.message = new String(datagram.getData(), 5, datagram.getLength()-4);
+        }
         this.source = datagram.getSocketAddress().toString().substring(1);
     }
 

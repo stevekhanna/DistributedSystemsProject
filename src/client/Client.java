@@ -347,12 +347,19 @@ public class Client {
                 pool.execute(new RequestProcessor(this, packet));
 
                 //restart KeepAlive timer
-                futures.get(packet.getSource()).cancel(true);
-                futures.put(packet.getSource(), pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
+                futures.get(teamName).cancel(true);
+                futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
             }
         }
         System.out.println("Closing UDP socket");
         udpSocket.close();
+
+        //cleanup futures
+        System.out.println("Cleaning up futures");
+        for (Map.Entry<String, Future> elem : futures.entrySet()) {
+            elem.getValue().cancel(true);
+        }
+
         System.out.println("Shutting down pool");
         pool.shutdown();
         //https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html#shutdown()
@@ -401,9 +408,13 @@ public class Client {
     }
 
     public void keepAlive() {
+        System.out.println("Running keepalive");
         String randomPeer = getRandomPeer();
         //snip newline and send peer
-        new Thread(new UDPBroadcast(this, "Peer" + randomPeer.substring(0, randomPeer.length() - 1)));
+        new Thread(new UDPBroadcast(this, "peer" + randomPeer.substring(0, randomPeer.length() - 1))).start();
+        //restart keepalive
+        futures.get(teamName).cancel(true);
+        futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
     }
 
     //TODO actually send a random peer, maybe add complexity to this.

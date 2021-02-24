@@ -19,7 +19,6 @@ public class Peer {
 	 *  <dot> ::= ‘.’
 	 *  <colon> ::= ‘:’
 	 * @param peer
-	 * TODO Make this a comparable object
 	 */
 	public Peer(String peer){
 		this.address = peer.split(":")[0];
