@@ -1,8 +1,15 @@
 package client;
+
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+
 public class Peer {
 
-	private String address;
-	private int port;
+	private final String address;
+	private final int port;
+	private final String timeReceived = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now());
 
 	/**
 	 * <peer> ::= <ip><colon><port><newline>
@@ -11,12 +18,16 @@ public class Peer {
 	 *  <dot> ::= ‘.’
 	 *  <colon> ::= ‘:’
 	 * @param peer
+	 * TODO Make this a comparable object
 	 */
 	public Peer(String peer){
-
-		//breakdown string
 		this.address = peer.split(":")[0];
 		this.port = Integer.parseInt(peer.split(":")[1]);
+	}
+
+	public Peer(String address, int port){
+		this.address = address;
+		this.port = port;
 	}
 
 	public String getAddress() {
@@ -27,6 +38,11 @@ public class Peer {
 		return port;
 	}
 
+	public String getTimeReceived(){
+		return this.timeReceived;
+	}
+
+	@Override
 	public String toString() {
 		return address + ":" + port;
 	}

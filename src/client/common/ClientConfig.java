@@ -1,5 +1,9 @@
 package client.common;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClientConfig {
 
 
@@ -16,4 +20,7 @@ public class ClientConfig {
 
     /** JFrame title */
     public static final String TITLE = "OnlySnippets";
+
+    public static final String SOURCE_DIR = "src/client";
+    public static final List<Path> CODE_FILES = new ArrayList<Path>();
 }

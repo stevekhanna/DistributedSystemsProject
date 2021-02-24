@@ -7,10 +7,7 @@ import client.util.GeneralUtil;
 
 import java.io.*;
 import java.net.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * A peer process that can receive peers from the registry as well as send a report on it's known sources and peers
  *
  * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
- * @version 1.0 (Iteration 1)
+ * @version 2.0 (Iteration 2)
  * @since 01-29-2021
  */
 public class Client {
@@ -44,12 +41,6 @@ public class Client {
     private final PeerTable peerTable;
 
     /**
-     * TODO maybe merge this with the information above
-     * Contains the time when the peerTable was acquire from a source, no duplicates allowed
-     */
-    private final ConcurrentHashMap<String, String> timeTable;
-
-    /**
      *
      */
     private final List<Snippet> snippetList;
@@ -66,14 +57,13 @@ public class Client {
 
     /**
      * Default class constructor
-     * Initializes port, peerTable, and timeTable
+     * Initializes port, peerTable
      */
     public Client() {
         this.serverIP = ClientConfig.DEFAULT_SERVER_IP;
         this.port = ClientConfig.DEFAULT_PORT_NUMBER;
         this.teamName = ClientConfig.DEFAULT_TEAM_NAME;
         this.peerTable = new PeerTable();
-        this.timeTable = new ConcurrentHashMap<>();
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
     }
@@ -89,7 +79,6 @@ public class Client {
         this.port = port;
         this.teamName = ClientConfig.DEFAULT_TEAM_NAME;
         this.peerTable = new PeerTable();
-        this.timeTable = new ConcurrentHashMap<>();
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
     }
@@ -106,7 +95,6 @@ public class Client {
         this.port = port;
         this.teamName = teamName + "\n";
         this.peerTable = new PeerTable();
-        this.timeTable = new ConcurrentHashMap<>();
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
     }
@@ -120,7 +108,7 @@ public class Client {
         StringBuilder sb = new StringBuilder();
         peerTable.values().forEach(peerList -> {
             peerList.forEach(peer -> {
-                sb.append(peer).append("\n");
+                sb.append(peer.toString()).append("\n");
             });
         });
         return sb.toString();
@@ -132,10 +120,10 @@ public class Client {
      * @param source the source IP:port where the peers came from
      * @return a string of peers with newline after each one
      */
-    private String getPeers(String source) {
+    private String getPeers(Peer source) {
         StringBuilder sb = new StringBuilder();
         peerTable.get(source).forEach(peer -> {
-            sb.append(peer).append("\n");
+            sb.append(peer.toString()).append("\n");
         });
         return sb.toString();
     }
@@ -143,15 +131,15 @@ public class Client {
     /**
      * Grab all the known sources as well as their peers
      * TODO: consider using stringify or something
-     *
+     * <source location><newline><date><newline><numOfPeers><newline><peers>
      * @return String, the sources as a string, the number of sources as well as the peers
      */
     private String getSources() {
         StringBuilder sb = new StringBuilder();
         peerTable.keySet().forEach(source -> {
-            sb.append(source)
+            sb.append(source.toString())
                     .append("\n")
-                    .append(timeTable.get(source))
+                    .append(source.getTimeReceived())
                     .append("\n")
                     .append(peerTable.get(source).size())
                     .append("\n")
@@ -167,10 +155,10 @@ public class Client {
      * @param reader socket to read the peers from
      * @param source for storing the peers with their source
      * @throws IOException if there is a problem communicating with the registry
+     * TODO change to UTC Time
      */
-    private void receivePeers(BufferedReader reader, String source) throws IOException {
+    private void receivePeers(BufferedReader reader, Peer source) throws IOException {
         int numberOfPeers = Integer.parseInt(reader.readLine());
-        String dateAcquired = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
         Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
 
         while (numberOfPeers > 0) {
@@ -178,7 +166,6 @@ public class Client {
             numberOfPeers--;
         }
 
-        timeTable.put(source, dateAcquired);
         if (!peerTable.containsKey(source)) {
             peerTable.put(source, peerList);
         } else {
@@ -197,6 +184,7 @@ public class Client {
      */
     private String getReport() {
         StringBuilder report = new StringBuilder();
+        //<source location><newline><date><newline><numOfPeers><newline><peers>
         String sources = (getSources().equals("") ? "\n" : getSources());
 
         int totalPeers = 0;
@@ -204,6 +192,7 @@ public class Client {
             totalPeers += setOfPeers.size();
         }
 
+        //<peer list><peer list sources><peers recd><peers sent><snippet list>
         report.append(totalPeers) //numOfPeers
                 .append("\n")
                 .append(getPeers())
@@ -262,7 +251,9 @@ public class Client {
                         System.out.println("Code Written Successfully.");
                         break;
                     case "receive peers":
-                        receivePeers(reader, sock.getInetAddress().getHostAddress() + ":" + sock.getPort());
+                        //.getSocketAddress().toString().substring(1) /127.0.0.1:port
+                        Peer peer = new Peer(sock.getInetAddress().getHostAddress(), sock.getPort());
+                        receivePeers(reader, peer);
                         System.out.printf("Peers received: {\n%s\n}\n", peerTable.toString());
                         break;
                     case "get report":

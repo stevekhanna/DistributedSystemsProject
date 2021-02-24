@@ -1,5 +1,7 @@
 package client.util;
 
+import client.common.ClientConfig;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,17 +22,21 @@ public class GeneralUtil {
     public static String getCode() {
         StringBuilder response = new StringBuilder();
         String language = "java\n";
+        response.append(language);
+        System.out.println("Number of code files found: "+ClientConfig.CODE_FILES.size());
+        ClientConfig.CODE_FILES.forEach(path -> {
+                    try {
+                        System.out.println("Writing file: "+path.toString());
+                        String code = Files.readString(path, StandardCharsets.UTF_8) + "\n";
+                        response.append(code);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
 
-        Path path = FileSystems.getDefault().getPath("src/Client/Client.java");
-
-        try {
-            String code = Files.readString(path, StandardCharsets.UTF_8) + "\n";
-            String endOfCode = "...\n";
-            response.append(language).append(code).append(endOfCode);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        String endOfCode = "...\n";
+        response.append(endOfCode);
         return response.toString();
     }
 
