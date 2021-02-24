@@ -456,4 +456,8 @@ public class Client {
     public LamportClock getLamportClock(){
         return lamportClock;
     }
+
+    public String getTeamName() {
+        return teamName;
+    }
 }
