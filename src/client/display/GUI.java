@@ -69,6 +69,7 @@ public class GUI extends JPanel implements ActionListener {
         if (e.getSource() == sendButton) {
             System.out.printf("%s\n", inputField.getText());
             client.sendSnippet(inputField.getText());
+            inputField.setText("");
         }
     }
 

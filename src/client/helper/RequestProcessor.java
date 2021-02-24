@@ -44,6 +44,7 @@ public class RequestProcessor implements Runnable {
 
     public void handleSnipRequest() {
         client.getSnippetList().add(new Snippet(0, packet));
+        System.out.printf("snip message is %s\n", packet.getMessage());
         SwingUtilities.invokeLater(() -> client.getGui().updateSnippetList(packet.getMessage()));
     }
 

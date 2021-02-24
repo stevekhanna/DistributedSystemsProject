@@ -334,9 +334,10 @@ public class Client {
 
         connectToRegistry();
 
-        byte[] msg = new byte[128];
-        DatagramPacket pkt = new DatagramPacket(msg, msg.length);
+
         while (!shutdown) {
+            byte[] msg = new byte[64];
+            DatagramPacket pkt = new DatagramPacket(msg, msg.length);
             try {
                 udpSocket.receive(pkt);
             } catch (Exception e) {
@@ -392,9 +393,7 @@ public class Client {
     }
 
     public void sendSnippet(String snippet){
-        System.out.printf("sending snippet %s\n", snippet);
-        Thread t = new Thread(new UDPBroadcast(this, snippet));
-        t.start();
+        new Thread(new UDPBroadcast(this, snippet)).start();
     }
 
     public void shutdown() {
