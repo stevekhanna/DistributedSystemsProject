@@ -381,6 +381,7 @@ public class Client {
 
         connectToRegistry();
         System.out.println("Sent updated report to registry, now terminating");
+        System.exit(0);
     }
 
     public void connectToRegistry() {

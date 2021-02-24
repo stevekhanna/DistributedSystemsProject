@@ -19,6 +19,7 @@ public class GUI extends JPanel implements ActionListener {
         initGUI(args);
     }
 
+    //TODO handle constructors for client propertly for all the cases or just one i guess
     public void initGUI(String[] args) {
         setFocusable(true);
         createLabels();

@@ -4,8 +4,8 @@ import client.Client;
 
 public class Inactive implements Runnable{
 
-    private Client client;
-    private String target;
+    private final Client client;
+    private final String target;
 
     public Inactive(Client client, String target){
         this.client = client;
