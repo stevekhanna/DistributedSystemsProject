@@ -3,6 +3,7 @@ package client.display;
 import client.Client;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class GUI extends JPanel implements ActionListener {
     private DefaultListModel<String> snippetList;
 
     public GUI(String[] args) {
+        super(new GridLayout(4, 1, 5, 5));
         initGUI(args);
     }
 
@@ -28,16 +30,14 @@ public class GUI extends JPanel implements ActionListener {
                 client = new Client(args[0], Integer.parseInt(args[1]), args[2], this);
             }
             Client finalClient = client;
-            Thread t = new Thread() {
-                public void run() {
-                    try {
-                        finalClient.start();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        System.exit(1);
-                    }
+            Thread t = new Thread(() -> {
+                try {
+                    finalClient.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
                 }
-            };
+            });
             t.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,8 +46,7 @@ public class GUI extends JPanel implements ActionListener {
 
     private void createLabels() {
         //Title at the top
-        JLabel label = new JLabel();
-        label.setText("News Feed");
+        JLabel label = new JLabel("<html>News Feed<br/><html>");
         add(label);
 
         //list of snippets
@@ -73,7 +72,7 @@ public class GUI extends JPanel implements ActionListener {
         }
     }
 
-    public void updateSnippetList(String snippet){
+    public void updateSnippetList(String snippet) {
         snippetList.addElement(snippet);
     }
 }

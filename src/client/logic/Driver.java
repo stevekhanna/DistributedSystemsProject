@@ -1,6 +1,5 @@
 package client.logic;
 
-import client.Client;
 import client.common.ClientConfig;
 import client.display.GUI;
 
@@ -52,7 +51,6 @@ public class Driver extends JFrame {
     public static void main(String[] args) {
 
         populateConfigFile();
-
         Driver driver = new Driver(args);
         driver.setVisible(true);
     }
