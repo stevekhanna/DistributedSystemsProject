@@ -51,8 +51,8 @@ public class GUI extends JPanel implements ActionListener {
 
         //list of snippets
         snippetList = new DefaultListModel<>();
-        add(new JList<>(snippetList));
-        snippetList.addElement("hey");
+        JList<String> list = new JList<>(snippetList);
+        add(new JScrollPane(list));
 
         //Input field
         inputField = new JTextField(20);
