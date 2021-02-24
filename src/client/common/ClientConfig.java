@@ -22,5 +22,5 @@ public class ClientConfig {
     public static final String TITLE = "OnlySnippets";
 
     public static final String SOURCE_DIR = "src/client";
-    public static final List<Path> CODE_FILES = new ArrayList<Path>();
+    public static final List<Path> CODE_FILES = new ArrayList<>();
 }

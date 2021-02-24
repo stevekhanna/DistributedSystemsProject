@@ -8,8 +8,8 @@ import java.net.InetAddress;
 
 public class UDPBroadcast implements Runnable{
 
-    private Client client;
-    private String snippet;
+    private final Client client;
+    private final String snippet;
 
     public UDPBroadcast(Client client, String snippet){
         this.client = client;

@@ -5,7 +5,9 @@ import client.Client;
 import client.DvPacket;
 import client.Snippet;
 
-public class RequestProcessor implements Runnable{
+import javax.swing.*;
+
+public class RequestProcessor implements Runnable {
 
     private final DvPacket packet;
     private final Client client;
@@ -20,10 +22,10 @@ public class RequestProcessor implements Runnable{
         processPacket();
     }
 
-    public void processPacket(){
-        try{
+    public void processPacket() {
+        try {
             String request = packet.getType();
-            switch (request){
+            switch (request) {
                 case "snip":
                     System.out.println("Snip request received");
                     handleSnipRequest();
@@ -35,17 +37,18 @@ public class RequestProcessor implements Runnable{
                 default:
                     System.out.printf("Request not recognized: %s\n", request);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void handleSnipRequest(){
+    public void handleSnipRequest() {
         client.getSnippetList().add(new Snippet(0, packet));
+        SwingUtilities.invokeLater(() -> client.getGui().updateSnippetList(packet.getMessage()));
     }
 
     //TODO
-    public void handlePeerRequest(){
+    public void handlePeerRequest() {
 
     }
 }

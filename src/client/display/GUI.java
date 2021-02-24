@@ -2,30 +2,46 @@ package client.display;
 
 import client.Client;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class GUI extends JPanel implements ActionListener {
     private JButton sendButton;
     private JTextField inputField;
     private Client client;
+    private DefaultListModel<String> snippetList;
 
-    public GUI() {
-        initGUI();
+    public GUI(String[] args) {
+        initGUI(args);
     }
 
-    public GUI(Client client){
-        this.client = client;
-        initGUI();
-    }
-
-    public void initGUI() {
+    public void initGUI(String[] args) {
         setFocusable(true);
         createLabels();
+        try {
+            if (args.length != 3) {
+                System.out.println("No Server IP, port and team name provided. Using Default Constructor with: localhost:12345");
+                client = new Client();
+            } else {
+                client = new Client(args[0], Integer.parseInt(args[1]), args[2], this);
+            }
+            Client finalClient = client;
+            Thread t = new Thread() {
+                public void run() {
+                    try {
+                        finalClient.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.exit(1);
+                    }
+                }
+            };
+            t.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void createLabels() {
@@ -33,6 +49,11 @@ public class GUI extends JPanel implements ActionListener {
         JLabel label = new JLabel();
         label.setText("News Feed");
         add(label);
+
+        //list of snippets
+        snippetList = new DefaultListModel<>();
+        add(new JList<>(snippetList));
+        snippetList.addElement("hey");
 
         //Input field
         inputField = new JTextField(20);
@@ -50,5 +71,9 @@ public class GUI extends JPanel implements ActionListener {
             System.out.printf("%s\n", inputField.getText());
             client.sendSnippet(inputField.getText());
         }
+    }
+
+    public void updateSnippetList(String snippet){
+        snippetList.addElement(snippet);
     }
 }

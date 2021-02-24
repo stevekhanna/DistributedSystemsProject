@@ -1,6 +1,7 @@
 package client;
 
 import client.common.ClientConfig;
+import client.display.GUI;
 import client.helper.RequestProcessor;
 import client.helper.UDPBroadcast;
 import client.util.GeneralUtil;
@@ -55,6 +56,8 @@ public class Client {
      */
     private boolean shutdown;
 
+    private GUI gui;
+
     /**
      * Default class constructor
      * Initializes port, peerTable
@@ -90,13 +93,14 @@ public class Client {
      * @param port     the port for the registry
      * @param teamName the teamName of this client
      */
-    public Client(String serverIP, int port, String teamName) {
+    public Client(String serverIP, int port, String teamName, GUI gui) {
         this.serverIP = serverIP;
         this.port = port;
         this.teamName = teamName + "\n";
         this.peerTable = new PeerTable();
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
+        this.gui = gui;
     }
 
     /**
@@ -408,5 +412,9 @@ public class Client {
     // TODO: Research Synchronized method to see if necessary
     public DatagramSocket getUDPSocket() {
         return udpSocket;
+    }
+
+    public GUI getGui() {
+        return gui;
     }
 }
