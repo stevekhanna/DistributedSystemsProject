@@ -56,6 +56,9 @@ public class Client {
      */
     private boolean shutdown;
 
+    /**
+     * GUI for the client
+     */
     private GUI gui;
 
     /**
@@ -254,7 +257,6 @@ public class Client {
                         System.out.println("Code Written Successfully.");
                         break;
                     case "receive peers":
-                        //.getSocketAddress().toString().substring(1) /127.0.0.1:port
                         Peer peer = new Peer(sock.getInetAddress().getHostAddress(), sock.getPort());
                         receivePeers(reader, peer);
                         System.out.printf("Peers received: {\n%s\n}\n", peerTable.toString());
@@ -313,6 +315,9 @@ public class Client {
         return port;
     }
 
+    public PeerTable getPeerTable() {
+        return peerTable;
+    }
 
     /**
      * Starts the peer and accepts requests from registry.

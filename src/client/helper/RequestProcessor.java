@@ -1,11 +1,12 @@
 package client.helper;
 
 
-import client.Client;
-import client.DvPacket;
-import client.Snippet;
+import client.*;
 
 import javax.swing.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class RequestProcessor implements Runnable {
 
@@ -48,8 +49,18 @@ public class RequestProcessor implements Runnable {
         SwingUtilities.invokeLater(() -> client.getGui().updateSnippetList(packet.getMessage()));
     }
 
-    //TODO
     public void handlePeerRequest() {
+        PeerTable peerTable = client.getPeerTable();
 
+        Peer source = new Peer(packet.getSource());
+        Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
+        peerList.add(new Peer(packet.getMessage()));
+
+        if (!peerTable.containsKey(source)) {
+            peerTable.put(source, peerList);
+        } else {
+            Set<Peer> temp = peerTable.get(source);
+            temp.addAll(peerList);
+        }
     }
 }

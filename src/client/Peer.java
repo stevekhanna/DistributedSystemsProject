@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Peer {
 
@@ -45,5 +46,18 @@ public class Peer {
 	@Override
 	public String toString() {
 		return address + ":" + port + "\n";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Peer peer = (Peer) o;
+		return getPort() == peer.getPort() && Objects.equals(getAddress(), peer.getAddress());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getAddress(), getPort());
 	}
 }
