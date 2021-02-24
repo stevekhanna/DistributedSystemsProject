@@ -18,7 +18,7 @@ public class MultiClient {
                     numOfPorts = DEFAULT_NUM_OF_PORTS;
                 }
             } catch (NumberFormatException nfe) {
-                System.out.println("Expected first argument to be a port number.  Argument ignored.");
+                System.out.println("Expected first argument to be the number of clients to run.  Argument ignored.");
             }
         }
 
