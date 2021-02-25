@@ -2,7 +2,6 @@ package client;
 
 import client.common.ClientConfig;
 import client.display.GUI;
-import client.helper.Inactive;
 import client.helper.KeepAlive;
 import client.helper.RequestProcessor;
 import client.helper.UDPBroadcast;
@@ -101,59 +100,10 @@ public class Client {
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
         this.gui = gui;
-        this.futures = new ConcurrentHashMap<String, Future>();
+        this.futures = new ConcurrentHashMap<>();
         this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
         this.lamportClock = new LamportClock();
         this.report = new Report(this);
-    }
-
-    /**
-     * Grabs all the stored peers
-     *
-     * @return string of peers with newline after each one
-     */
-    public String getPeers() {
-        StringBuilder sb = new StringBuilder();
-        peerTable.values().forEach(peerList -> {
-            peerList.forEach(peer -> {
-                sb.append(peer.toString());
-            });
-        });
-        return sb.toString();
-    }
-
-    /**
-     * Grabs all the peers for the source provides
-     *
-     * @param source the source IP:port where the peers came from
-     * @return a string of peers with newline after each one
-     */
-    private String getPeers(Peer source) {
-        StringBuilder sb = new StringBuilder();
-        peerTable.get(source).forEach(peer -> {
-            sb.append(peer.toString());
-        });
-        return sb.toString();
-    }
-
-    /**
-     * Grab all the known sources as well as their peers
-     * TODO: consider using stringify or something
-     * <source location><newline><date><newline><numOfPeers><newline><peers>
-     *
-     * @return String, the sources as a string, the number of sources as well as the peers
-     */
-    public String getSources() {
-        StringBuilder sb = new StringBuilder();
-        peerTable.keySet().forEach(source -> {
-            sb.append(source.toString())
-                    .append(source.getTimeReceived())
-                    .append("\n")
-                    .append(peerTable.get(source).size())
-                    .append("\n")
-                    .append(getPeers(source));
-        });
-        return (sb.toString().equals("") ? "\n" : sb.toString());
     }
 
     /**
