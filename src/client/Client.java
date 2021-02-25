@@ -181,34 +181,6 @@ public class Client {
         }
     }
 
-    /**
-     * handle the get report request, getting the sources and their peers as a string
-     * TODO: update this to meet the new requirements
-     * <peer list><peer list sources><peers recd><peers sent><snippet list>
-     * <p>
-     * TODO: move some stuff to the toString method of the PeerList class
-     * TODO: consider making the report an object that is populated and already formatted
-     *
-     * @return String, information on the sources, peers and how many peers their are
-     */
-    private String getReport() {
-        StringBuilder report = new StringBuilder();
-
-        report.append(countPeers()) //numOfPeers
-                .append("\n")
-                .append(getPeers())
-                .append(peerTable.size()) //numOfSources
-                .append("\n")
-                .append(getSources())
-                .append(0)
-                .append("\n")
-                .append(0) //peers sent
-                .append("\n")
-                .append(getSnippetListReport());
-
-        return report.toString();
-    }
-
     public int countPeers(){
         int totalPeers = 0;
         for (Set<Peer> setOfPeers : peerTable.values()) {
@@ -217,15 +189,6 @@ public class Client {
         return totalPeers;
     }
 
-    private String getSnippetListReport() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(snippetList.size()).append("\n");
-
-        snippetList.forEach(snippet -> {
-            sb.append(snippet.toString());
-        });
-        return sb.toString();
-    }
 
     /**
      * handling the communication between the peer process and the registry server
