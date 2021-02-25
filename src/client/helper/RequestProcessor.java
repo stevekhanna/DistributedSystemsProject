@@ -50,7 +50,7 @@ public class RequestProcessor implements Runnable {
         client.getLamportClock().setTimestamp(timestamp);
         client.getSnippetList().add(new Snippet(timestamp, packet));
         System.out.printf("snip message is %s\n", packet.getMessage());
-        SwingUtilities.invokeLater(() -> client.getGui().updateSnippetList(packet.getMessage()));
+        SwingUtilities.invokeLater(() -> client.getGui().updateSnippetList(timestamp + packet.getMessage()));
     }
 
     public void handlePeerRequest() {

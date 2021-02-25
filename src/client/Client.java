@@ -184,12 +184,12 @@ public class Client {
      * <peer list><peer list sources><peers recd><peers sent><snippet list>
      * <p>
      * TODO: move some stuff to the toString method of the PeerList class
+     * TODO: consider making the report an object that is populated and already formatted
      *
      * @return String, information on the sources, peers and how many peers their are
      */
     private String getReport() {
         StringBuilder report = new StringBuilder();
-        //<source location><newline><date><newline><numOfPeers><newline><peers>
         String sources = (getSources().equals("") ? "\n" : getSources());
 
         int totalPeers = 0;
@@ -197,7 +197,6 @@ public class Client {
             totalPeers += setOfPeers.size();
         }
 
-        //<peer list><peer list sources><peers recd><peers sent><snippet list>
         report.append(totalPeers) //numOfPeers
                 .append("\n")
                 .append(getPeers())
