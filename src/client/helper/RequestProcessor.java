@@ -5,7 +5,6 @@ import client.*;
 import client.common.ClientConfig;
 
 import javax.swing.*;
-import java.net.InetAddress;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
