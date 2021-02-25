@@ -76,7 +76,7 @@ public class RequestProcessor implements Runnable {
         if(client.getFutures().containsKey(packet.getSource())){
             client.getFutures().get(packet.getSource()).cancel(true);
         }
-        client.getFutures().put(packet.getSource(), client.getPool().schedule(new Inactive(client, packet.getSource()), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
+        client.getFutures().put(packet.getSource(), client.getPool().schedule(new Inactive(client, new Peer(packet.getSource())), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
 
         Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
         peerList.add(new Peer(packet.getMessage()));

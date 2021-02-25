@@ -2,6 +2,7 @@ package client;
 
 import client.common.ClientConfig;
 import client.display.GUI;
+import client.helper.Inactive;
 import client.helper.KeepAlive;
 import client.helper.RequestProcessor;
 import client.helper.UDPBroadcast;
@@ -116,16 +117,23 @@ public class Client {
         Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
 
         while (numberOfPeers > 0) {
-            peerList.add(new Peer(reader.readLine()));
+            Peer peer = new Peer(reader.readLine());
+            peerList.add(peer);
+            futures.put(peer.toString().replace("\n", ""), pool.schedule(new Inactive(this, peer), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
             numberOfPeers--;
         }
 
+        String key = source.toString().replace("\n", "");
         if (!peerTable.containsKey(source)) {
             peerTable.put(source, peerList);
+            if(futures.containsKey(key)){
+                futures.get(key).cancel(true);
+            }
         } else {
             Set<Peer> temp = peerTable.get(source);
             temp.addAll(peerList);
         }
+        futures.put(key, pool.schedule(new Inactive(this, source), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
     }
 
     public int countPeers() {
@@ -327,10 +335,19 @@ public class Client {
     //TODO one liner this
     public void expired(Peer target) {
         //remove target from known active peers
-        for (Peer peer : peerTable.keySet()) {
-            if(peer.equals(target)){
-                peer.setAlive(false);
-                break;
+        for (Map.Entry<Peer, Set<Peer>> entry : peerTable.entrySet()) {
+            Peer k = entry.getKey();
+            if(k.equals(target)){
+                k.setAlive(false);
+            }
+            Set<Peer> v = entry.getValue();
+            if(v.contains(target)){
+                for (Peer peer : v) {
+                    if (peer.equals(target)) {
+                        peer.setAlive(false);
+                        break;
+                    }
+                }
             }
         }
     }

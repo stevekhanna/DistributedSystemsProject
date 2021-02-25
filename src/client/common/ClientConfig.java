@@ -16,7 +16,7 @@ public class ClientConfig {
 
     public static final int THREAD_POOL_SIZE = 10;
     public static final int KEEP_ALIVE_INTERVAL = 60 * 1000;
-    public static final int INACTIVITY_INTERVAL = 60 * 1000;
+    public static final int INACTIVITY_INTERVAL = 10 * 1000;
 
     public static final String SOURCE_DIR = "src/client";
     public static final List<Path> CODE_FILES = new ArrayList<>();
