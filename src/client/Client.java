@@ -67,6 +67,8 @@ public class Client {
 
     private final LamportClock lamportClock;
 
+    private final Report report;
+
     /**
      * Default class constructor
      * Initializes port, peerTable
@@ -81,6 +83,7 @@ public class Client {
         this.futures = new ConcurrentHashMap<String, Future>();
         this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
         this.lamportClock = new LamportClock();
+        this.report = new Report(this);
     }
 
     /**
@@ -101,6 +104,7 @@ public class Client {
         this.futures = new ConcurrentHashMap<String, Future>();
         this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
         this.lamportClock = new LamportClock();
+        this.report = new Report(this);
     }
 
     /**
@@ -108,7 +112,7 @@ public class Client {
      *
      * @return string of peers with newline after each one
      */
-    private String getPeers() {
+    public String getPeers() {
         StringBuilder sb = new StringBuilder();
         peerTable.values().forEach(peerList -> {
             peerList.forEach(peer -> {
@@ -139,7 +143,7 @@ public class Client {
      *
      * @return String, the sources as a string, the number of sources as well as the peers
      */
-    private String getSources() {
+    public String getSources() {
         StringBuilder sb = new StringBuilder();
         peerTable.keySet().forEach(source -> {
             sb.append(source.toString())
@@ -149,8 +153,7 @@ public class Client {
                     .append("\n")
                     .append(getPeers(source));
         });
-
-        return sb.toString();
+        return (sb.toString().equals("") ? "\n" : sb.toString());
     }
 
     /**
@@ -190,19 +193,13 @@ public class Client {
      */
     private String getReport() {
         StringBuilder report = new StringBuilder();
-        String sources = (getSources().equals("") ? "\n" : getSources());
 
-        int totalPeers = 0;
-        for (Set<Peer> setOfPeers : peerTable.values()) {
-            totalPeers += setOfPeers.size();
-        }
-
-        report.append(totalPeers) //numOfPeers
+        report.append(countPeers()) //numOfPeers
                 .append("\n")
                 .append(getPeers())
                 .append(peerTable.size()) //numOfSources
                 .append("\n")
-                .append(sources)
+                .append(getSources())
                 .append(0)
                 .append("\n")
                 .append(0) //peers sent
@@ -212,10 +209,17 @@ public class Client {
         return report.toString();
     }
 
+    public int countPeers(){
+        int totalPeers = 0;
+        for (Set<Peer> setOfPeers : peerTable.values()) {
+            totalPeers += setOfPeers.size();
+        }
+        return totalPeers;
+    }
+
     private String getSnippetListReport() {
         StringBuilder sb = new StringBuilder();
-        sb.append(snippetList.size())
-                .append("\n");
+        sb.append(snippetList.size()).append("\n");
 
         snippetList.forEach(snippet -> {
             sb.append(snippet.toString());
@@ -260,7 +264,7 @@ public class Client {
                         System.out.printf("Peers received: {\n%s\n}\n", peerTable.toString());
                         break;
                     case "get report":
-                        response.append(getReport());
+                        response.append(report.toString());
                         System.out.printf("Writing response:\n{%s}\n", response.toString());
                         writer.write(response.toString());
                         writer.flush();
