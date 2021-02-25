@@ -90,4 +90,12 @@ public class Report {
 
         return sb.toString();
     }
+
+    public List<String> getPeersSent(){
+        return peersSent;
+    }
+
+    public List<String> getPeersReceived(){
+        return peersReceived;
+    }
 }

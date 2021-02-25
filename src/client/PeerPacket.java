@@ -10,22 +10,28 @@ public class PeerPacket implements Serializable {
     private final String source;
     private final int timeReceived;
 
+    //TODO: something weird happens with empty snippet
     public PeerPacket(DatagramPacket datagram) {
-        String[] content = new String(datagram.getData(), 0, datagram.getLength()).split(" ");
-        this.type = content[0].substring(0,4);
+        String content = new String(datagram.getData(), 0, datagram.getLength());
+        this.type = content.substring(0,4);
         int timeReceived = 0;
+        String tempMessage = "";
         switch (type) {
             case "snip" -> {
-                timeReceived = Integer.parseInt(content[0].substring(4));
-                this.message = content[1];
+                String [] parts = content.split(" ");
+                timeReceived = Integer.parseInt(parts[0].substring(4));
+                if(parts.length == 2) {
+                    tempMessage = parts[1];
+                }
             }
-            case "peer" -> this.message = content[0].substring(4);
-            case "stop" -> this.message = "";
+            case "peer" -> tempMessage = content.substring(4);
+            case "stop" -> tempMessage = "";
             default -> {
-                this.message = "";
+                tempMessage = "";
                 System.out.printf("datagram type not recognized: %s\n", type);
             }
         }
+        this.message = tempMessage;
         this.timeReceived = timeReceived;
         this.source = datagram.getSocketAddress().toString().substring(1);
     }

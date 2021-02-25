@@ -5,6 +5,11 @@ import client.*;
 import client.common.ClientConfig;
 
 import javax.swing.*;
+import java.net.InetAddress;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,6 +61,16 @@ public class RequestProcessor implements Runnable {
     public void handlePeerRequest() {
         PeerTable peerTable = client.getPeerTable();
 
+        String packetSource = packet.getSource();
+        String message = packet.getMessage();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(packetSource).append(" ")
+                .append(message).append(" ")
+                .append(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()))
+                .append("\n");
+
+        client.getReport().getPeersReceived().add(sb.toString());
         Peer source = new Peer(packet.getSource());
 
         if(client.getFutures().containsKey(packet.getSource())){

@@ -40,9 +40,6 @@ public class Client {
      */
     private final PeerTable peerTable;
 
-    /**
-     *
-     */
     private final List<Snippet> snippetList;
 
     /**
@@ -79,7 +76,7 @@ public class Client {
         this.peerTable = new PeerTable();
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
-        this.futures = new ConcurrentHashMap<String, Future>();
+        this.futures = new ConcurrentHashMap<>();
         this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
         this.lamportClock = new LamportClock();
         this.report = new Report(this);
@@ -131,7 +128,7 @@ public class Client {
         }
     }
 
-    public int countPeers(){
+    public int countPeers() {
         int totalPeers = 0;
         for (Set<Peer> setOfPeers : peerTable.values()) {
             totalPeers += setOfPeers.size();
@@ -159,34 +156,34 @@ public class Client {
                 StringBuilder response = new StringBuilder();
 
                 switch (request) {
-                    case "get team name":
+                    case "get team name" -> {
                         response.append(teamName);
                         System.out.printf("Writing response: {\n%s}\n", response.toString());
                         writer.write(response.toString());
                         writer.flush();
-                        break;
-                    case "get code":
+                    }
+                    case "get code" -> {
                         response.append(GeneralUtil.getCode());
                         writer.write(response.toString());
                         writer.flush();
                         System.out.println("Code Written Successfully.");
-                        break;
-                    case "receive peers":
+                    }
+                    case "receive peers" -> {
                         Peer peer = new Peer(sock.getInetAddress().getHostAddress(), sock.getPort());
                         receivePeers(reader, peer);
                         System.out.printf("Peers received: {\n%s\n}\n", peerTable.toString());
-                        break;
-                    case "get report":
+                    }
+                    case "get report" -> {
                         response.append(report.toString());
                         System.out.printf("Writing response:\n{%s}\n", response.toString());
                         writer.write(response.toString());
                         writer.flush();
-                        break;
-                    case "close":
+                    }
+                    case "close" -> {
                         System.out.println("Close Received");
                         done = true;
-                        break;
-                    case "get location":
+                    }
+                    case "get location" -> {
                         System.out.println("get location Received");
                         String ip = GeneralUtil.getMyIP();
                         if (ip.equals("Error")) {
@@ -199,9 +196,8 @@ public class Client {
                             writer.write(response.toString());
                         }
                         writer.flush();
-                        break;
-                    default:
-                        System.out.printf("Request not recognized: %s\n", request);
+                    }
+                    default -> System.out.printf("Request not recognized: %s\n", request);
                 }
             }
             reader.close();
@@ -303,7 +299,7 @@ public class Client {
     }
 
     public void sendSnippet(String snippet) {
-        new Thread(new UDPBroadcast(this, "snip" + lamportClock.getTimestamp() + " " + snippet)).start();
+        new Thread(new UDPBroadcast(this, "snip", "snip" + lamportClock.getTimestamp() + " " + snippet)).start();
     }
 
     public void shutdown() {
@@ -314,7 +310,7 @@ public class Client {
         System.out.println("Running keepalive");
         String randomPeer = getRandomPeer();
         //snip newline and send peer
-        new Thread(new UDPBroadcast(this, "peer" + randomPeer.substring(0, randomPeer.length() - 1))).start();
+        new Thread(new UDPBroadcast(this, "peer", "peer" + randomPeer.substring(0, randomPeer.length() - 1))).start();
         //restart keepalive
         futures.get(teamName).cancel(true);
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
@@ -328,8 +324,15 @@ public class Client {
         return peers.iterator().next().toString();
     }
 
-    public void expired(String target) {
+    //TODO one liner this
+    public void expired(Peer target) {
         //remove target from known active peers
+        for (Peer peer : peerTable.keySet()) {
+            if(peer.equals(target)){
+                peer.setAlive(false);
+                break;
+            }
+        }
     }
 
     public Collection<Set<Peer>> getAllPeers() {
@@ -369,11 +372,15 @@ public class Client {
         return pool;
     }
 
-    public LamportClock getLamportClock(){
+    public LamportClock getLamportClock() {
         return lamportClock;
     }
 
     public String getTeamName() {
         return teamName;
+    }
+
+    public Report getReport() {
+        return report;
     }
 }
