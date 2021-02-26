@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ClientConfig {
 
-
     /** Client defaults */
     public static final String DEFAULT_TEAM_NAME = "Steve and Issack\n";
 

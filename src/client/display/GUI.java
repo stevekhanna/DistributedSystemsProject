@@ -11,6 +11,7 @@ import java.io.IOException;
 public class GUI extends JPanel implements ActionListener {
     private JButton sendButton;
     private JTextField inputField;
+
     private Client client;
     private DefaultListModel<String> snippetList;
 
@@ -79,5 +80,9 @@ public class GUI extends JPanel implements ActionListener {
 
     public void updateSnippetList(String snippet) {
         snippetList.addElement(snippet);
+    }
+
+    public Client getClient() {
+        return client;
     }
 }

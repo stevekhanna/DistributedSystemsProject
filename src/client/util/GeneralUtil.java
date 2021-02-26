@@ -23,10 +23,8 @@ public class GeneralUtil {
         StringBuilder response = new StringBuilder();
         String language = "java\n";
         response.append(language);
-        System.out.println("Number of code files found: "+ClientConfig.CODE_FILES.size());
         ClientConfig.CODE_FILES.forEach(path -> {
                     try {
-                        System.out.println("Writing file: "+path.toString());
                         String code = Files.readString(path, StandardCharsets.UTF_8) + "\n";
                         response.append(code);
                     } catch (IOException e) {

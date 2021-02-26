@@ -18,7 +18,7 @@ public class PeerPacket implements Serializable {
         String tempMessage = "";
         switch (type) {
             case "snip" -> {
-                String [] parts = content.split(" ");
+                String [] parts = content.split(" ", 2);
                 timeReceived = Integer.parseInt(parts[0].substring(4));
                 if(parts.length == 2) {
                     tempMessage = parts[1];

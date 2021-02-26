@@ -33,16 +33,19 @@ public class RequestProcessor implements Runnable {
         try {
             String request = packet.getType();
             switch (request) {
-                case "snip":
+                case "snip" -> {
                     System.out.println("Snip request received");
                     handleSnipRequest();
-                    break;
-                case "peer":
+                }
+                case "peer" -> {
                     System.out.println("Peer request received");
                     handlePeerRequest();
-                    break;
-                default:
-                    System.out.printf("Request not recognized: %s\n", request);
+                }
+                case "stop" -> {
+                    System.out.println("Stop request received, terminating program");
+                    client.shutdown();
+                }
+                default -> System.out.printf("Request not recognized: %s\n", request);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +61,7 @@ public class RequestProcessor implements Runnable {
     }
 
     public void handlePeerRequest() {
-        PeerTable peerTable = client.getPeerTable();
+        PeerTable peerTable = client.getReport().getPeerTable();
 
         String packetSource = packet.getSource();
         String message = packet.getMessage();
@@ -78,7 +81,8 @@ public class RequestProcessor implements Runnable {
         client.getFutures().put(packet.getSource(), client.getPool().schedule(new Inactive(client, new Peer(packet.getSource())), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
 
         Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
-        peerList.add(new Peer(packet.getMessage()));
+        Peer peerReceived = new Peer(packet.getMessage());
+        peerList.add(peerReceived);
 
         if (!peerTable.containsKey(source)) {
             peerTable.put(source, peerList);
@@ -86,5 +90,9 @@ public class RequestProcessor implements Runnable {
             Set<Peer> temp = peerTable.get(source);
             temp.addAll(peerList);
         }
+
+        client.getActivePeers().add(source);
+        client.getActivePeers().add(peerReceived);
+
     }
 }

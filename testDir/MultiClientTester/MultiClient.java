@@ -1,9 +1,6 @@
 package MultiClientTester;
 
-import client.Client;
 import client.logic.Driver;
-
-import java.io.IOException;
 
 public class MultiClient {
     private static final String HOST = "localhost";
@@ -26,7 +23,7 @@ public class MultiClient {
         }
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -37,10 +34,9 @@ public class MultiClient {
                 String teamName = "Client "+ finalI;
                 String [] argumentArr = {HOST, PORT, teamName};
                 Driver driver = new Driver(argumentArr);
-                driver.setVisible(true);
+                driver.getGui().getClient().sendSnippet("Hello World" + finalI);
             });
             t.start();
-
         }
     }
 }

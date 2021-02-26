@@ -28,27 +28,23 @@ public class UDPBroadcast implements Runnable {
         //enumerate all known peers
         System.out.println("broadcasting " + message);
         byte[] msg = message.getBytes();
-        client.getAllPeers().forEach(peerList -> {
-            peerList.forEach(peer -> {
-                if (peer.isAlive()) {
-                    try {
-                        DatagramPacket packet = new DatagramPacket(msg, msg.length, InetAddress.getByName(peer.getAddress()), peer.getPort());
-                        client.getUDPSocket().send(packet);
-                        if (type.equals("peer")) {
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(InetAddress.getByName(peer.getAddress()).toString().substring(1))
-                                    .append(":")
-                                    .append(peer.getPort()).append(" ")
-                                    .append(message.substring(4)).append(" ")
-                                    .append(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()))
-                                    .append("\n");
-                            client.getReport().getPeersSent().add(sb.toString());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+        client.getActivePeers().forEach(peer -> {
+            try {
+                DatagramPacket packet = new DatagramPacket(msg, msg.length, InetAddress.getByName(peer.getAddress()), peer.getPort());
+                client.getUDPSocket().send(packet);
+                if (type.equals("peer")) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(InetAddress.getByName(peer.getAddress()).toString().substring(1))
+                            .append(":")
+                            .append(peer.getPort()).append(" ")
+                            .append(message.substring(4)).append(" ")
+                            .append(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()))
+                            .append("\n");
+                    client.getReport().getPeersSent().add(sb.toString());
                 }
-            });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 }

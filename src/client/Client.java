@@ -15,12 +15,15 @@ import java.util.concurrent.*;
 
 /**
  * A peer process that can receive peers from the registry as well as send a report on it's known sources and peers
+ * <p>
+ * TODO: CREATE ENUM CLASS FOR THE TYPE OF REQUESTS RECEIVED, PACKAGES
  *
  * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
  * @version 2.0 (Iteration 2)
  * @since 01-29-2021
  */
 public class Client {
+
     /**
      * Server ip of registry
      */
@@ -39,7 +42,7 @@ public class Client {
     /**
      * Contains the sources and peers we know about, no duplicate sources
      */
-    private final PeerTable peerTable;
+    private final Set<Peer> activePeers;
 
     private final List<Snippet> snippetList;
 
@@ -58,7 +61,7 @@ public class Client {
      */
     private GUI gui;
 
-    private final Map<String, Future> futures; //future tasks
+    private final Map<String, Future> futures;
 
     private final ScheduledExecutorService pool;
 
@@ -74,7 +77,7 @@ public class Client {
         this.serverIP = ClientConfig.DEFAULT_SERVER_IP;
         this.port = ClientConfig.DEFAULT_PORT_NUMBER;
         this.teamName = ClientConfig.DEFAULT_TEAM_NAME;
-        this.peerTable = new PeerTable();
+        this.activePeers = Collections.synchronizedSet(new HashSet<>());
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
         this.futures = new ConcurrentHashMap<>();
@@ -94,7 +97,7 @@ public class Client {
         this.serverIP = serverIP;
         this.port = port;
         this.teamName = teamName + "\n";
-        this.peerTable = new PeerTable();
+        this.activePeers = Collections.synchronizedSet(new HashSet<>());
         this.snippetList = Collections.synchronizedList(new ArrayList<>());
         this.shutdown = false;
         this.gui = gui;
@@ -119,31 +122,24 @@ public class Client {
         while (numberOfPeers > 0) {
             Peer peer = new Peer(reader.readLine());
             peerList.add(peer);
+            activePeers.add(peer);
             futures.put(peer.toString().replace("\n", ""), pool.schedule(new Inactive(this, peer), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
             numberOfPeers--;
         }
 
         String key = source.toString().replace("\n", "");
-        if (!peerTable.containsKey(source)) {
-            peerTable.put(source, peerList);
-            if(futures.containsKey(key)){
+        if (!activePeers.contains(source)) {
+            report.getPeerTable().put(source, peerList); //adding source peer to the report
+            activePeers.add(source);
+            if (futures.containsKey(key)) {
                 futures.get(key).cancel(true);
             }
-        } else {
-            Set<Peer> temp = peerTable.get(source);
+        } else { //does contain source
+            Set<Peer> temp = report.getPeerTable().get(source);
             temp.addAll(peerList);
         }
         futures.put(key, pool.schedule(new Inactive(this, source), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
     }
-
-    public int countPeers() {
-        int totalPeers = 0;
-        for (Set<Peer> setOfPeers : peerTable.values()) {
-            totalPeers += setOfPeers.size();
-        }
-        return totalPeers;
-    }
-
 
     /**
      * handling the communication between the peer process and the registry server
@@ -179,7 +175,7 @@ public class Client {
                     case "receive peers" -> {
                         Peer peer = new Peer(sock.getInetAddress().getHostAddress(), sock.getPort());
                         receivePeers(reader, peer);
-                        System.out.printf("Peers received: {\n%s\n}\n", peerTable.toString());
+                        System.out.printf("Peers received: {\n%s\n}\n", report.getPeerTable().toString());
                     }
                     case "get report" -> {
                         response.append(report.toString());
@@ -235,6 +231,10 @@ public class Client {
 
         connectToRegistry();
 
+        //need to handle situation when udp port doesn't get created properly, try again in a loop or terminate
+        //ADD ourselves to peerTable
+        activePeers.add(new Peer(this.serverIP, this.udpSocket.getLocalPort()));
+
         //start keepalive timer
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
 
@@ -246,17 +246,12 @@ public class Client {
             } catch (Exception e) {
                 break;
             }
-            PeerPacket packet = new PeerPacket(pkt);
-            if (packet.getType().equals("stop")) {
-                System.out.println("Stop request received, terminating program");
-                shutdown();
-            } else {
-                pool.execute(new RequestProcessor(this, packet));
 
-                //restart KeepAlive timer
-                futures.get(teamName).cancel(true);
-                futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
-            }
+            pool.execute(new RequestProcessor(this, new PeerPacket(pkt)));
+
+            //restart KeepAlive timer
+            futures.get(teamName).cancel(true);
+            futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
         }
         System.out.println("Closing UDP socket");
         udpSocket.close();
@@ -312,6 +307,7 @@ public class Client {
 
     public void shutdown() {
         this.shutdown = true;
+        udpSocket.close();
     }
 
     public void keepAlive() {
@@ -326,41 +322,27 @@ public class Client {
 
     //TODO actually send a random peer, maybe add complexity to this.
     public String getRandomPeer() {
-
-        //get first source's set of peers
-        Set<Peer> peers = peerTable.entrySet().iterator().next().getValue();
-        return peers.iterator().next().toString();
+        return activePeers.iterator().next().toString();
     }
 
     //TODO one liner this
     public void expired(Peer target) {
         //remove target from known active peers
-        for (Map.Entry<Peer, Set<Peer>> entry : peerTable.entrySet()) {
-            Peer k = entry.getKey();
-            if(k.equals(target)){
-                k.setAlive(false);
-            }
-            Set<Peer> v = entry.getValue();
-            if(v.contains(target)){
-                for (Peer peer : v) {
-                    if (peer.equals(target)) {
-                        peer.setAlive(false);
-                        break;
-                    }
+        if (activePeers.contains(target)) {
+            for (Peer peer : activePeers) {
+                if (peer.equals(target)) {
+                    peer.setAlive(false);
+                    break;
                 }
             }
+            activePeers.remove(target);
         }
-    }
-
-    public Collection<Set<Peer>> getAllPeers() {
-        return peerTable.values();
     }
 
     public List<Snippet> getSnippetList() {
         return snippetList;
     }
 
-    // TODO: Research Synchronized method to see if necessary
     public DatagramSocket getUDPSocket() {
         return udpSocket;
     }
@@ -375,10 +357,6 @@ public class Client {
 
     public int getPort() {
         return port;
-    }
-
-    public PeerTable getPeerTable() {
-        return peerTable;
     }
 
     public Map<String, Future> getFutures() {
@@ -399,5 +377,9 @@ public class Client {
 
     public Report getReport() {
         return report;
+    }
+
+    public Set<Peer> getActivePeers() {
+        return activePeers;
     }
 }

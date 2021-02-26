@@ -11,7 +11,10 @@ import java.nio.file.Paths;
 
 public class Driver extends JFrame {
 
+    private GUI gui;
+
     public Driver(String[] args) {
+        populateConfigFile();
         initFrame(args);
     }
 
@@ -24,7 +27,8 @@ public class Driver extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        add(new GUI(args));
+        this.gui = new GUI(args);
+        add(this.gui);
         pack();
     }
 
@@ -41,6 +45,9 @@ public class Driver extends JFrame {
         }
     }
 
+    public GUI getGui() {
+        return gui;
+    }
 
     /**
      * Starts the client server. If a port number is provided as a runtime argument,
@@ -50,7 +57,6 @@ public class Driver extends JFrame {
      */
     public static void main(String[] args) {
 
-        populateConfigFile();
         Driver driver = new Driver(args);
         driver.setVisible(true);
     }

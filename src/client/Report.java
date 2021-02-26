@@ -1,23 +1,27 @@
 package client;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * handle the get report request, getting the sources and their peers as a string
  */
 public class Report {
 
+    private final PeerTable peerTable;
     private final List<String> peersSent;
     private final List<String> peersReceived;
     private final Client client;
 
 
-    public Report(Client client){
+    public Report(Client client) {
         this.peersSent = Collections.synchronizedList(new ArrayList<>());
         this.peersReceived = Collections.synchronizedList(new ArrayList<>());
         this.client = client;
+        this.peerTable = new PeerTable();
+    }
+
+    public PeerTable getPeerTable() {
+        return peerTable;
     }
 
     /**
@@ -27,7 +31,7 @@ public class Report {
      */
     public String getPeersReport() {
         StringBuilder sb = new StringBuilder();
-        client.getPeerTable().values().forEach(peerList -> {
+        peerTable.values().forEach(peerList -> {
             peerList.forEach(peer -> {
                 sb.append(peer.toString());
             });
@@ -43,7 +47,7 @@ public class Report {
      */
     private String getPeersReport(Peer source) {
         StringBuilder sb = new StringBuilder();
-        client.getPeerTable().get(source).forEach(peer -> {
+        peerTable.get(source).forEach(peer -> {
             sb.append(peer.toString());
         });
         return sb.toString();
@@ -58,25 +62,33 @@ public class Report {
      */
     public String getSourcesReport() {
         StringBuilder sb = new StringBuilder();
-        client.getPeerTable().keySet().forEach(source -> {
+        peerTable.keySet().forEach(source -> {
             sb.append(source.toString())
                     .append(source.getTimeReceived())
                     .append("\n")
-                    .append(client.getPeerTable().get(source).size())
+                    .append(peerTable.get(source).size())
                     .append("\n")
                     .append(getPeersReport(source));
         });
         return (sb.toString().equals("") ? "\n" : sb.toString());
     }
 
+    public int countPeers() {
+        int totalPeers = 0;
+        for (Set<Peer> setOfPeers : peerTable.values()) {
+            totalPeers += setOfPeers.size();
+        }
+        return totalPeers;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(client.countPeers()).append("\n"); // The reporting peer has a list of x peers
+        sb.append(countPeers()).append("\n"); // The reporting peer has a list of x peers
         sb.append(getPeersReport()); //iteratively add each peer
 
-        sb.append(client.getPeerTable().size()).append("\n"); //number of sources
+        sb.append(peerTable.size()).append("\n"); //number of sources
         sb.append(getSourcesReport()); //iteratively add each source
 
         sb.append(peersReceived.size()).append("\n"); //There were x peers that we received via UDP
@@ -91,11 +103,11 @@ public class Report {
         return sb.toString();
     }
 
-    public List<String> getPeersSent(){
+    public List<String> getPeersSent() {
         return peersSent;
     }
 
-    public List<String> getPeersReceived(){
+    public List<String> getPeersReceived() {
         return peersReceived;
     }
 }
