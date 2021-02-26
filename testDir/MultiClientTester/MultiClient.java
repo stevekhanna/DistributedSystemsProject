@@ -34,6 +34,7 @@ public class MultiClient {
                 String teamName = "Client "+ finalI;
                 String [] argumentArr = {HOST, PORT, teamName};
                 Driver driver = new Driver(argumentArr);
+                driver.setVisible(true);
                 driver.getGui().getClient().sendSnippet("Hello World" + finalI);
             });
             t.start();

@@ -314,7 +314,8 @@ public class Client {
         System.out.println("Running keepalive");
         String randomPeer = getRandomPeer();
         //snip newline and send peer
-        new Thread(new UDPBroadcast(this, "peer", "peer" + randomPeer.substring(0, randomPeer.length() - 1))).start();
+        System.out.println(randomPeer);
+        new Thread(new UDPBroadcast(this, "peer", "peer" + randomPeer.replace("\n", ""))).start();
         //restart keepalive
         futures.get(teamName).cancel(true);
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
@@ -322,7 +323,7 @@ public class Client {
 
     //TODO actually send a random peer, maybe add complexity to this.
     public String getRandomPeer() {
-        return activePeers.iterator().next().toString();
+        return activePeers.toArray()[new Random().nextInt(activePeers.size())].toString();
     }
 
     //TODO one liner this
