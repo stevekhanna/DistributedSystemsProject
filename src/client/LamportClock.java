@@ -8,10 +8,6 @@ public class LamportClock {
         timestamp = 1;
     }
 
-    public void tick(){
-        timestamp++;
-    }
-
     public void setTimestamp(int timestamp){
         this.timestamp = timestamp;
     }

@@ -5,6 +5,10 @@ import java.net.DatagramPacket;
 
 public class PeerPacket implements Serializable {
 
+    public enum Type {
+        snip, peer, stop
+    }
+
     private final String type;
     private final String message;
     private final String source;
@@ -13,14 +17,14 @@ public class PeerPacket implements Serializable {
     //TODO: something weird happens with empty snippet
     public PeerPacket(DatagramPacket datagram) {
         String content = new String(datagram.getData(), 0, datagram.getLength());
-        this.type = content.substring(0,4);
+        this.type = content.substring(0, 4);
         int timeReceived = 0;
         String tempMessage = "";
         switch (type) {
             case "snip" -> {
-                String [] parts = content.split(" ", 2);
+                String[] parts = content.split(" ", 2);
                 timeReceived = Integer.parseInt(parts[0].substring(4));
-                if(parts.length == 2) {
+                if (parts.length == 2) {
                     tempMessage = parts[1];
                 }
             }

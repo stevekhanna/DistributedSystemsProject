@@ -12,11 +12,21 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
+/**
+ * NOTES FOR CLEANING UP CODE
+ * <p>
+ * 1) USE X.length() == 0 INSTEAD OF X.equals("")
+ * 2) Use vectors instead of arraylist for things modified by multiple threads
+ * because they are already synchronised, Vector<T> v = new Vector<T>();
+ * 3) Logging instead of println
+ * 4)
+ */
 
 /**
  * A peer process that can receive peers from the registry as well as send a report on it's known sources and peers
  * <p>
  * TODO: CREATE ENUM CLASS FOR THE TYPE OF REQUESTS RECEIVED, PACKAGES
+ * TODO: I don't think we are using peer isAlive boolean anymore since we have only active members in our peerlist
  *
  * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
  * @version 2.0 (Iteration 2)
