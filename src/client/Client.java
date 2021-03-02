@@ -19,7 +19,6 @@ import java.util.concurrent.*;
  * 2) Use vectors instead of arraylist for things modified by multiple threads
  * because they are already synchronised, Vector<T> v = new Vector<T>();
  * 3) Logging instead of println
- * 4)
  */
 
 /**
@@ -27,6 +26,7 @@ import java.util.concurrent.*;
  * <p>
  * TODO: CREATE ENUM CLASS FOR THE TYPE OF REQUESTS RECEIVED, PACKAGES
  * TODO: I don't think we are using peer isAlive boolean anymore since we have only active members in our peerlist
+ * TODO: checking for bad pears
  *
  * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
  * @version 2.0 (Iteration 2)

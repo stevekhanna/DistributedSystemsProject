@@ -11,7 +11,9 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class RequestProcessor implements Runnable {
@@ -61,7 +63,6 @@ public class RequestProcessor implements Runnable {
     }
 
     public void handlePeerRequest() {
-        PeerTable peerTable = client.getReport().getPeerTable();
 
         String packetSource = packet.getSource();
         String message = packet.getMessage();
@@ -72,27 +73,31 @@ public class RequestProcessor implements Runnable {
                 .append(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()))
                 .append("\n");
 
-        client.getReport().getPeersReceived().add(sb.toString());
+        Report report = client.getReport();
+        report.getPeersReceived().add(sb.toString());
         Peer source = new Peer(packet.getSource());
 
-        if(client.getFutures().containsKey(packet.getSource())){
-            client.getFutures().get(packet.getSource()).cancel(true);
+        Map<String, Future> futures = client.getFutures();
+        if(futures.containsKey(packet.getSource())){
+            futures.get(packet.getSource()).cancel(true);
         }
-        client.getFutures().put(packet.getSource(), client.getPool().schedule(new Inactive(client, new Peer(packet.getSource())), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
+        futures.put(packet.getSource(), client.getPool().schedule(new Inactive(client, new Peer(packet.getSource())), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
 
         Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
         Peer peerReceived = new Peer(packet.getMessage());
         peerList.add(peerReceived);
 
+        PeerTable peerTable = report.getPeerTable();
         if (!peerTable.containsKey(source)) {
             peerTable.put(source, peerList);
         } else {
             Set<Peer> temp = peerTable.get(source);
             temp.addAll(peerList);
         }
+        Set<Peer> activePeers = client.getActivePeers();
 
-        client.getActivePeers().add(source);
-        client.getActivePeers().add(peerReceived);
+        activePeers.add(source);
+        activePeers.add(peerReceived);
 
     }
 }
