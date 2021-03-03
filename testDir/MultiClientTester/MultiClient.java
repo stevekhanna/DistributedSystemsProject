@@ -3,7 +3,7 @@ package MultiClientTester;
 import client.logic.Driver;
 
 public class MultiClient {
-    private static final String HOST = "localhost";
+    private static final String HOST = "127.0.0.1";
 
     private static final String PORT = "55921";
 

@@ -249,7 +249,7 @@ public class Client {
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
 
         while (!shutdown) {
-            byte[] msg = new byte[64];
+            byte[] msg = new byte[ClientConfig.DEFAULT_PACKET_LENGTH];
             DatagramPacket pkt = new DatagramPacket(msg, msg.length);
             try {
                 udpSocket.receive(pkt);
