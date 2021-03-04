@@ -14,6 +14,7 @@ public class ClientConfig {
     public static final int UDP_DEFAULT_PORT = 0;
     public static final int DEFAULT_PACKET_LENGTH = 64;
     public static final String DEFAULT_CLIENT_IP = "localhost";
+    public static final String DEFAULT_LAN_IP = "192.168.1.65";
 
     public static final int THREAD_POOL_SIZE = 10;
     public static final int KEEP_ALIVE_INTERVAL = 60 * 1000;

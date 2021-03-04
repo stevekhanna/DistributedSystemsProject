@@ -54,11 +54,15 @@ public class GUI extends JPanel implements ActionListener {
         JLabel label2 = new JLabel(client.getTeamName());
         add(label2);
 
-        //TODO auto scroll this
         //list of snippets
         snippetList = new DefaultListModel<>();
         JList<String> list = new JList<>(snippetList);
-        add(new JScrollPane(list));
+        JScrollPane scrollPane = new JScrollPane(list);
+        add(scrollPane);
+
+        scrollPane.getVerticalScrollBar().addAdjustmentListener(
+                e -> e.getAdjustable().setValue(e.getAdjustable().getMaximum())
+        );
 
         //Input field
         inputField = new JTextField(20);
@@ -78,6 +82,7 @@ public class GUI extends JPanel implements ActionListener {
             inputField.setText("");
         }
     }
+
 
     public void updateSnippetList(String snippet) {
         snippetList.addElement(snippet);

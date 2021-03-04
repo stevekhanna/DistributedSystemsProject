@@ -118,7 +118,7 @@ public class Client {
         this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
         this.lamportClock = new LamportClock();
         this.report = new Report(this);
-        this.clientIP = GeneralUtil.getMyIP();
+        this.clientIP = serverIP.equals("127.0.0.1") ? ClientConfig.DEFAULT_LAN_IP : GeneralUtil.getMyIP();
     }
 
     /**
@@ -243,7 +243,7 @@ public class Client {
 
         //need to handle situation when udp port doesn't get created properly, try again in a loop or terminate
         //ADD ourselves to activePeers if we aren't in there
-        activePeers.add(new Peer(GeneralUtil.getMyIP(), this.udpSocket.getLocalPort()));
+        activePeers.add(new Peer(this.clientIP, this.udpSocket.getLocalPort()));
 
         //start keepalive timer
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
