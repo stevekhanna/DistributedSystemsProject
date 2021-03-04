@@ -27,6 +27,7 @@ public class UDPBroadcast implements Runnable {
     public void run() {
         //enumerate all known peers
         System.out.println("broadcasting " + message);
+        System.out.println(client.getActivePeers().toString());
         byte[] msg = message.getBytes();
         client.getActivePeers().forEach(peer -> {
             try {

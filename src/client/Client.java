@@ -132,6 +132,7 @@ public class Client {
         while (numberOfPeers > 0) {
             Peer peer = new Peer(reader.readLine());
             peerList.add(peer);
+            System.out.printf("Peer received is %s\n", peer);
             activePeers.add(peer);
             futures.put(peer.toString().replace("\n", ""), pool.schedule(new Inactive(this, peer), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
             numberOfPeers--;
@@ -140,7 +141,7 @@ public class Client {
         String key = source.toString().replace("\n", "");
         if (!activePeers.contains(source)) {
             report.getPeerTable().put(source, peerList); //adding source peer to the report
-            activePeers.add(source);
+//            activePeers.add(source);
             if (futures.containsKey(key)) {
                 futures.get(key).cancel(true);
             }

@@ -70,7 +70,7 @@ public class Report {
                     .append("\n")
                     .append(getPeersReport(source));
         });
-        return (sb.toString().equals("") ? "\n" : sb.toString());
+        return sb.toString();
     }
 
     public int countPeers() {
