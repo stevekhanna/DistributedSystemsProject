@@ -54,6 +54,7 @@ public class GUI extends JPanel implements ActionListener {
         JLabel label2 = new JLabel(client.getTeamName());
         add(label2);
 
+        //TODO auto scroll this
         //list of snippets
         snippetList = new DefaultListModel<>();
         JList<String> list = new JList<>(snippetList);

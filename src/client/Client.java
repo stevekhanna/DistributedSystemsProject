@@ -242,7 +242,7 @@ public class Client {
         connectToRegistry();
 
         //need to handle situation when udp port doesn't get created properly, try again in a loop or terminate
-        //ADD ourselves to peerTable
+        //ADD ourselves to activePeers if we aren't in there
         activePeers.add(new Peer(GeneralUtil.getMyIP(), this.udpSocket.getLocalPort()));
 
         //start keepalive timer
@@ -324,7 +324,6 @@ public class Client {
         System.out.println("Running keepalive");
         String randomPeer = getRandomPeer();
         //snip newline and send peer
-        System.out.println(randomPeer);
         new Thread(new UDPBroadcast(this, "peer", "peer" + randomPeer.replace("\n", ""))).start();
         //restart keepalive
         futures.get(teamName).cancel(true);

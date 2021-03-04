@@ -1,5 +1,11 @@
 package client;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -22,6 +28,21 @@ public class Report {
 
     public PeerTable getPeerTable() {
         return peerTable;
+    }
+
+    public void addSentPeerToReport(Peer peer, String message){
+        StringBuilder sb = new StringBuilder();
+        try {
+            sb.append(InetAddress.getByName(peer.getAddress()).toString().substring(1))
+                    .append(":")
+                    .append(peer.getPort()).append(" ")
+                    .append(message.substring(4)).append(" ")
+                    .append(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()))
+                    .append("\n");
+        } catch (UnknownHostException e) {
+            System.out.println("Unknown Host");
+        }
+        this.peersSent.add(sb.toString());
     }
 
     /**

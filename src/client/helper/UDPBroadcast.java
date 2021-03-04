@@ -5,10 +5,6 @@ import client.Client;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 
 public class UDPBroadcast implements Runnable {
 
@@ -34,14 +30,7 @@ public class UDPBroadcast implements Runnable {
                 DatagramPacket packet = new DatagramPacket(msg, msg.length, InetAddress.getByName(peer.getAddress()), peer.getPort());
                 client.getUDPSocket().send(packet);
                 if (type.equals("peer")) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(InetAddress.getByName(peer.getAddress()).toString().substring(1))
-                            .append(":")
-                            .append(peer.getPort()).append(" ")
-                            .append(message.substring(4)).append(" ")
-                            .append(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()))
-                            .append("\n");
-                    client.getReport().getPeersSent().add(sb.toString());
+                    client.getReport().addSentPeerToReport(peer, message);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
