@@ -1,6 +1,7 @@
 package client.display;
 
 import client.Client;
+import client.common.ClientConfig;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,10 @@ public class GUI extends JPanel implements ActionListener {
     private DefaultListModel<String> snippetList;
 
     public GUI(String[] args) {
-        super(new GridLayout(5, 1, 5, 5));
+        super(new GridLayout(ClientConfig.GRID_LAYOUT_ROWS,
+                ClientConfig.GRID_LAYOUT_COLS,
+                ClientConfig.GRID_LAYOUT_HGAP,
+                ClientConfig.GRID_LAYOUT_VGAP));
         initGUI(args);
     }
 
@@ -25,7 +29,7 @@ public class GUI extends JPanel implements ActionListener {
         setFocusable(true);
         try {
             if (args.length != 3) {
-                System.out.println("No Server IP, port and team name provided. Using Default Constructor with: localhost:12345");
+                System.out.println("Using Default Constructor with: 127.0.0.1:1245");
                 client = new Client();
             } else {
                 client = new Client(args[0], Integer.parseInt(args[1]), args[2], this);
@@ -41,7 +45,7 @@ public class GUI extends JPanel implements ActionListener {
             });
             t.start();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Problem creating client");
         }
         createLabels();
     }

@@ -238,7 +238,7 @@ public class Client {
 
         //setup UDP broadcast socket
         try {
-            udpSocket = new DatagramSocket(ClientConfig.UDP_DEFAULT_PORT);
+            udpSocket = new DatagramSocket(ClientConfig.DEFAULT_UDP_PORT_NUMBER);
             udpSocket.setBroadcast(true);
         } catch (Exception e) {
             System.out.println("Problem initializing broadcast socket");
