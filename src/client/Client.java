@@ -1,5 +1,6 @@
 package client;
 
+import Server.RegistryIteration2.Registry;
 import client.common.ClientConfig;
 import client.display.GUI;
 import client.helper.Inactive;
@@ -12,6 +13,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  * NOTES FOR CLEANING UP CODE
  * <p>
@@ -80,6 +83,8 @@ public class Client {
     private final LamportClock lamportClock;
 
     private final Report report;
+
+    private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
 
     /**
      * Default class constructor
@@ -240,10 +245,13 @@ public class Client {
         try {
             udpSocket = new DatagramSocket(ClientConfig.DEFAULT_UDP_PORT_NUMBER);
             udpSocket.setBroadcast(true);
-        } catch (Exception e) {
-            System.out.println("Problem initializing broadcast socket");
-            e.printStackTrace();
+            LOGGER.log(Level.INFO, "Client UDP port started at" + udpSocket.getLocalPort());
+        } catch (SocketException e) {
+            LOGGER.log(Level.SEVERE, "Unable to initialize udp socket");
+            System.exit(1);
         }
+
+
 
         connectToRegistry();
 
@@ -302,15 +310,25 @@ public class Client {
         System.exit(0);
     }
 
+    /**
+     *
+     * @param snippet
+     */
     public void sendSnippet(String snippet) {
         new Thread(new UDPBroadcast(this, "snip", "snip" + lamportClock.getTimestamp() + " " + snippet)).start();
     }
 
+    /**
+     *
+     */
     public void shutdown() {
         this.shutdown = true;
         udpSocket.close();
     }
 
+    /**
+     *
+     */
     public void keepAlive() {
         System.out.println("Running keepalive");
         String randomPeer = getRandomPeer();
@@ -321,12 +339,18 @@ public class Client {
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
     }
 
-    //TODO actually send a random peer, maybe add complexity to this.
+    /**
+     * Get and return 1 random peer
+     * @return the chosen peer
+     */
     public String getRandomPeer() {
         return activePeers.toArray()[new Random().nextInt(activePeers.size())].toString();
     }
 
-    //TODO one liner this
+    /**
+     * Removes target peer from active peers
+     * @param target the peer to be removed
+     */
     public void expired(Peer target) {
         //remove target from known active peers
         if (activePeers.contains(target)) {
