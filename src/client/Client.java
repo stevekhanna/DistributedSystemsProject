@@ -223,13 +223,11 @@ public class Client {
             Socket socket = new Socket(serverIP, port);
             handleRequest(socket);
             socket.close();
-            System.out.println("Socket successfully closed.");
+            LOGGER.log(Level.INFO, "Socket successfully closed.");
         } catch (BindException be) {
-            System.out.println("Trouble binding to port");
-            be.printStackTrace();
-        } catch (IOException ce) {
-            System.out.println("Trouble connecting, connection refused");
-            ce.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Unable to start TCP socket at port " + port);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Trouble connecting, connection refused");
         }
     }
 
@@ -250,8 +248,6 @@ public class Client {
             LOGGER.log(Level.SEVERE, "Unable to initialize udp socket");
             System.exit(1);
         }
-
-
 
         connectToRegistry();
 
