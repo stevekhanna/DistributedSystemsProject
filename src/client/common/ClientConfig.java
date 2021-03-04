@@ -13,10 +13,11 @@ public class ClientConfig {
     public static final int DEFAULT_PORT_NUMBER = 1245;
     public static final int UDP_DEFAULT_PORT = 0;
     public static final int DEFAULT_PACKET_LENGTH = 64;
+    public static final String DEFAULT_CLIENT_IP = "localhost";
 
     public static final int THREAD_POOL_SIZE = 10;
-    public static final int KEEP_ALIVE_INTERVAL = 10 * 1000;
-    public static final int INACTIVITY_INTERVAL = 2 * 60 * 1000;
+    public static final int KEEP_ALIVE_INTERVAL = 60 * 1000;
+    public static final int INACTIVITY_INTERVAL = 3 * 60 * 1000;
 
     public static final String SOURCE_DIR = "src/client";
     public static final List<Path> CODE_FILES = new ArrayList<>();

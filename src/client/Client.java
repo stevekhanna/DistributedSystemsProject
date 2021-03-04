@@ -39,6 +39,8 @@ public class Client {
      */
     private final String serverIP;
 
+    private final String clientIP;
+
     /**
      * Port number of registry
      */
@@ -94,6 +96,7 @@ public class Client {
         this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
         this.lamportClock = new LamportClock();
         this.report = new Report(this);
+        this.clientIP = ClientConfig.DEFAULT_CLIENT_IP;
     }
 
     /**
@@ -115,6 +118,7 @@ public class Client {
         this.pool = Executors.newScheduledThreadPool(ClientConfig.THREAD_POOL_SIZE);
         this.lamportClock = new LamportClock();
         this.report = new Report(this);
+        this.clientIP = GeneralUtil.getMyIP();
     }
 
     /**
@@ -200,16 +204,11 @@ public class Client {
                     }
                     case "get location" -> {
                         System.out.println("get location Received");
-                        String ip = GeneralUtil.getMyIP();
-                        if (ip.equals("Error")) {
-                            writer.write("Garbage\n");
-                        } else {
-                            response.append((serverIP.equals("localhost") ? "127.0.0.1" : ip))
-                                    .append(":")
-                                    .append(udpSocket.getLocalPort())
-                                    .append("\n");
-                            writer.write(response.toString());
-                        }
+                        response.append(this.clientIP)
+                                .append(":")
+                                .append(udpSocket.getLocalPort())
+                                .append("\n");
+                        writer.write(response.toString());
                         writer.flush();
                     }
                     default -> System.out.printf("Request not recognized: %s\n", request);
@@ -244,7 +243,7 @@ public class Client {
 
         //need to handle situation when udp port doesn't get created properly, try again in a loop or terminate
         //ADD ourselves to peerTable
-        activePeers.add(new Peer(this.serverIP, this.udpSocket.getLocalPort()));
+        activePeers.add(new Peer(GeneralUtil.getMyIP(), this.udpSocket.getLocalPort()));
 
         //start keepalive timer
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
