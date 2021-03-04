@@ -15,8 +15,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RequestProcessor implements Runnable {
+
+    private final static Logger LOGGER = Logger.getLogger(RequestProcessor.class.getName());
 
     private final PeerPacket packet;
     private final Client client;
@@ -36,18 +40,19 @@ public class RequestProcessor implements Runnable {
             String request = packet.getType();
             switch (request) {
                 case "snip" -> {
-                    System.out.println("Snip request received");
+                    LOGGER.log(Level.INFO, "Snip request received");
                     handleSnipRequest();
                 }
                 case "peer" -> {
-                    System.out.println("Peer request received");
+                    LOGGER.log(Level.INFO, "Peer request received");
                     handlePeerRequest();
                 }
                 case "stop" -> {
-                    System.out.println("Stop request received, terminating program");
+                    LOGGER.log(Level.INFO, "Stop request received, terminating program");
                     client.shutdown();
+
                 }
-                default -> System.out.printf("Request not recognized: %s\n", request);
+                default -> LOGGER.log(Level.INFO, "Request not recognized: " + request);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +63,7 @@ public class RequestProcessor implements Runnable {
         int timestamp = Math.max(client.getLamportClock().getTimestamp(), packet.getTimeReceived()) + 1;
         client.getLamportClock().setTimestamp(timestamp);
         client.getSnippetList().add(new Snippet(timestamp, packet));
-        System.out.printf("snip message is %s\n", packet.getMessage());
+        LOGGER.log(Level.INFO, "snip message is "+ packet.getMessage());
         SwingUtilities.invokeLater(() -> client.getGui().updateSnippetList(timestamp + packet.getMessage()));
     }
 

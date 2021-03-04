@@ -37,6 +37,8 @@ import java.util.logging.Logger;
  */
 public class Client {
 
+    private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
+
     /**
      * Server ip of registry
      */
@@ -84,7 +86,6 @@ public class Client {
 
     private final Report report;
 
-    private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
 
     /**
      * Default class constructor
@@ -243,16 +244,15 @@ public class Client {
         try {
             udpSocket = new DatagramSocket(ClientConfig.DEFAULT_UDP_PORT_NUMBER);
             udpSocket.setBroadcast(true);
-            LOGGER.log(Level.INFO, "Client UDP port started at" + udpSocket.getLocalPort());
+            LOGGER.log(Level.INFO, "Client UDP port started at " + udpSocket.getLocalPort());
         } catch (SocketException e) {
             LOGGER.log(Level.SEVERE, "Unable to initialize udp socket");
             System.exit(1);
         }
 
+        //First connection to Registry
         connectToRegistry();
 
-        //need to handle situation when udp port doesn't get created properly, try again in a loop or terminate
-        //ADD ourselves to activePeers if we aren't in there
         activePeers.add(new Peer(this.clientIP, this.udpSocket.getLocalPort()));
 
         //start keepalive timer
@@ -263,8 +263,8 @@ public class Client {
             DatagramPacket pkt = new DatagramPacket(msg, msg.length);
             try {
                 udpSocket.receive(pkt);
-            } catch (Exception e) {
-                break;
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Issue receiving from UDP socket with port " + port);
             }
 
             pool.execute(new RequestProcessor(this, new PeerPacket(pkt)));
@@ -301,7 +301,9 @@ public class Client {
         }
         System.out.println("Executor Shutdown successful");
 
+        // Second Connection to Registry
         connectToRegistry();
+
         System.out.println("Sent updated report to registry, now terminating");
         System.exit(0);
     }
