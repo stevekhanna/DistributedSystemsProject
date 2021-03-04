@@ -131,11 +131,11 @@ public class Client {
      */
     private void receivePeers(BufferedReader reader, Peer source) throws IOException {
         int numberOfPeers = Integer.parseInt(reader.readLine());
-        Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
+        Set<Peer> peerSet = Collections.synchronizedSet(new HashSet<>());
 
         while (numberOfPeers > 0) {
             Peer peer = new Peer(reader.readLine());
-            peerList.add(peer);
+            peerSet.add(peer);
             System.out.printf("Peer received is %s\n", peer);
             activePeers.add(peer);
             futures.put(peer.toString().replace("\n", ""), pool.schedule(new Inactive(this, peer), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
@@ -143,17 +143,8 @@ public class Client {
         }
 
         String key = source.toString().replace("\n", "");
-        if (!activePeers.contains(source)) {
-            report.getPeerTable().put(source, peerList); //adding source peer to the report
-//            activePeers.add(source);
-            if (futures.containsKey(key)) {
-                futures.get(key).cancel(true);
-            }
-        } else { //does contain source
-            Set<Peer> temp = report.getPeerTable().get(source);
-            temp.addAll(peerList);
-        }
-        futures.put(key, pool.schedule(new Inactive(this, source), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
+        //adding source peer to the report
+        report.getPeerTable().put(source, peerSet);
     }
 
     /**
@@ -219,6 +210,21 @@ public class Client {
             System.out.println("Reader and Writer successfully closed.");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void connectToRegistry() {
+        try {
+            Socket socket = new Socket(serverIP, port);
+            handleRequest(socket);
+            socket.close();
+            System.out.println("Socket successfully closed.");
+        } catch (BindException be) {
+            System.out.println("Trouble binding to port");
+            be.printStackTrace();
+        } catch (IOException ce) {
+            System.out.println("Trouble connecting, connection refused");
+            ce.printStackTrace();
         }
     }
 
@@ -294,21 +300,6 @@ public class Client {
         connectToRegistry();
         System.out.println("Sent updated report to registry, now terminating");
         System.exit(0);
-    }
-
-    public void connectToRegistry() {
-        try {
-            Socket socket = new Socket(serverIP, port);
-            handleRequest(socket);
-            socket.close();
-            System.out.println("Socket successfully closed.");
-        } catch (BindException be) {
-            System.out.println("Trouble binding to port");
-            be.printStackTrace();
-        } catch (IOException ce) {
-            System.out.println("Trouble connecting, connection refused");
-            ce.printStackTrace();
-        }
     }
 
     public void sendSnippet(String snippet) {
