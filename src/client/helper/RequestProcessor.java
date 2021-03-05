@@ -90,6 +90,7 @@ public class RequestProcessor implements Runnable {
         futures.put(packetSource, client.getPool().schedule(new Inactive(client, new Peer(packetSource)), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
 
         Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
+        LOGGER.log(Level.INFO, "peer received is " + packet.getMessage());
         Peer peerReceived = new Peer(packet.getMessage());
         peerList.add(peerReceived);
 
@@ -109,10 +110,10 @@ public class RequestProcessor implements Runnable {
             activePeers.add(source);
             activePeers.add(peerReceived);
         }else{
-            if(!isLocal(source.getAddress()) || !peerReceived.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)){
+            if(!isLocal(source.getAddress()) && !source.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)){
                 activePeers.add(source);
             }
-            if(!isLocal(peerReceived.getAddress()) || peerReceived.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)){
+            if(!isLocal(peerReceived.getAddress()) && !peerReceived.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)){
                 activePeers.add(peerReceived);
             }
         }
