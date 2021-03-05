@@ -1,4 +1,4 @@
-package client;
+package client.peer;
 
 import java.io.Serializable;
 import java.net.DatagramPacket;
@@ -14,7 +14,6 @@ public class PeerPacket implements Serializable {
     private final String source;
     private final int timeReceived;
 
-    //TODO: something weird happens with empty snippet
     public PeerPacket(DatagramPacket datagram) {
         String content = new String(datagram.getData(), 0, datagram.getLength());
         this.type = content.substring(0, 4);

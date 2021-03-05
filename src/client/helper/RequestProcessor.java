@@ -1,14 +1,11 @@
 package client.helper;
 
 
-import client.*;
-import client.common.ClientConfig;
+import client.general.ClientConfig;
+import client.logic.Client;
+import client.peer.*;
 
 import javax.swing.*;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;

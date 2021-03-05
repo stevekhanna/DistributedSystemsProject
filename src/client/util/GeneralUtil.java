@@ -1,15 +1,13 @@
 package client.util;
 
-import client.common.ClientConfig;
+import client.general.ClientConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class GeneralUtil {
 

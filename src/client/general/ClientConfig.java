@@ -1,4 +1,4 @@
-package client.common;
+package client.general;
 
 import java.nio.file.Path;
 import java.util.ArrayList;

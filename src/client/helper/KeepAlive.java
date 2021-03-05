@@ -1,6 +1,6 @@
 package client.helper;
 
-import client.Client;
+import client.logic.Client;
 
 public class KeepAlive implements Runnable{
 

@@ -1,7 +1,7 @@
 package client.helper;
 
-import client.Client;
-import client.Peer;
+import client.logic.Client;
+import client.peer.Peer;
 
 public class Inactive implements Runnable{
 

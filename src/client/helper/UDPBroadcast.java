@@ -1,6 +1,6 @@
 package client.helper;
 
-import client.Client;
+import client.logic.Client;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

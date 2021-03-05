@@ -1,11 +1,16 @@
-package client;
+package client.logic;
 
-import client.common.ClientConfig;
+import client.general.ClientConfig;
 import client.display.GUI;
 import client.helper.Inactive;
 import client.helper.KeepAlive;
 import client.helper.RequestProcessor;
 import client.helper.UDPBroadcast;
+import client.peer.Peer;
+import client.peer.PeerPacket;
+import client.peer.Report;
+import client.peer.Snippet;
+import client.synchronization.LamportClock;
 import client.util.GeneralUtil;
 
 import java.io.*;

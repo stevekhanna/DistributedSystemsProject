@@ -1,11 +1,11 @@
-package client;
+package client.synchronization;
 
 public class LamportClock {
 
     private int timestamp;
 
     public LamportClock(){
-        timestamp = 1;
+        timestamp = 0;
     }
 
     public void setTimestamp(int timestamp){

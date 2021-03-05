@@ -1,4 +1,6 @@
-package client;
+package client.peer;
+
+import client.peer.PeerPacket;
 
 public class Snippet {
 

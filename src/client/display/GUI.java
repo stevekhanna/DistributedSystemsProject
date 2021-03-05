@@ -1,7 +1,7 @@
 package client.display;
 
-import client.Client;
-import client.common.ClientConfig;
+import client.logic.Client;
+import client.general.ClientConfig;
 
 import javax.swing.*;
 import java.awt.*;

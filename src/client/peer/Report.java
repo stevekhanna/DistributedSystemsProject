@@ -1,4 +1,6 @@
-package client;
+package client.peer;
+
+import client.logic.Client;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

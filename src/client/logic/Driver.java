@@ -1,6 +1,6 @@
 package client.logic;
 
-import client.common.ClientConfig;
+import client.general.ClientConfig;
 import client.display.GUI;
 
 import javax.swing.JFrame;
