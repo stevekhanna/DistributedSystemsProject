@@ -35,7 +35,7 @@ public class RequestProcessor implements Runnable {
     }
 
     /**
-     *
+     * handling the packets that are received
      */
     @Override
     public void run() {
@@ -62,7 +62,7 @@ public class RequestProcessor implements Runnable {
     }
 
     /**
-     * TODO if received snippet from someone not in our list, add them
+     * handling the snippet type packet
      */
     public void handleSnipRequest() {
         int timestamp = Math.max(client.getLamportClock().getTimestamp(), packet.getTimeReceived()) + 1;
@@ -73,7 +73,7 @@ public class RequestProcessor implements Runnable {
     }
 
     /**
-     *
+     * handling the peer type packet and adding to report
      */
     public void handlePeerRequest() {
 
@@ -120,9 +120,9 @@ public class RequestProcessor implements Runnable {
     }
 
     /**
-     *
-     * @param address
-     * @return
+     * checking if address is a local address
+     * @param address the address to check
+     * @return true if address is local
      */
     public boolean isLocal(String address){
         return address.equals(ClientConfig.DEFAULT_CLIENT_IP);

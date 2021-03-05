@@ -20,7 +20,6 @@ public class GeneralUtil {
 
     /**
      * Convert all source code for peer process to string
-     * TODO: Read from a list
      *
      * @return String response, all the source code as a string
      */
@@ -50,8 +49,8 @@ public class GeneralUtil {
      Availability: https://stackoverflow.com/questions/2939218/getting-the-external-ip-address-in-java
      */
     /**
-     *
-     * @return
+     * Method to return my current IPv4 Address
+     * @return my IP
      */
     public static String getMyIP(){
         URL whatismyip = null;

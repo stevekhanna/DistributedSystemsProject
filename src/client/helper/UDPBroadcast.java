@@ -32,6 +32,7 @@ public class UDPBroadcast implements Runnable {
 
     /**
      * sends message to all active peers in our peerlist
+     * and add them to report
      */
     @Override
     public void run() {

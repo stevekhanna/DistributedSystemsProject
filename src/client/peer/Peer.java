@@ -7,8 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
- *
- *
+ * Represents a peer in our system
  * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
  * @version 2.0 (Iteration 2)
  * @since 01-29-2021
@@ -20,8 +19,8 @@ public class Peer {
 	private final String timeReceived = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now());
 
 	/**
-	 *
-	 * @param peer
+	 * constructor for when a string reprsentation of the peer is received
+	 * @param peer string representation of peer
 	 */
 	public Peer(String peer){
 		this.address = peer.split(":")[0];

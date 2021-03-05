@@ -8,7 +8,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 /**
- *
+ * Packets that are received by our system from udp
  *
  * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
  * @version 2.0 (Iteration 2)
@@ -21,6 +21,10 @@ public class PeerPacket implements Serializable {
     private final String source;
     private final int timeReceived;
 
+    /**
+     * constructor that handles properly setting the instance variables of the packet
+     * @param datagram datagram received
+     */
     public PeerPacket(DatagramPacket datagram) {
         String content = new String(datagram.getData(), 0, datagram.getLength());
         this.type = content.substring(0, 4);

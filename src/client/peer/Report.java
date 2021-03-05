@@ -36,6 +36,11 @@ public class Report {
         return peerTable;
     }
 
+    /**
+     * adding a peer that was sent to our report to be sent later
+     * @param peer the peer that was
+     * @param message
+     */
     public void addSentPeerToReport(Peer peer, String message){
         StringBuilder sb = new StringBuilder();
         try {
@@ -100,6 +105,10 @@ public class Report {
         return sb.toString();
     }
 
+    /**
+     * count number of peers in our peertable
+     * @return the amount of peers in our peertable
+     */
     public int countPeers() {
         int totalPeers = 0;
         for (Set<Peer> setOfPeers : peerTable.values()) {
@@ -108,6 +117,10 @@ public class Report {
         return totalPeers;
     }
 
+    /**
+     * generate the report to be sent to registry
+     * @return the report as a string
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

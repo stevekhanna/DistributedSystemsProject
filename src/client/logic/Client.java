@@ -148,7 +148,6 @@ public class Client {
      * @param reader socket to read the peers from
      * @param source for storing the peers with their source
      * @throws IOException if there is a problem communicating with the registry
-     *                     TODO change to UTC Time
      */
     private void receivePeers(BufferedReader reader, Peer source) throws IOException {
         int numberOfPeers = Integer.parseInt(reader.readLine());
@@ -171,6 +170,11 @@ public class Client {
         report.getPeerTable().put(source, peerSet);
     }
 
+    /**
+     * Checking to see if port number receieved is between the valid range
+     * @param peer
+     * @return boolean if port number is valid
+     */
     public boolean isValidPeer(Peer peer) {
         return peer.getPort() >= 1 && peer.getPort() <= 65535;
     }
@@ -242,7 +246,7 @@ public class Client {
     }
 
     /**
-     *
+     * Try to connect to the registry and log if any errors occur
      */
     public void connectToRegistry() {
         try {
@@ -307,6 +311,7 @@ public class Client {
 
         pool.shutdown();
         LOGGER.log(Level.INFO, "Shutting down pool");
+        
         //https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html#shutdown()
         try {
             // Wait a while for existing tasks to terminate
@@ -332,6 +337,7 @@ public class Client {
     }
 
     /**
+     * Send snippet method after cleaning up payload
      * @param snippet
      */
     public void sendSnippet(String snippet) {
@@ -339,7 +345,7 @@ public class Client {
     }
 
     /**
-     *
+     * Shutdown boolean to close UDP socket
      */
     public void shutdown() {
         this.shutdown = true;

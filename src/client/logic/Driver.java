@@ -27,7 +27,7 @@ public class Driver extends JFrame {
     /**
      * Initiates the frame, adds JPanel Gui to frame
      * and fits size to the preferred size
-     * @param args
+     * @param args args for the client in the gui
      */
     private void initFrame(String[] args) {
         setSize(ClientConfig.WIDTH, ClientConfig.HEIGHT);
@@ -44,7 +44,7 @@ public class Driver extends JFrame {
     }
 
     /**
-     * TODO needs doc
+     * populate the list of source files
      */
     private static void populateConfigFile() {
 
