@@ -264,26 +264,23 @@ public class Client {
             try {
                 udpSocket.receive(pkt);
             } catch (IOException e) {
-                LOGGER.log(Level.SEVERE, "Issue receiving from UDP socket with port " + port);
+                LOGGER.log(Level.SEVERE, "Issue receiving from UDP socket");
+            }
+            if(!shutdown){
+                pool.execute(new RequestProcessor(this, new PeerPacket(pkt)));
+
+                //restart KeepAlive timer
+                futures.get(teamName).cancel(true);
+                futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
             }
 
-            pool.execute(new RequestProcessor(this, new PeerPacket(pkt)));
-
-            //restart KeepAlive timer
-            futures.get(teamName).cancel(true);
-            futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
-        }
-        System.out.println("Closing UDP socket");
-        udpSocket.close();
-
-        //cleanup futures
-        System.out.println("Cleaning up futures");
-        for (Map.Entry<String, Future> elem : futures.entrySet()) {
-            elem.getValue().cancel(true);
         }
 
-        System.out.println("Shutting down pool");
+        futures.forEach((key, value) -> value.cancel(true));
+        LOGGER.log(Level.INFO, "Cleaned up futures");
+
         pool.shutdown();
+        LOGGER.log(Level.INFO, "Shutting down pool");
         //https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html#shutdown()
         try {
             // Wait a while for existing tasks to terminate
@@ -299,7 +296,7 @@ public class Client {
             // Preserve interrupt status
             Thread.currentThread().interrupt();
         }
-        System.out.println("Executor Shutdown successful");
+        LOGGER.log(Level.INFO, "Pool Shutdown successful");
 
         // Second Connection to Registry
         connectToRegistry();
@@ -321,6 +318,7 @@ public class Client {
      */
     public void shutdown() {
         this.shutdown = true;
+        LOGGER.log(Level.INFO, "Closing UDP socket");
         udpSocket.close();
     }
 

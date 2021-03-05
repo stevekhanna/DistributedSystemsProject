@@ -40,7 +40,7 @@ public class RequestProcessor implements Runnable {
             String request = packet.getType();
             switch (request) {
                 case "snip" -> {
-                    LOGGER.log(Level.INFO, "Snip request received");
+                    LOGGER.log(Level.INFO, "Snip request received by " + client.getUDPSocket().getLocalSocketAddress().toString());
                     handleSnipRequest();
                 }
                 case "peer" -> {
@@ -70,23 +70,16 @@ public class RequestProcessor implements Runnable {
     public void handlePeerRequest() {
 
         String packetSource = packet.getSource();
-        String message = packet.getMessage();
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(packetSource).append(" ")
-                .append(message).append(" ")
-                .append(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()))
-                .append("\n");
 
         Report report = client.getReport();
-        report.getPeersReceived().add(sb.toString());
-        Peer source = new Peer(packet.getSource());
+        report.getPeersReceived().add(packet.toString());
+        Peer source = new Peer(packetSource);
 
         Map<String, Future> futures = client.getFutures();
-        if(futures.containsKey(packet.getSource())){
-            futures.get(packet.getSource()).cancel(true);
+        if(futures.containsKey(packetSource)){
+            futures.get(packetSource).cancel(true);
         }
-        futures.put(packet.getSource(), client.getPool().schedule(new Inactive(client, new Peer(packet.getSource())), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
+        futures.put(packetSource, client.getPool().schedule(new Inactive(client, new Peer(packetSource)), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
 
         Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
         Peer peerReceived = new Peer(packet.getMessage());

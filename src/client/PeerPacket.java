@@ -2,12 +2,12 @@ package client;
 
 import java.io.Serializable;
 import java.net.DatagramPacket;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 public class PeerPacket implements Serializable {
-
-    public enum Type {
-        snip, peer, stop
-    }
 
     private final String type;
     private final String message;
@@ -38,6 +38,14 @@ public class PeerPacket implements Serializable {
         this.message = tempMessage;
         this.timeReceived = timeReceived;
         this.source = datagram.getSocketAddress().toString().substring(1);
+    }
+
+    @Override
+    public String toString() {
+        return source + " "
+                + message + " "
+                + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now())
+                + "\n";
     }
 
     public String getMessage() {

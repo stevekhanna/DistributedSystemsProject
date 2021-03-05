@@ -5,8 +5,12 @@ import client.Client;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UDPBroadcast implements Runnable {
+
+    private final static Logger LOGGER = Logger.getLogger(UDPBroadcast.class.getName());
 
     private final Client client;
     private final String type;
@@ -18,12 +22,12 @@ public class UDPBroadcast implements Runnable {
         this.message = message;
     }
 
-    //TODO send to only peers that are still alive
     @Override
     public void run() {
         //enumerate all known peers
-        System.out.println("broadcasting " + message);
-        System.out.println(client.getActivePeers().toString());
+        LOGGER.log(Level.INFO, "Broadcasting " + message);
+        LOGGER.log(Level.INFO, "Current active peers are" + client.getActivePeers().toString());
+
         byte[] msg = message.getBytes();
         client.getActivePeers().forEach(peer -> {
             try {
