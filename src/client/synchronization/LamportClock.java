@@ -1,7 +1,8 @@
 package client.synchronization;
 
 /**
- *
+ * clock used for sending messages with timestamp and
+ * collaboration with peers
  *
  * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
  * @version 2.0 (Iteration 2)
