@@ -15,6 +15,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Process a request from a peer in the system
+ *
+ * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
+ * @version 2.0 (Iteration 2)
+ * @since 01-29-2021
+ */
 public class RequestProcessor implements Runnable {
 
     private final static Logger LOGGER = Logger.getLogger(RequestProcessor.class.getName());
@@ -27,12 +34,11 @@ public class RequestProcessor implements Runnable {
         this.packet = pkt;
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
-        processPacket();
-    }
-
-    public void processPacket() {
         try {
             String request = packet.getType();
             switch (request) {
@@ -55,7 +61,9 @@ public class RequestProcessor implements Runnable {
         }
     }
 
-    //If received snippet from someone not in our list, add them
+    /**
+     * TODO if received snippet from someone not in our list, add them
+     */
     public void handleSnipRequest() {
         int timestamp = Math.max(client.getLamportClock().getTimestamp(), packet.getTimeReceived()) + 1;
         client.getLamportClock().setTimestamp(timestamp);
@@ -64,6 +72,9 @@ public class RequestProcessor implements Runnable {
         SwingUtilities.invokeLater(() -> client.getGui().updateSnippetList(timestamp + packet.getMessage()));
     }
 
+    /**
+     *
+     */
     public void handlePeerRequest() {
 
         String packetSource = packet.getSource();
@@ -107,6 +118,11 @@ public class RequestProcessor implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param address
+     * @return
+     */
     public boolean isLocal(String address){
         return address.equals(ClientConfig.DEFAULT_CLIENT_IP);
     }

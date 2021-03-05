@@ -9,6 +9,13 @@ import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ *
+ * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
+ * @version 2.0 (Iteration 2)
+ * @since 01-29-2021
+ */
 public class UDPBroadcast implements Runnable {
 
     private final static Logger LOGGER = Logger.getLogger(UDPBroadcast.class.getName());
@@ -23,6 +30,9 @@ public class UDPBroadcast implements Runnable {
         this.message = message;
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
         //enumerate all known peers

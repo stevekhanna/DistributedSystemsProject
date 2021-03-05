@@ -11,7 +11,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
- * handle the get report request, getting the sources and their peers as a string
+ * Used to store all data for the report, getting the sources and their peers as a string
+ *
+ * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
+ * @version 2.0 (Iteration 2)
+ * @since 01-29-2021
  */
 public class Report {
 

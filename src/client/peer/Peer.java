@@ -6,6 +6,13 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+/**
+ *
+ *
+ * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
+ * @version 2.0 (Iteration 2)
+ * @since 01-29-2021
+ */
 public class Peer {
 
 	private final String address;
