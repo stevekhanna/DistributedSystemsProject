@@ -109,10 +109,10 @@ public class RequestProcessor implements Runnable {
             activePeers.add(source);
             activePeers.add(peerReceived);
         }else{
-            if(!isLocal(source.getAddress())){
+            if(!isLocal(source.getAddress()) || !peerReceived.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)){
                 activePeers.add(source);
             }
-            if(!isLocal(peerReceived.getAddress())){
+            if(!isLocal(peerReceived.getAddress()) || peerReceived.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)){
                 activePeers.add(peerReceived);
             }
         }

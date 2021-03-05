@@ -18,6 +18,7 @@ public class ClientConfig {
     public static final int DEFAULT_PORT_NUMBER = 1245;
     public static final int DEFAULT_UDP_PORT_NUMBER = 0;
     public static final String DEFAULT_CLIENT_IP = "127.0.0.1";
+    public static final String DEFAULT_CPSC_LOCAL_IP = "10.58.197.67";
     public static final String DEFAULT_LAN_IP = "192.168.1.65";
 
     /** max size of packets received */
