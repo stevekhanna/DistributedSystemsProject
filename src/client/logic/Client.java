@@ -283,11 +283,13 @@ public class Client {
         while (!shutdown) {
             byte[] msg = new byte[ClientConfig.DEFAULT_PACKET_LENGTH];
             DatagramPacket pkt = new DatagramPacket(msg, msg.length);
+
             try {
                 udpSocket.receive(pkt);
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, "Issue receiving from UDP socket");
             }
+
             if (!shutdown) {
                 pool.execute(new RequestProcessor(this, new PeerPacket(pkt)));
 
@@ -295,7 +297,6 @@ public class Client {
                 futures.get(teamName).cancel(true);
                 futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
             }
-
         }
 
         futures.forEach((key, value) -> value.cancel(true));
@@ -344,7 +345,7 @@ public class Client {
     }
 
     /**
-     *
+     * Let peers know we are alive
      */
     public void keepAlive() {
         System.out.println("Running keepalive");

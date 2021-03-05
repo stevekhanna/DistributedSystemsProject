@@ -92,8 +92,22 @@ public class RequestProcessor implements Runnable {
         Set<Peer> activePeers = client.getActivePeers();
 
         LOGGER.log(Level.INFO, "source ip "+ source.toString() + "peer ip " + peerReceived.toString());
-        activePeers.add(source);
-        activePeers.add(peerReceived);
 
+        //if connected to local server
+        if(isLocal(client.getServerIP())){
+            activePeers.add(source);
+            activePeers.add(peerReceived);
+        }else{
+            if(!isLocal(source.getAddress())){
+                activePeers.add(source);
+            }
+            if(!isLocal(peerReceived.getAddress())){
+                activePeers.add(peerReceived);
+            }
+        }
+    }
+
+    public boolean isLocal(String address){
+        return address.equals(ClientConfig.DEFAULT_CLIENT_IP);
     }
 }

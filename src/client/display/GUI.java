@@ -9,6 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Displays graphic user interface in the window
+ *
+ * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
+ * @version 2.0 (Iteration 2)
+ * @since 01-29-2021
+ */
 public class GUI extends JPanel implements ActionListener {
     private JButton sendButton;
     private JTextField inputField;

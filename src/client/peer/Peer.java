@@ -13,11 +13,7 @@ public class Peer {
 	private final String timeReceived = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now());
 
 	/**
-	 * <peer> ::= <ip><colon><port><newline>
-	 *  <ip> ::= <num><dot><num><dot><num><dot><num>
-	 *  <port> ::= <num><num> ::= [0-9]+
-	 *  <dot> ::= ‘.’
-	 *  <colon> ::= ‘:’
+	 *
 	 * @param peer
 	 */
 	public Peer(String peer){
