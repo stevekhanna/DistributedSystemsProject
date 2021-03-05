@@ -275,7 +275,7 @@ public class Client {
         //First connection to Registry
         connectToRegistry();
 
-        activePeers.add(new Peer(this.clientIP, this.udpSocket.getLocalPort()));
+        activePeers.add(new Peer(ClientConfig.DEFAULT_CLIENT_IP, this.udpSocket.getLocalPort()));
 
         //start keepalive timer
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));

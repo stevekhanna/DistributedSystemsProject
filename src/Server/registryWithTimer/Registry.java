@@ -83,6 +83,7 @@ public class Registry {
 		createTimerThread();
 		try {
 			ServerSocket server = new ServerSocket(portNumber);
+
 			LOGGER.log(Level.INFO, "Server started at " + 
 					server.getInetAddress().getLocalHost().getHostAddress() +
 					":" + portNumber);
