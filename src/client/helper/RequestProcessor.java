@@ -55,6 +55,7 @@ public class RequestProcessor implements Runnable {
         }
     }
 
+    //If received snippet from someone not in our list, add them
     public void handleSnipRequest() {
         int timestamp = Math.max(client.getLamportClock().getTimestamp(), packet.getTimeReceived()) + 1;
         client.getLamportClock().setTimestamp(timestamp);
@@ -90,6 +91,7 @@ public class RequestProcessor implements Runnable {
         }
         Set<Peer> activePeers = client.getActivePeers();
 
+        LOGGER.log(Level.INFO, "source ip "+ source.toString() + "peer ip " + peerReceived.toString());
         activePeers.add(source);
         activePeers.add(peerReceived);
 
