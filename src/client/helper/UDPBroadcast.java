@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Broadcast a message to all active peers
  *
  * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
  * @version 2.0 (Iteration 2)
@@ -31,7 +31,7 @@ public class UDPBroadcast implements Runnable {
     }
 
     /**
-     *
+     * sends message to all active peers in our peerlist
      */
     @Override
     public void run() {

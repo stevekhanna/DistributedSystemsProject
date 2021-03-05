@@ -241,6 +241,9 @@ public class Client {
         }
     }
 
+    /**
+     *
+     */
     public void connectToRegistry() {
         try {
             Socket socket = new Socket(serverIP, port);

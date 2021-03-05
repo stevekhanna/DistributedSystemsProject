@@ -23,6 +23,10 @@ public class GUI extends JPanel implements ActionListener {
     private Client client;
     private DefaultListModel<String> snippetList;
 
+    /**
+     * Constructor for gui to create gridlayout and init gui
+     * @param args arguemnts for the client
+     */
     public GUI(String[] args) {
         super(new GridLayout(ClientConfig.GRID_LAYOUT_ROWS,
                 ClientConfig.GRID_LAYOUT_COLS,
@@ -32,8 +36,8 @@ public class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     *
-     * @param args
+     * Initialize client for gui
+     * @param args arguments for the client
      */
     public void initGUI(String[] args) {
         setFocusable(true);
@@ -61,7 +65,7 @@ public class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     *
+     * creating the labels for the panel
      */
     private void createLabels() {
         //Title at the top
@@ -92,8 +96,8 @@ public class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     *
-     * @param e
+     * listening for when a button is clicked
+     * @param e action event that was triggered
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -104,7 +108,10 @@ public class GUI extends JPanel implements ActionListener {
         }
     }
 
-
+    /**
+     * add snippet to our list model
+     * @param snippet the snippet to be added
+     */
     public void updateSnippetList(String snippet) {
         snippetList.addElement(snippet);
     }

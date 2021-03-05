@@ -43,13 +43,17 @@ public class GeneralUtil {
         return response.toString();
     }
 
-    /**
-     * Getting the IP address
-     *
-     * @return String IPv4 address
+    /** Title: getting-the-external-ip-address-in-java
+     Author: Adelec Bakkal
+     Date: May 30, 2010
+     Code version: unknown
+     Availability: https://stackoverflow.com/questions/2939218/getting-the-external-ip-address-in-java
      */
-    public static String getMyIP() {
-        //https://stackoverflow.com/questions/2939218/getting-the-external-ip-address-in-java
+    /**
+     *
+     * @return
+     */
+    public static String getMyIP(){
         URL whatismyip = null;
         String ip = "Error";
         try {
