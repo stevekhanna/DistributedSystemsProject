@@ -71,6 +71,6 @@ public class Driver extends JFrame {
     public static void main(String[] args) {
 
         Driver driver = new Driver(args);
-        driver.setVisible(false);
+        driver.setVisible(true);
     }
 }
