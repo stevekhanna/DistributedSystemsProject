@@ -31,7 +31,10 @@ public class GUI extends JPanel implements ActionListener {
         initGUI(args);
     }
 
-    //TODO handle constructors for client propertly for all the cases or just one i guess
+    /**
+     *
+     * @param args
+     */
     public void initGUI(String[] args) {
         setFocusable(true);
         try {
@@ -57,6 +60,9 @@ public class GUI extends JPanel implements ActionListener {
         createLabels();
     }
 
+    /**
+     *
+     */
     private void createLabels() {
         //Title at the top
         JLabel label = new JLabel("<html>News Feed<br/><html>");
@@ -85,6 +91,10 @@ public class GUI extends JPanel implements ActionListener {
         add(sendButton);
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sendButton) {
