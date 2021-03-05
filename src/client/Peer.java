@@ -10,7 +10,6 @@ public class Peer {
 
 	private final String address;
 	private final int port;
-	private boolean isAlive = true;
 	private final String timeReceived = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now());
 
 	/**
@@ -43,12 +42,7 @@ public class Peer {
 		return this.timeReceived;
 	}
 
-	public boolean isAlive() {
-		return isAlive;
-	}
-
 	public void setAlive(boolean alive) {
-		isAlive = alive;
 	}
 
 	@Override

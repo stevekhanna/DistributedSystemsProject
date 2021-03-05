@@ -1,6 +1,5 @@
 package client;
 
-import Server.RegistryIteration2.Registry;
 import client.common.ClientConfig;
 import client.display.GUI;
 import client.helper.Inactive;
@@ -28,8 +27,7 @@ import java.util.logging.Logger;
  * A peer process that can receive peers from the registry as well as send a report on it's known sources and peers
  * <p>
  * TODO: CREATE ENUM CLASS FOR THE TYPE OF REQUESTS RECEIVED, PACKAGES
- * TODO: I don't think we are using peer isAlive boolean anymore since we have only active members in our peerlist
- * TODO: checking for bad pears
+ * TODO: checking for bad peers
  *
  * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
  * @version 2.0 (Iteration 2)
@@ -78,12 +76,24 @@ public class Client {
      */
     private GUI gui;
 
+    /**
+     *
+     */
     private final Map<String, Future> futures;
 
+    /**
+     *
+     */
     private final ScheduledExecutorService pool;
 
+    /**
+     *
+     */
     private final LamportClock lamportClock;
 
+    /**
+     *
+     */
     private final Report report;
 
 
@@ -141,16 +151,23 @@ public class Client {
 
         while (numberOfPeers > 0) {
             Peer peer = new Peer(reader.readLine());
-            peerSet.add(peer);
-            System.out.printf("Peer received is %s\n", peer);
+            if(isValidPeer(peer)){
+                peerSet.add(peer);
+                LOGGER.log(Level.INFO, "(valid) Peer received is " + peer.toString());
+            }else{
+                LOGGER.log(Level.INFO, "(invalid) Peer received is " + peer.toString());
+            }
             activePeers.add(peer);
             futures.put(peer.toString().replace("\n", ""), pool.schedule(new Inactive(this, peer), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
             numberOfPeers--;
         }
 
-        String key = source.toString().replace("\n", "");
         //adding source peer to the report
         report.getPeerTable().put(source, peerSet);
+    }
+
+    public boolean isValidPeer(Peer peer){
+        return peer.getPort() >= 1 && peer.getPort() <= 65535;
     }
 
     /**
