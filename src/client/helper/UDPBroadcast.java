@@ -1,5 +1,6 @@
 package client.helper;
 
+import client.general.ClientConfig;
 import client.logic.Client;
 
 import java.io.IOException;
@@ -26,10 +27,12 @@ public class UDPBroadcast implements Runnable {
     public void run() {
         //enumerate all known peers
         LOGGER.log(Level.INFO, "Broadcasting " + message);
+        LOGGER.log(Level.INFO, "active peers " + client.getActivePeers());
         byte[] msg = message.getBytes();
         client.getActivePeers().forEach(peer -> {
             try {
-                DatagramPacket packet = new DatagramPacket(msg, msg.length, InetAddress.getByName(peer.getAddress()), peer.getPort());
+                DatagramPacket packet = new DatagramPacket(msg, msg.length, InetAddress.getByName(peer.getAddress().equals(client.getClientIP()) ?
+                        ClientConfig.DEFAULT_CLIENT_IP : peer.getAddress()), peer.getPort());
                 client.getUDPSocket().send(packet);
                 if (type.equals("peer")) {
                     client.getReport().addSentPeerToReport(peer, message);

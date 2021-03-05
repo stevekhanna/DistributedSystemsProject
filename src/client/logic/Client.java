@@ -156,10 +156,10 @@ public class Client {
 
         while (numberOfPeers > 0) {
             Peer peer = new Peer(reader.readLine());
-            if(isValidPeer(peer)){
+            if (isValidPeer(peer)) {
                 peerSet.add(peer);
                 LOGGER.log(Level.INFO, "(valid) Peer received is " + peer.toString());
-            }else{
+            } else {
                 LOGGER.log(Level.INFO, "(invalid) Peer received is " + peer.toString());
             }
             activePeers.add(peer);
@@ -171,7 +171,7 @@ public class Client {
         report.getPeerTable().put(source, peerSet);
     }
 
-    public boolean isValidPeer(Peer peer){
+    public boolean isValidPeer(Peer peer) {
         return peer.getPort() >= 1 && peer.getPort() <= 65535;
     }
 
@@ -275,7 +275,7 @@ public class Client {
         //First connection to Registry
         connectToRegistry();
 
-        activePeers.add(new Peer(ClientConfig.DEFAULT_CLIENT_IP, this.udpSocket.getLocalPort()));
+        activePeers.add(new Peer(this.clientIP, this.udpSocket.getLocalPort()));
 
         //start keepalive timer
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
@@ -288,7 +288,7 @@ public class Client {
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, "Issue receiving from UDP socket");
             }
-            if(!shutdown){
+            if (!shutdown) {
                 pool.execute(new RequestProcessor(this, new PeerPacket(pkt)));
 
                 //restart KeepAlive timer
@@ -328,7 +328,6 @@ public class Client {
     }
 
     /**
-     *
      * @param snippet
      */
     public void sendSnippet(String snippet) {
@@ -359,6 +358,7 @@ public class Client {
 
     /**
      * Get and return 1 random peer
+     *
      * @return the chosen peer
      */
     public String getRandomPeer() {
@@ -367,6 +367,7 @@ public class Client {
 
     /**
      * Removes target peer from active peers
+     *
      * @param target the peer to be removed
      */
     public void expired(Peer target) {
@@ -424,5 +425,9 @@ public class Client {
 
     public Set<Peer> getActivePeers() {
         return activePeers;
+    }
+
+    public String getClientIP() {
+        return clientIP;
     }
 }
