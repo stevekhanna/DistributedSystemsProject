@@ -31,7 +31,7 @@ public class ClientConfig {
     public static final int KEEP_ALIVE_INTERVAL = 60 * 1000;
 
     /** Time before peer is considered inactive */
-    public static final int INACTIVITY_INTERVAL = 3 * 60 * 1000;
+    public static final int INACTIVITY_INTERVAL = 10 * 1000;
 
     /** Where our code is located */
     public static final String SOURCE_DIR = "src/client";
