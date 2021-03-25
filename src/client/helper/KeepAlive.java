@@ -9,13 +9,14 @@ import client.logic.Client;
  * @version 2.0 (Iteration 2)
  * @since 01-29-2021
  */
-public class KeepAlive implements Runnable{
+public class KeepAlive implements Runnable {
 
     Client client;
 
-    public KeepAlive(Client client){
+    public KeepAlive(Client client) {
         this.client = client;
     }
+
     @Override
     public void run() {
         client.keepAlive();

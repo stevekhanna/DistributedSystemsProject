@@ -42,8 +42,9 @@ public class UDPBroadcast implements Runnable {
         byte[] msg = message.getBytes();
         client.getActivePeers().forEach(peer -> {
             try {
-                DatagramPacket packet = new DatagramPacket(msg, msg.length, InetAddress.getByName(peer.getAddress().equals(client.getClientIP()) ?
-                        ClientConfig.DEFAULT_CLIENT_IP : peer.getAddress()), peer.getPort());
+                DatagramPacket packet = new DatagramPacket(msg, msg.length,
+                        InetAddress.getByName(peer.getAddress().equals(client.getClientIP()) ?
+                                ClientConfig.DEFAULT_CLIENT_IP : peer.getAddress()), peer.getPort());
                 client.getUDPSocket().send(packet);
                 if (type.equals("peer")) {
                     client.getReport().addSentPeerToReport(peer, message);

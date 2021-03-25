@@ -1,7 +1,7 @@
 package client.display;
 
-import client.logic.Client;
 import client.general.ClientConfig;
+import client.logic.Client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +25,7 @@ public class GUI extends JPanel implements ActionListener {
 
     /**
      * Constructor for gui to create gridlayout and init gui
+     *
      * @param args arguemnts for the client
      */
     public GUI(String[] args) {
@@ -37,6 +38,7 @@ public class GUI extends JPanel implements ActionListener {
 
     /**
      * Initialize client for gui
+     *
      * @param args arguments for the client
      */
     public void initGUI(String[] args) {
@@ -97,6 +99,7 @@ public class GUI extends JPanel implements ActionListener {
 
     /**
      * listening for when a button is clicked
+     *
      * @param e action event that was triggered
      */
     @Override
@@ -110,6 +113,7 @@ public class GUI extends JPanel implements ActionListener {
 
     /**
      * add snippet to our list model
+     *
      * @param snippet the snippet to be added
      */
     public void updateSnippetList(String snippet) {

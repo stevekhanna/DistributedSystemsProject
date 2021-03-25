@@ -1,4 +1,4 @@
-package registry;
+package Server.Iteration3.registry;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

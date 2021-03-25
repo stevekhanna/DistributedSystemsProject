@@ -8,7 +8,10 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Used to store all data for the report, getting the sources and their peers as a string
@@ -38,10 +41,11 @@ public class Report {
 
     /**
      * adding a peer that was sent to our report to be sent later
-     * @param peer the peer that was
+     *
+     * @param peer    the peer that was
      * @param message
      */
-    public void addSentPeerToReport(Peer peer, String message){
+    public void addSentPeerToReport(Peer peer, String message) {
         StringBuilder sb = new StringBuilder();
         try {
             sb.append(InetAddress.getByName(peer.getAddress()).toString().substring(1))
@@ -107,6 +111,7 @@ public class Report {
 
     /**
      * count number of peers in our peertable
+     *
      * @return the amount of peers in our peertable
      */
     public int countPeers() {
@@ -119,6 +124,7 @@ public class Report {
 
     /**
      * generate the report to be sent to registry
+     *
      * @return the report as a string
      */
     @Override

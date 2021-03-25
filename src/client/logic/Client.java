@@ -1,11 +1,8 @@
 package client.logic;
 
-import client.general.ClientConfig;
 import client.display.GUI;
-import client.helper.Inactive;
-import client.helper.KeepAlive;
-import client.helper.RequestProcessor;
-import client.helper.UDPBroadcast;
+import client.general.ClientConfig;
+import client.helper.*;
 import client.peer.Peer;
 import client.peer.PeerPacket;
 import client.peer.Report;
@@ -65,41 +62,34 @@ public class Client {
     private final Set<Peer> activePeers;
 
     private final List<Snippet> snippetList;
-
-    /**
-     * Socket used for UDP communication with peers
-     */
-    private DatagramSocket udpSocket;
-
-    /**
-     * Controls whether udp socket continues to receive req
-     */
-    private boolean shutdown;
-
-    /**
-     * GUI for the client
-     */
-    private GUI gui;
-
     /**
      *
      */
     private final Map<String, Future> futures;
-
     /**
      *
      */
     private final ScheduledExecutorService pool;
-
     /**
      *
      */
     private final LamportClock lamportClock;
-
     /**
      *
      */
     private final Report report;
+    /**
+     * Socket used for UDP communication with peers
+     */
+    private DatagramSocket udpSocket;
+    /**
+     * Controls whether udp socket continues to receive req
+     */
+    private boolean shutdown;
+    /**
+     * GUI for the client
+     */
+    private GUI gui;
 
 
     /**
@@ -162,7 +152,8 @@ public class Client {
                 LOGGER.log(Level.INFO, "(invalid) Peer received is " + peer.toString());
             }
             activePeers.add(peer);
-            futures.put(peer.toString().replace("\n", ""), pool.schedule(new Inactive(this, peer), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
+            futures.put(peer.toString().replace("\n", ""), pool.schedule(new Inactive(this, peer),
+                    ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
             numberOfPeers--;
         }
 
@@ -172,6 +163,7 @@ public class Client {
 
     /**
      * Checking to see if port number receieved is between the valid range
+     *
      * @param peer
      * @return boolean if port number is valid
      */
@@ -285,7 +277,8 @@ public class Client {
         activePeers.add(new Peer(this.clientIP, this.udpSocket.getLocalPort()));
 
         //start keepalive timer
-        futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
+        futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL,
+                TimeUnit.MILLISECONDS));
 
         while (!shutdown) {
             byte[] msg = new byte[ClientConfig.DEFAULT_PACKET_LENGTH];
@@ -302,7 +295,8 @@ public class Client {
 
                 //restart KeepAlive timer
                 futures.get(teamName).cancel(true);
-                futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
+                futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL,
+                        TimeUnit.MILLISECONDS));
             }
         }
 
@@ -311,7 +305,7 @@ public class Client {
 
         pool.shutdown();
         LOGGER.log(Level.INFO, "Shutting down pool");
-        
+
         //https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html#shutdown()
         try {
             // Wait a while for existing tasks to terminate
@@ -338,6 +332,7 @@ public class Client {
 
     /**
      * Send snippet method after cleaning up payload
+     *
      * @param snippet
      */
     public void sendSnippet(String snippet) {
@@ -363,7 +358,8 @@ public class Client {
         new Thread(new UDPBroadcast(this, "peer", "peer" + randomPeer.replace("\n", ""))).start();
         //restart keepalive
         futures.get(teamName).cancel(true);
-        futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL, TimeUnit.MILLISECONDS));
+        futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL,
+                TimeUnit.MILLISECONDS));
     }
 
     /**
@@ -391,6 +387,9 @@ public class Client {
             }
             activePeers.remove(target);
         }
+    }
+    public void sendAck(PeerPacket packet) {
+        new Thread(new PeerToPeerUDP(this, packet)).start();
     }
 
     public List<Snippet> getSnippetList() {
@@ -440,4 +439,6 @@ public class Client {
     public String getClientIP() {
         return clientIP;
     }
+
+
 }

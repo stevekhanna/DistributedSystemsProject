@@ -1,4 +1,4 @@
-package registry;
+package Server.Iteration3.registry;
 public class Peer {
 	String address;
 	private int port;

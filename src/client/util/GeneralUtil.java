@@ -50,9 +50,10 @@ public class GeneralUtil {
      */
     /**
      * Method to return my current IPv4 Address
+     *
      * @return my IP
      */
-    public static String getMyIP(){
+    public static String getMyIP() {
         URL whatismyip = null;
         String ip = "Error";
         try {

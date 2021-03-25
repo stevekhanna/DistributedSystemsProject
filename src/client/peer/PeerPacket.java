@@ -2,6 +2,7 @@ package client.peer;
 
 import java.io.Serializable;
 import java.net.DatagramPacket;
+import java.net.SocketAddress;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -21,8 +22,12 @@ public class PeerPacket implements Serializable {
     private final String source;
     private final int timeReceived;
 
+    private final SocketAddress socketAddress;
+
+
     /**
      * constructor that handles properly setting the instance variables of the packet
+     *
      * @param datagram datagram received
      */
     public PeerPacket(DatagramPacket datagram) {
@@ -48,6 +53,7 @@ public class PeerPacket implements Serializable {
         this.message = tempMessage;
         this.timeReceived = timeReceived;
         this.source = datagram.getSocketAddress().toString().substring(1);
+        this.socketAddress = datagram.getSocketAddress();
     }
 
     @Override
@@ -73,4 +79,6 @@ public class PeerPacket implements Serializable {
     public int getTimeReceived() {
         return timeReceived;
     }
+
+    public SocketAddress getSocketAddress() { return socketAddress; }
 }

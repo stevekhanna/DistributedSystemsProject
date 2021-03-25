@@ -43,7 +43,8 @@ public class RequestProcessor implements Runnable {
             String request = packet.getType();
             switch (request) {
                 case "snip" -> {
-                    LOGGER.log(Level.INFO, "Snip request received by " + client.getUDPSocket().getLocalSocketAddress().toString());
+                    LOGGER.log(Level.INFO, "Snip request received by "
+                            + client.getUDPSocket().getLocalSocketAddress().toString());
                     handleSnipRequest();
                 }
                 case "peer" -> {
@@ -52,6 +53,7 @@ public class RequestProcessor implements Runnable {
                 }
                 case "stop" -> {
                     LOGGER.log(Level.INFO, "Stop request received, terminating program");
+                    client.sendAck(packet);
                     client.shutdown();
                 }
                 default -> LOGGER.log(Level.INFO, "Request not recognized: " + request);
@@ -68,7 +70,7 @@ public class RequestProcessor implements Runnable {
         int timestamp = Math.max(client.getLamportClock().getTimestamp(), packet.getTimeReceived()) + 1;
         client.getLamportClock().setTimestamp(timestamp);
         client.getSnippetList().add(new Snippet(timestamp, packet));
-        LOGGER.log(Level.INFO, "snip message is "+ packet.getMessage());
+        LOGGER.log(Level.INFO, "snip message is " + packet.getMessage());
         SwingUtilities.invokeLater(() -> client.getGui().updateSnippetList(timestamp + packet.getMessage()));
     }
 
@@ -84,10 +86,14 @@ public class RequestProcessor implements Runnable {
         Peer source = new Peer(packetSource);
 
         Map<String, Future> futures = client.getFutures();
-        if(futures.containsKey(packetSource)){
+        if (futures.containsKey(packetSource)) {
             futures.get(packetSource).cancel(true);
         }
-        futures.put(packetSource, client.getPool().schedule(new Inactive(client, new Peer(packetSource)), ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
+        futures.put(packetSource, client.getPool().schedule(
+                new Inactive(client, new Peer(packetSource)),
+                ClientConfig.INACTIVITY_INTERVAL,
+                TimeUnit.MILLISECONDS)
+        );
 
         Set<Peer> peerList = Collections.synchronizedSet(new HashSet<>());
         LOGGER.log(Level.INFO, "peer received is " + packet.getMessage());
@@ -103,17 +109,18 @@ public class RequestProcessor implements Runnable {
         }
         Set<Peer> activePeers = client.getActivePeers();
 
-        LOGGER.log(Level.INFO, "source ip "+ source.toString() + "peer ip " + peerReceived.toString());
+        LOGGER.log(Level.INFO, "source ip " + source.toString() + "peer ip " + peerReceived.toString());
 
         //if connected to local server
-        if(isLocal(client.getServerIP())){
+        if (isLocal(client.getServerIP())) {
             activePeers.add(source);
             activePeers.add(peerReceived);
-        }else{
-            if(!isLocal(source.getAddress()) && !source.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)){
+        } else {
+            if (!isLocal(source.getAddress()) && !source.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)) {
                 activePeers.add(source);
             }
-            if(!isLocal(peerReceived.getAddress()) && !peerReceived.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)){
+            if (!isLocal(peerReceived.getAddress())
+                    && !peerReceived.getAddress().equals(ClientConfig.DEFAULT_CPSC_LOCAL_IP)) {
                 activePeers.add(peerReceived);
             }
         }
@@ -121,10 +128,11 @@ public class RequestProcessor implements Runnable {
 
     /**
      * checking if address is a local address
+     *
      * @param address the address to check
      * @return true if address is local
      */
-    public boolean isLocal(String address){
+    public boolean isLocal(String address) {
         return address.equals(ClientConfig.DEFAULT_CLIENT_IP);
     }
 }

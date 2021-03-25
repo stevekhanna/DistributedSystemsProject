@@ -10,12 +10,12 @@ import client.peer.Peer;
  * @version 2.0 (Iteration 2)
  * @since 01-29-2021
  */
-public class Inactive implements Runnable{
+public class Inactive implements Runnable {
 
     private final Client client;
     private final Peer target;
 
-    public Inactive(Client client, Peer target){
+    public Inactive(Client client, Peer target) {
         this.client = client;
         this.target = target;
     }

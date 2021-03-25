@@ -1,4 +1,4 @@
-package registry;
+package Server.Iteration3.registry;
 
 import java.io.IOException;
 import java.net.BindException;
@@ -157,11 +157,11 @@ public class Registry {
 						peers.clear();
 						done = false;
 						String[] argsForPeer = {"localhost","" + portNumber, "test"};
-						try {
-							peer.Iteration3Solution.main(argsForPeer);
-						} catch (Exception e) {
-							System.out.println("Problem running test peers");
-						}
+//						try {
+//							peer.Iteration3Solution.main(argsForPeer);
+//						} catch (Exception e) {
+//							System.out.println("Problem running test peers");
+//						}
 					}
 				}, MINUTES_TO_WAIT_FOR_REPORT*60*1000);
 			}
