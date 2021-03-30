@@ -40,6 +40,7 @@ public class RequestProcessor implements Runnable {
     @Override
     public void run() {
         try {
+            LOGGER.log(Level.INFO, "Packet Received " + packet.toString());
             String request = packet.getType();
             switch (request) {
                 case "snip" -> {

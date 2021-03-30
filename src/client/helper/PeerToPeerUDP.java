@@ -1,12 +1,10 @@
 package client.helper;
 
-import client.general.ClientConfig;
 import client.logic.Client;
 import client.peer.PeerPacket;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

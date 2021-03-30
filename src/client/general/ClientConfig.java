@@ -42,7 +42,7 @@ public class ClientConfig {
     /**
      * Time before peer is considered inactive
      */
-    public static final int INACTIVITY_INTERVAL = 10 * 1000;
+    public static final int INACTIVITY_INTERVAL = 60 * 1000;
 
     /**
      * Where our code is located
