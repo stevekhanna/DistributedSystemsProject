@@ -388,7 +388,7 @@ public class Client {
             activePeers.remove(target);
         }
     }
-    public void sendAck(PeerPacket packet) {
+    public void sendAckAndShutDown(PeerPacket packet) {
         new Thread(new PeerToPeerUDP(this, packet)).start();
     }
 

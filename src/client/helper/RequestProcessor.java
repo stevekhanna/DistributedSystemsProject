@@ -54,8 +54,7 @@ public class RequestProcessor implements Runnable {
                 }
                 case "stop" -> {
                     LOGGER.log(Level.INFO, "Stop request received, terminating program");
-                    client.sendAck(packet);
-                    client.shutdown();
+                    client.sendAckAndShutDown(packet);
                 }
                 default -> LOGGER.log(Level.INFO, "Request not recognized: " + request);
             }

@@ -35,6 +35,7 @@ public class PeerToPeerUDP implements Runnable {
         try {
             DatagramPacket packet = new DatagramPacket(msg, msg.length, this.packet.getSocketAddress());
             client.getUDPSocket().send(packet);
+            client.shutdown();
         } catch (IOException e) {
             e.printStackTrace();
         }
