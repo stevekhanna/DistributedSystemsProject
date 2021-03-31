@@ -67,7 +67,7 @@ public class RequestProcessor implements Runnable {
      * handling the snippet type packet
      */
     public void handleSnipRequest() {
-        int timestamp = Math.max(client.getLamportClock().getTimestamp(), packet.getTimeReceived()) + 1;
+        int timestamp = Math.max(client.getLamportClock().getTimestamp(), packet.getTimeReceived());
         client.getLamportClock().setTimestamp(timestamp);
         client.getSnippetList().add(new Snippet(timestamp, packet));
         LOGGER.log(Level.INFO, "snip message is " + packet.getMessage());

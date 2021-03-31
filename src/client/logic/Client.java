@@ -326,6 +326,7 @@ public class Client {
      * @param snippet
      */
     public void sendSnippet(String snippet) {
+        lamportClock.incrementTimestamp();
         String message = "snip" + lamportClock.getTimestamp() + " " + snippet;
         new Thread(new UDPBroadcast(this, "snip", message)).start();
     }

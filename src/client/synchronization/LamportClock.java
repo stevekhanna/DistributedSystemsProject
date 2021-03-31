@@ -20,6 +20,10 @@ public class LamportClock {
         return timestamp;
     }
 
+    public void incrementTimestamp(){
+        setTimestamp(getTimestamp()+1);
+    }
+
     public void setTimestamp(int timestamp) {
         this.timestamp = timestamp;
     }
