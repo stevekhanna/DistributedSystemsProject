@@ -17,21 +17,24 @@ public class PeerToPeerUDP implements Runnable {
 
     private final Client client;
     private final PeerPacket packet;
+    private final String teamName;
 
     /**
      *
      * @param client
      * @param packet
      */
-    public PeerToPeerUDP(Client client, PeerPacket packet) {
+    public PeerToPeerUDP(Client client, PeerPacket packet, String teamName) {
         this.client = client;
         this.packet = packet;
+        this.teamName = teamName;
     }
 
     @Override
     public void run() {
-        LOGGER.log(Level.INFO, "Sending Ack " + packet.getMessage());
-        byte[] msg = packet.getMessage().getBytes();
+        String message = "ack" + teamName;
+        LOGGER.log(Level.INFO, "Sending Ack " + message);
+        byte[] msg = message.getBytes();
         try {
             DatagramPacket packet = new DatagramPacket(msg, msg.length, this.packet.getSocketAddress());
             client.getUDPSocket().send(packet);

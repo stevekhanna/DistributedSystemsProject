@@ -389,7 +389,7 @@ public class Client {
         }
     }
     public void sendAckAndShutDown(PeerPacket packet) {
-        new Thread(new PeerToPeerUDP(this, packet)).start();
+        new Thread(new PeerToPeerUDP(this, packet, this.getTeamName())).start();
     }
 
     public List<Snippet> getSnippetList() {

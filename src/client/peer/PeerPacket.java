@@ -46,7 +46,7 @@ public class PeerPacket implements Serializable {
             case "peer" -> tempMessage = content.substring(4);
             case "stop" -> tempMessage = "";
             default -> {
-                tempMessage = "";
+                tempMessage = "ack";
                 System.out.printf("datagram type not recognized: %s\n", type);
             }
         }
