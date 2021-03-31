@@ -18,7 +18,10 @@ public class Peer {
     private final String address;
     private final int port;
     private final String timeReceived =
-			DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now());
+            DateTimeFormatter
+            .ofPattern("yyyy-MM-dd HH:mm:ss")
+            .withZone(ZoneId.from(ZoneOffset.UTC))
+            .format(Instant.now());
 
     /**
      * constructor for when a string reprsentation of the peer is received
