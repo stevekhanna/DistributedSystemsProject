@@ -17,6 +17,7 @@ import java.io.IOException;
  * @since 01-29-2021
  */
 public class GUI extends JPanel implements ActionListener {
+
     private JButton sendButton;
     private JTextField inputField;
 

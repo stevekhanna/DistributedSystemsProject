@@ -13,7 +13,6 @@ public class Snippet {
     private final String content;
     private final String sourcePeer;
 
-
     public Snippet(int timestamp, PeerPacket packet) {
         this.timestamp = timestamp;
         this.content = packet.getMessage();

@@ -12,7 +12,6 @@ import java.util.List;
  * @since 01-29-2021
  */
 public class ClientConfig {
-
     /**
      * Client defaults
      */

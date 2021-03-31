@@ -9,7 +9,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Runnable class used for the sending of ACK
  *
+ * @author Team: "Steve and Issack" - Steve Khanna 10153930, Issack John 30031053
+ * @version 3.0 (Iteration 3)
+ * @since 03-31-2021
  */
 public class PeerToPeerUDP implements Runnable {
 

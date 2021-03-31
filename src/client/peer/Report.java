@@ -27,7 +27,6 @@ public class Report {
     private final List<String> peersReceived;
     private final Client client;
 
-
     public Report(Client client) {
         this.peersSent = Collections.synchronizedList(new ArrayList<>());
         this.peersReceived = Collections.synchronizedList(new ArrayList<>());

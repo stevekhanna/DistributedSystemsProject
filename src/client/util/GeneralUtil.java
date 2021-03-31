@@ -17,7 +17,6 @@ import java.nio.file.Files;
  * @since 01-29-2021
  */
 public class GeneralUtil {
-
     /**
      * Convert all source code for peer process to string
      *
@@ -47,11 +46,6 @@ public class GeneralUtil {
      Date: May 30, 2010
      Code version: unknown
      Availability: https://stackoverflow.com/questions/2939218/getting-the-external-ip-address-in-java
-     */
-    /**
-     * Method to return my current IPv4 Address
-     *
-     * @return my IP
      */
     public static String getMyIP() {
         URL whatismyip = null;
