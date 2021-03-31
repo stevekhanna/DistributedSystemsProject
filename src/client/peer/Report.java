@@ -52,7 +52,10 @@ public class Report {
                     .append(":")
                     .append(peer.getPort()).append(" ")
                     .append(message.substring(4)).append(" ")
-                    .append(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()))
+                    .append(DateTimeFormatter
+                            .ofPattern("yyyy-MM-dd HH:mm:ss")
+                            .withZone(ZoneId.from(ZoneOffset.UTC))
+                            .format(Instant.now()))
                     .append("\n");
         } catch (UnknownHostException e) {
             System.out.println("Unknown Host");

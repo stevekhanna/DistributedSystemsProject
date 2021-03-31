@@ -60,7 +60,8 @@ public class PeerPacket implements Serializable {
     public String toString() {
         return source + " "
                 + message + " "
-                + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now())
+                + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC))
+                .format(Instant.now())
                 + "\n";
     }
 

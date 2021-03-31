@@ -152,7 +152,8 @@ public class Client {
                 LOGGER.log(Level.INFO, "(invalid) Peer received is " + peer.toString());
             }
             activePeers.add(peer);
-            futures.put(peer.toString().replace("\n", ""), pool.schedule(new Inactive(this, peer),
+            futures.put(peer.toString().replace("\n", ""),
+                    pool.schedule(new Inactive(this, peer),
                     ClientConfig.INACTIVITY_INTERVAL, TimeUnit.MILLISECONDS));
             numberOfPeers--;
         }
@@ -336,7 +337,8 @@ public class Client {
      * @param snippet
      */
     public void sendSnippet(String snippet) {
-        new Thread(new UDPBroadcast(this, "snip", "snip" + lamportClock.getTimestamp() + " " + snippet)).start();
+        String message = "snip" + lamportClock.getTimestamp() + " " + snippet;
+        new Thread(new UDPBroadcast(this, "snip", message)).start();
     }
 
     /**
@@ -355,7 +357,8 @@ public class Client {
         System.out.println("Running keepalive");
         String randomPeer = getRandomPeer();
         //snip newline and send peer
-        new Thread(new UDPBroadcast(this, "peer", "peer" + randomPeer.replace("\n", ""))).start();
+        String message = "peer" + randomPeer.replace("\n", "");
+        new Thread(new UDPBroadcast(this, "peer", message)).start();
         //restart keepalive
         futures.get(teamName).cancel(true);
         futures.put(teamName, pool.schedule(new KeepAlive(this), ClientConfig.KEEP_ALIVE_INTERVAL,
